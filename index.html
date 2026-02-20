@@ -15,8 +15,6 @@
       position: fixed;
       width: 100%;
       padding: 15px 60px;
-      display: flex;
-      align-items: center;
       z-index: 10;
       background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
     }
@@ -27,80 +25,20 @@
       font-weight: bold;
     }
 
-    /* HERO */
-    .hero {
-      position: relative;
-      height: 75vh;
-      overflow: hidden;
-    }
-
-    .slide {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      display: flex;
-      align-items: center;
-      padding-left: 60px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .slide.active {
-      opacity: 1;
-    }
-
-    .overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to right, rgba(0,0,0,0.85) 40%, transparent);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 500px;
-    }
-
-    .hero h1 {
-      font-size: 55px;
-    }
-
-    .play-btn {
-      margin-top: 20px;
-      padding: 12px 28px;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      background: white;
-      color: black;
-    }
-
-    /* SECTION */
     .section {
-      padding: 40px 60px;
+      padding: 100px 60px 40px;
     }
 
     .row {
       display: flex;
-      gap: 18px;
-      overflow-x: auto;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .row::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* MOVIE CARD */
     .movie {
-      min-width: 260px;
+      width: 23%;
       position: relative;
       cursor: pointer;
-      transition: transform 0.3s ease;
     }
 
     .poster-box {
@@ -114,42 +52,50 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: 0.3s;
     }
 
     .movie:hover img {
-      transform: scale(1.15);
+      transform: scale(1.1);
     }
 
-    /* HOVER POPUP */
-    .hover-info {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-      opacity: 0;
-      transition: 0.3s;
-      border-radius: 0 0 8px 8px;
-    }
-
-    .movie:hover .hover-info {
-      opacity: 1;
-    }
-
-    .hover-title {
+    .movie-title {
+      margin-top: 8px;
       font-size: 14px;
       font-weight: bold;
+      text-align: center;
     }
 
-    .hover-btn {
-      margin-top: 8px;
-      padding: 6px 14px;
-      font-size: 12px;
-      border: none;
-      border-radius: 4px;
-      background: white;
+    /* MODAL PLAYER */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal-content {
+      width: 80%;
+      max-width: 900px;
+      position: relative;
+    }
+
+    .modal iframe {
+      width: 100%;
+      height: 500px;
+      border-radius: 8px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      font-size: 30px;
       cursor: pointer;
+      color: white;
     }
 
   </style>
@@ -161,116 +107,98 @@
     <div class="logo">MUJAHIDFLIX</div>
   </div>
 
-  <div class="hero" id="heroSlider"></div>
-
   <div class="section">
     <h2>Trending Now</h2>
 
     <div class="row">
 
-      <div class="movie">
-        <a href="#" target="_blank">
-          <div class="poster-box">
-            <img src="Dhurandhar.gif">
-          </div>
-        </a>
+      <div class="movie" data-video="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview">
+        <div class="poster-box">
+          <img src="Dhurandhar.gif">
+        </div>
       </div>
 
-      <div class="movie">
-        <a href="#" target="_blank">
-          <div class="poster-box">
-            <img src="Aap Jaisa Koi.jpeg">
-          </div>
-        </a>
+      <div class="movie" data-video="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview">
+        <div class="poster-box">
+          <img src="Aap Jaisa Koi.jpeg">
+        </div>
       </div>
 
-      <div class="movie">
-        <a href="#" target="_blank">
-          <div class="poster-box">
-            <img src="Baaghi_4-new-version.gif">
-          </div>
-        </a>
+      <div class="movie" data-video="https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview">
+        <div class="poster-box">
+          <img src="Baaghi_4-new-version.gif">
+        </div>
       </div>
 
-      <div class="movie">
-        <a href="#" target="_blank">
-          <div class="poster-box">
-            <img src="Deva.gif">
-          </div>
-        </a>
+      <div class="movie" data-video="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview">
+        <div class="poster-box">
+          <img src="Deva.gif">
+        </div>
       </div>
 
     </div>
   </div>
 
+  <!-- MODAL -->
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <iframe id="videoFrame" src="" allowfullscreen></iframe>
+    </div>
+  </div>
+
   <script>
-    window.addEventListener("DOMContentLoaded", function () {
+    const movies = document.querySelectorAll(".movie");
+    const modal = document.getElementById("videoModal");
+    const frame = document.getElementById("videoFrame");
+    const closeBtn = document.getElementById("closeModal");
 
-      const movies = document.querySelectorAll(".movie");
-      const hero = document.getElementById("heroSlider");
+    function formatTitle(filename) {
+      let name = filename.replace(/\.[^/.]+$/, "");
+      name = decodeURIComponent(name);
+      name = name.replace(/[-_]/g, " ");
+      name = name.split(" ")
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+      return name;
+    }
 
-      function formatTitle(filename) {
-        let name = filename.replace(/\.[^/.]+$/, "");
-        name = decodeURIComponent(name);
-        name = name.replace(/[-_]/g, " ");
-        name = name.replace(/\s+/g, " ");
+    movies.forEach(movie => {
 
-        name = name.split(" ")
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ");
+      const img = movie.querySelector("img").src;
+      const fileName = img.substring(img.lastIndexOf("/") + 1);
+      const title = formatTitle(fileName);
 
-        return name;
-      }
+      const titleDiv = document.createElement("div");
+      titleDiv.className = "movie-title";
+      titleDiv.textContent = title;
+      movie.appendChild(titleDiv);
 
-      movies.forEach((movie, index) => {
-
-        const imgElement = movie.querySelector("img");
-        const imgSrc = imgElement.getAttribute("src");
-        const link = movie.querySelector("a").href;
-
-        const fileName = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
-        const title = formatTitle(fileName);
-
-        /* HOVER INFO */
-        const hoverBox = document.createElement("div");
-        hoverBox.className = "hover-info";
-        hoverBox.innerHTML = `
-          <div class="hover-title">${title}</div>
-          <a href="${link}" target="_blank">
-            <button class="hover-btn">▶ Play</button>
-          </a>
-        `;
-        movie.appendChild(hoverBox);
-
-        /* HERO SLIDER */
-        const slide = document.createElement("div");
-        slide.classList.add("slide");
-        if (index === 0) slide.classList.add("active");
-
-        slide.style.backgroundImage = `url('${imgSrc}')`;
-
-        slide.innerHTML = `
-          <div class="overlay"></div>
-          <div class="hero-content">
-            <h1>${title}</h1>
-            <a href="${link}" target="_blank">
-              <button class="play-btn">▶ Play</button>
-            </a>
-          </div>
-        `;
-
-        hero.appendChild(slide);
+      movie.addEventListener("click", () => {
+        const videoURL = movie.getAttribute("data-video");
+        frame.src = videoURL;
+        modal.style.display = "flex";
       });
 
-      const slides = document.querySelectorAll(".slide");
-      let current = 0;
+    });
 
-      setInterval(() => {
-        slides[current].classList.remove("active");
-        current = (current + 1) % slides.length;
-        slides[current].classList.add("active");
-      }, 3000);
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+      frame.src = "";
+    });
 
+    window.addEventListener("click", e => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        frame.src = "";
+      }
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        modal.style.display = "none";
+        frame.src = "";
+      }
     });
   </script>
 
