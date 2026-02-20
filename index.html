@@ -12,6 +12,7 @@
       overflow-x: hidden;
     }
 
+    /* NAVBAR */
     .navbar {
       position: fixed;
       width: 100%;
@@ -28,10 +29,10 @@
       font-weight: bold;
     }
 
-    /* HERO */
+    /* HERO SECTION */
     .hero {
       position: relative;
-      height: 70vh;
+      height: 75vh;
       overflow: hidden;
     }
 
@@ -44,8 +45,8 @@
       display: flex;
       align-items: center;
       padding-left: 60px;
-      background-size: contain;
-      background-position: right center;
+      background-size: cover;
+      background-position: center;
       background-repeat: no-repeat;
     }
 
@@ -67,13 +68,13 @@
     }
 
     .hero h1 {
-      font-size: 50px;
+      font-size: 55px;
       margin-bottom: 10px;
     }
 
     .play-btn {
       margin-top: 20px;
-      padding: 10px 22px;
+      padding: 12px 28px;
       font-size: 16px;
       border: none;
       border-radius: 4px;
@@ -83,9 +84,9 @@
       color: black;
     }
 
-    /* Trending */
+    /* SECTION */
     .section {
-      padding: 30px 60px;
+      padding: 40px 60px;
     }
 
     .row {
@@ -98,14 +99,19 @@
       display: none;
     }
 
+    /* NETFLIX STYLE POSTERS */
     .movie {
       min-width: 200px;
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+      border-radius: 10px;
       transition: transform 0.3s ease;
     }
 
     .movie img {
       width: 100%;
-      border-radius: 8px;
+      height: 100%;
+      object-fit: cover;
     }
 
     .movie:hover {
@@ -124,10 +130,11 @@
   <!-- HERO -->
   <div class="hero" id="heroSlider"></div>
 
-  <!-- MOVIE ROW -->
+  <!-- MOVIES -->
   <div class="section">
     <h2>Trending Now</h2>
-    <div class="row" id="movieRow">
+
+    <div class="row">
 
       <div class="movie">
         <a href="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview" target="_blank">
@@ -147,16 +154,16 @@
         </a>
       </div>
 
-  <div class="movie">
-        <a href="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/view?usp=drive_link">
+      <div class="movie">
+        <a href="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview" target="_blank">
           <img src="Deva.gif">
         </a>
       </div>
-      
+
     </div>
   </div>
 
-  <!-- AUTO BUILD SLIDER SCRIPT -->
+  <!-- AUTO SLIDER SCRIPT -->
   <script>
     const movies = document.querySelectorAll(".movie");
     const hero = document.getElementById("heroSlider");
@@ -165,7 +172,7 @@
       const img = movie.querySelector("img").src;
       const link = movie.querySelector("a").href;
       const rawTitle = movie.querySelector("img").src.split('/').pop().split('.')[0];
-const title = decodeURIComponent(rawTitle);
+      const title = decodeURIComponent(rawTitle);
 
       const slide = document.createElement("div");
       slide.classList.add("slide");
