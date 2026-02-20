@@ -12,7 +12,6 @@
       overflow-x: hidden;
     }
 
-    /* Navbar */
     .navbar {
       position: fixed;
       width: 100%;
@@ -27,10 +26,9 @@
       color: #e50914;
       font-size: 28px;
       font-weight: bold;
-      margin-right: 40px;
     }
 
-    /* HERO SLIDER */
+    /* HERO */
     .hero {
       position: relative;
       height: 70vh;
@@ -73,32 +71,19 @@
       margin-bottom: 10px;
     }
 
-    .hero p {
-      color: #ccc;
-      font-size: 18px;
-    }
-
-    .hero button {
+    .play-btn {
       margin-top: 20px;
       padding: 10px 22px;
       font-size: 16px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      margin-right: 10px;
       font-weight: bold;
-    }
-
-    .play-btn {
       background: white;
       color: black;
     }
 
-    .play-btn:hover {
-      background: #ddd;
-    }
-
-    /* Trending Row */
+    /* Trending */
     .section {
       padding: 30px 60px;
     }
@@ -136,41 +121,13 @@
     <div class="logo">MUJAHIDFLIX</div>
   </div>
 
-  <!-- HERO AUTO SLIDER -->
-  <div class="hero">
+  <!-- HERO -->
+  <div class="hero" id="heroSlider"></div>
 
-    <!-- Slide 1 -->
-    <div class="slide active" 
-         style="background-image: url('Dhurrandhar.jpeg');">
-      <div class="overlay"></div>
-      <div class="hero-content">
-        <h1>Dhurrandhar</h1>
-        <p>Watch the latest blockbuster in full HD.</p>
-        <a href="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview" target="_blank">
-          <button class="play-btn">▶ Play</button>
-        </a>
-      </div>
-    </div>
-
-    <!-- Slide 2 -->
-    <div class="slide" 
-         style="background-image: url('Aap Jaisa Koi.jpeg');">
-      <div class="overlay"></div>
-      <div class="hero-content">
-        <h1>Aap Jaisa Koi</h1>
-        <p>Romantic drama streaming now.</p>
-        <a href="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview" target="_blank">
-          <button class="play-btn">▶ Play</button>
-        </a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Trending Section -->
+  <!-- MOVIE ROW -->
   <div class="section">
     <h2>Trending Now</h2>
-    <div class="row">
+    <div class="row" id="movieRow">
 
       <div class="movie">
         <a href="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview" target="_blank">
@@ -184,24 +141,51 @@
         </a>
       </div>
 
-<div class="movie">
-        <a href="https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/view?usp=drive_link">
+      <div class="movie">
+        <a href="https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview" target="_blank">
           <img src="Baaghi 4.gif">
         </a>
       </div>
-      
+
     </div>
   </div>
 
-  <!-- SLIDER SCRIPT -->
+  <!-- AUTO BUILD SLIDER SCRIPT -->
   <script>
-    let slides = document.querySelectorAll(".slide");
-    let index = 0;
+    const movies = document.querySelectorAll(".movie");
+    const hero = document.getElementById("heroSlider");
+
+    movies.forEach((movie, index) => {
+      const img = movie.querySelector("img").src;
+      const link = movie.querySelector("a").href;
+      const title = movie.querySelector("img").src.split('/').pop().split('.')[0];
+
+      const slide = document.createElement("div");
+      slide.classList.add("slide");
+      if (index === 0) slide.classList.add("active");
+
+      slide.style.backgroundImage = `url('${img}')`;
+
+      slide.innerHTML = `
+        <div class="overlay"></div>
+        <div class="hero-content">
+          <h1>${title}</h1>
+          <a href="${link}" target="_blank">
+            <button class="play-btn">▶ Play</button>
+          </a>
+        </div>
+      `;
+
+      hero.appendChild(slide);
+    });
+
+    const slides = document.querySelectorAll(".slide");
+    let current = 0;
 
     setInterval(() => {
-      slides[index].classList.remove("active");
-      index = (index + 1) % slides.length;
-      slides[index].classList.add("active");
+      slides[current].classList.remove("active");
+      current = (current + 1) % slides.length;
+      slides[current].classList.add("active");
     }, 3000);
   </script>
 
