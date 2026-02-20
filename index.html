@@ -97,7 +97,6 @@
       display: none;
     }
 
-    /* NETFLIX POSTER STYLE */
     .movie {
       min-width: 260px;
       display: flex;
@@ -130,6 +129,7 @@
       font-weight: bold;
       text-align: center;
     }
+
   </style>
 </head>
 
@@ -147,7 +147,7 @@
     <div class="row">
 
       <div class="movie">
-        <a href="LINK1" target="_blank">
+        <a href="#" target="_blank">
           <div class="poster-box">
             <img src="Dhurandhar.gif">
           </div>
@@ -155,7 +155,7 @@
       </div>
 
       <div class="movie">
-        <a href="LINK2" target="_blank">
+        <a href="#" target="_blank">
           <div class="poster-box">
             <img src="Aap Jaisa Koi.jpeg">
           </div>
@@ -163,15 +163,15 @@
       </div>
 
       <div class="movie">
-        <a href="LINK3" target="_blank">
+        <a href="#" target="_blank">
           <div class="poster-box">
-            <img src="Baaghi 4.gif">
+            <img src="Baaghi_4-new-version.gif">
           </div>
         </a>
       </div>
 
       <div class="movie">
-        <a href="LINK4" target="_blank">
+        <a href="#" target="_blank">
           <div class="poster-box">
             <img src="Deva.gif">
           </div>
@@ -187,25 +187,36 @@
       const movies = document.querySelectorAll(".movie");
       const hero = document.getElementById("heroSlider");
 
+      function formatTitle(filename) {
+        let name = filename.replace(/\.[^/.]+$/, ""); // remove extension
+        name = decodeURIComponent(name);
+        name = name.replace(/[-_]/g, " "); // replace - and _
+        name = name.replace(/\s+/g, " "); // remove extra spaces
+
+        // Title Case
+        name = name.split(" ")
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+
+        return name;
+      }
+
       movies.forEach((movie, index) => {
 
         const imgElement = movie.querySelector("img");
         const imgSrc = imgElement.getAttribute("src");
         const link = movie.querySelector("a").href;
 
-        // Get clean filename without extension
         const fileName = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
-        const cleanTitle = fileName.replace(/\.[^/.]+$/, "");
+        const title = formatTitle(fileName);
 
-        const title = decodeURIComponent(cleanTitle);
-
-        // ADD TITLE BELOW POSTER
+        // Add title below poster
         const titleDiv = document.createElement("div");
         titleDiv.className = "movie-title";
         titleDiv.textContent = title;
         movie.appendChild(titleDiv);
 
-        // CREATE HERO SLIDE
+        // Create slider
         const slide = document.createElement("div");
         slide.classList.add("slide");
         if (index === 0) slide.classList.add("active");
