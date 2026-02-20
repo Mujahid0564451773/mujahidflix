@@ -158,7 +158,8 @@
     movies.forEach((movie, index) => {
       const img = movie.querySelector("img").src;
       const link = movie.querySelector("a").href;
-      const title = movie.querySelector("img").src.split('/').pop().split('.')[0];
+      const rawTitle = movie.querySelector("img").src.split('/').pop().split('.')[0];
+const title = decodeURIComponent(rawTitle);
 
       const slide = document.createElement("div");
       slide.classList.add("slide");
