@@ -5,50 +5,91 @@
 
   <style>
     body {
-      background: #111;
+      background: #141414;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      color: white;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 15px 40px;
+      background: black;
+      position: sticky;
+      top: 0;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #e50914;
+      margin-right: 40px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      margin-right: 20px;
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: #e50914;
     }
 
     h1 {
-      color: white;
-      padding: 20px;
+      padding: 20px 40px 10px;
+      font-size: 22px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 25px;
+      padding: 0 40px 40px;
     }
 
     .movie {
-      text-align: center;
-      color: white;
+      transition: transform 0.3s ease;
     }
 
     .movie img {
       width: 100%;
-      border-radius: 12px;
-      transition: 0.3s;
+      border-radius: 8px;
     }
 
-    .movie img:hover {
-      transform: scale(1.05);
+    .movie:hover {
+      transform: scale(1.08);
+      z-index: 2;
     }
 
     .movie p {
-      margin-top: 10px;
-      font-size: 16px;
-      color: white;
+      margin-top: 8px;
+      font-size: 14px;
+      text-align: center;
+      color: #ccc;
     }
+
   </style>
 </head>
 
 <body>
 
-  <h1>Mujahid Flix</h1>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">MUJAHIDFLIX</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Movies</a>
+      <a href="#">New & Popular</a>
+      <a href="#">My List</a>
+    </div>
+  </div>
+
+  <h1>Trending Now</h1>
 
   <div class="grid">
 
@@ -60,12 +101,12 @@
     </div>
 
     <div class="movie">
-  <a href="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/view?usp=drive_link" target="_blank">
-    <img src="Aap Jaisa Koi.jpeg">
-  </a>
-  <p>Aap Jaisa Koi (2025)</p>
-</div>
-    
+      <a href="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/view?usp=drive_link" target="_blank">
+        <img src="Aap Jaisa Koi.jpeg">
+      </a>
+      <p>Aap Jaisa Koi (2025)</p>
+    </div>
+
   </div>
 
 </body>
