@@ -68,7 +68,6 @@
 
     .hero h1 {
       font-size: 55px;
-      margin-bottom: 10px;
     }
 
     .play-btn {
@@ -83,14 +82,14 @@
       color: black;
     }
 
-    /* MOVIE SECTION */
+    /* SECTION */
     .section {
       padding: 40px 60px;
     }
 
     .row {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       overflow-x: auto;
     }
 
@@ -98,31 +97,24 @@
       display: none;
     }
 
+    /* NETFLIX STYLE POSTERS (16:9) */
     .movie {
-      min-width: 220px;
-      aspect-ratio: 1 / 1;
+      min-width: 260px;
+      aspect-ratio: 16 / 9;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 8px;
       transition: transform 0.3s ease;
       background: #222;
-      text-align: center;
     }
 
     .movie img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 12px;
     }
 
     .movie:hover {
-      transform: scale(1.05);
-    }
-
-    .movie-title {
-      margin-top: 10px;
-      font-size: 14px;
-      font-weight: bold;
+      transform: scale(1.08);
     }
 
   </style>
@@ -134,10 +126,8 @@
     <div class="logo">MUJAHIDFLIX</div>
   </div>
 
-  <!-- HERO -->
   <div class="hero" id="heroSlider"></div>
 
-  <!-- MOVIES -->
   <div class="section">
     <h2>Trending Now</h2>
 
@@ -175,20 +165,11 @@
     const hero = document.getElementById("heroSlider");
 
     movies.forEach((movie, index) => {
-
       const img = movie.querySelector("img").src;
       const link = movie.querySelector("a").href;
-
       const rawTitle = movie.querySelector("img").src.split('/').pop().split('.')[0];
       const title = decodeURIComponent(rawTitle);
 
-      /* ADD TITLE BELOW POSTER */
-      const titleElement = document.createElement("div");
-      titleElement.classList.add("movie-title");
-      titleElement.textContent = title;
-      movie.appendChild(titleElement);
-
-      /* CREATE SLIDER */
       const slide = document.createElement("div");
       slide.classList.add("slide");
       if (index === 0) slide.classList.add("active");
@@ -216,7 +197,6 @@
       current = (current + 1) % slides.length;
       slides[current].classList.add("active");
     }, 3000);
-
   </script>
 
 </body>
