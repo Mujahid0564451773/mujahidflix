@@ -97,9 +97,16 @@
       display: none;
     }
 
-    /* NETFLIX STYLE POSTERS (16:9) */
+    /* NETFLIX POSTER STYLE */
     .movie {
       min-width: 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .poster-box {
+      width: 100%;
       aspect-ratio: 16 / 9;
       overflow: hidden;
       border-radius: 8px;
@@ -107,14 +114,21 @@
       background: #222;
     }
 
-    .movie img {
+    .poster-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .movie:hover {
+    .poster-box:hover {
       transform: scale(1.08);
+    }
+
+    .movie-title {
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
     }
 
   </style>
@@ -135,25 +149,33 @@
 
       <div class="movie">
         <a href="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview" target="_blank">
-          <img src="Dhurandhar.gif">
+          <div class="poster-box">
+            <img src="Dhurandhar.gif">
+          </div>
         </a>
       </div>
 
       <div class="movie">
         <a href="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview" target="_blank">
-          <img src="Aap Jaisa Koi.jpeg">
+          <div class="poster-box">
+            <img src="Aap Jaisa Koi.jpeg">
+          </div>
         </a>
       </div>
 
       <div class="movie">
         <a href="https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview" target="_blank">
-          <img src="Baaghi 4.gif">
+          <div class="poster-box">
+            <img src="Baaghi 4.gif">
+          </div>
         </a>
       </div>
 
       <div class="movie">
         <a href="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview" target="_blank">
-          <img src="Deva.gif">
+          <div class="poster-box">
+            <img src="Deva.gif">
+          </div>
         </a>
       </div>
 
@@ -165,11 +187,20 @@
     const hero = document.getElementById("heroSlider");
 
     movies.forEach((movie, index) => {
+
       const img = movie.querySelector("img").src;
       const link = movie.querySelector("a").href;
-      const rawTitle = movie.querySelector("img").src.split('/').pop().split('.')[0];
+
+      const rawTitle = img.split('/').pop().split('.')[0];
       const title = decodeURIComponent(rawTitle);
 
+      /* Add title below poster */
+      const titleDiv = document.createElement("div");
+      titleDiv.classList.add("movie-title");
+      titleDiv.textContent = title;
+      movie.appendChild(titleDiv);
+
+      /* Create slider */
       const slide = document.createElement("div");
       slide.classList.add("slide");
       if (index === 0) slide.classList.add("active");
