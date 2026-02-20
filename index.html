@@ -9,17 +9,18 @@
       background: #141414;
       font-family: Arial, sans-serif;
       color: white;
+      overflow-x: hidden;
     }
 
     /* Navbar */
     .navbar {
-      display: flex;
-      align-items: center;
-      padding: 15px 60px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
       position: fixed;
       width: 100%;
+      padding: 15px 60px;
+      display: flex;
+      align-items: center;
       z-index: 10;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
     }
 
     .logo {
@@ -29,39 +30,52 @@
       margin-right: 40px;
     }
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      margin-right: 20px;
-      font-size: 14px;
-    }
-
-    .nav-links a:hover {
-      color: #e50914;
-    }
-
-    /* Hero Section */
+    /* HERO SLIDER */
     .hero {
-      height: 75vh;
-      background: linear-gradient(to right, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.2)),
-                  url("Dhurrandhar.jpeg") right center/contain no-repeat;
+      position: relative;
+      height: 70vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
       display: flex;
       align-items: center;
       padding-left: 60px;
+      background-size: contain;
+      background-position: right center;
+      background-repeat: no-repeat;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0.85) 40%, transparent);
     }
 
     .hero-content {
+      position: relative;
+      z-index: 2;
       max-width: 500px;
     }
 
     .hero h1 {
-      font-size: 55px;
+      font-size: 50px;
       margin-bottom: 10px;
     }
 
     .hero p {
-      font-size: 18px;
       color: #ccc;
+      font-size: 18px;
     }
 
     .hero button {
@@ -84,29 +98,15 @@
       background: #ddd;
     }
 
-    .info-btn {
-      background: rgba(109,109,110,0.7);
-      color: white;
-    }
-
-    .info-btn:hover {
-      background: rgba(109,109,110,0.4);
-    }
-
-    /* Section */
+    /* Trending Row */
     .section {
       padding: 30px 60px;
-    }
-
-    .section h2 {
-      margin-bottom: 15px;
     }
 
     .row {
       display: flex;
       gap: 15px;
       overflow-x: auto;
-      padding-bottom: 10px;
     }
 
     .row::-webkit-scrollbar {
@@ -125,7 +125,6 @@
 
     .movie:hover {
       transform: scale(1.1);
-      z-index: 2;
     }
 
   </style>
@@ -133,35 +132,44 @@
 
 <body>
 
-  <!-- Navbar -->
   <div class="navbar">
     <div class="logo">MUJAHIDFLIX</div>
-    <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Movies</a>
-      <a href="#">New & Popular</a>
-      <a href="#">My List</a>
-    </div>
   </div>
 
-  <!-- Hero Section -->
+  <!-- HERO AUTO SLIDER -->
   <div class="hero">
-    <div class="hero-content">
-      <h1>Dhurrandhar</h1>
-      <p>Watch the latest blockbuster in full HD. Streaming now.</p>
 
-      <a href="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview" target="_blank">
-        <button class="play-btn">▶ Play</button>
-      </a>
-
-      <button class="info-btn">More Info</button>
+    <!-- Slide 1 -->
+    <div class="slide active" 
+         style="background-image: url('Dhurrandhar.jpeg');">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h1>Dhurrandhar</h1>
+        <p>Watch the latest blockbuster in full HD.</p>
+        <a href="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview" target="_blank">
+          <button class="play-btn">▶ Play</button>
+        </a>
+      </div>
     </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" 
+         style="background-image: url('Aap Jaisa Koi.jpeg');">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h1>Aap Jaisa Koi</h1>
+        <p>Romantic drama streaming now.</p>
+        <a href="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview" target="_blank">
+          <button class="play-btn">▶ Play</button>
+        </a>
+      </div>
+    </div>
+
   </div>
 
   <!-- Trending Section -->
   <div class="section">
     <h2>Trending Now</h2>
-
     <div class="row">
 
       <div class="movie">
@@ -178,6 +186,18 @@
 
     </div>
   </div>
+
+  <!-- SLIDER SCRIPT -->
+  <script>
+    let slides = document.querySelectorAll(".slide");
+    let index = 0;
+
+    setInterval(() => {
+      slides[index].classList.remove("active");
+      index = (index + 1) % slides.length;
+      slides[index].classList.add("active");
+    }, 3000);
+  </script>
 
 </body>
 </html>
