@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mujahid Hussain Cloud</title>
+  <title>Mujahid Flix</title>
 
   <style>
     body {
@@ -130,14 +130,13 @@
       font-weight: bold;
       text-align: center;
     }
-
   </style>
 </head>
 
 <body>
 
   <div class="navbar">
-    <div class="logo">ONLINE STREAMING</div>
+    <div class="logo">MUJAHIDFLIX</div>
   </div>
 
   <div class="hero" id="heroSlider"></div>
@@ -148,7 +147,7 @@
     <div class="row">
 
       <div class="movie">
-        <a href="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview" target="_blank">
+        <a href="LINK1" target="_blank">
           <div class="poster-box">
             <img src="Dhurandhar.gif">
           </div>
@@ -156,7 +155,7 @@
       </div>
 
       <div class="movie">
-        <a href="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview" target="_blank">
+        <a href="LINK2" target="_blank">
           <div class="poster-box">
             <img src="Aap Jaisa Koi.jpeg">
           </div>
@@ -164,7 +163,7 @@
       </div>
 
       <div class="movie">
-        <a href="https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview" target="_blank">
+        <a href="LINK3" target="_blank">
           <div class="poster-box">
             <img src="Baaghi 4.gif">
           </div>
@@ -172,70 +171,70 @@
       </div>
 
       <div class="movie">
-        <a href="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview" target="_blank">
+        <a href="LINK4" target="_blank">
           <div class="poster-box">
             <img src="Deva.gif">
           </div>
         </a>
       </div>
 
-        <div class="movie">
-        <a href="https://drive.google.com/file/d/1DVVgfuRpiHxpXXP3PxN0iBrWNGlOvnGp/view?usp=drive_link">
-          <div class="poster-box">
-            <img src="Jaat.gif">
-          </div>
-        </a>
-      </div>
-      
     </div>
   </div>
 
   <script>
-    const movies = document.querySelectorAll(".movie");
-    const hero = document.getElementById("heroSlider");
+    window.addEventListener("DOMContentLoaded", function () {
 
-    movies.forEach((movie, index) => {
+      const movies = document.querySelectorAll(".movie");
+      const hero = document.getElementById("heroSlider");
 
-      const img = movie.querySelector("img").src;
-      const link = movie.querySelector("a").href;
+      movies.forEach((movie, index) => {
 
-      const rawTitle = img.split('/').pop().split('.')[0];
-      const title = decodeURIComponent(rawTitle);
+        const imgElement = movie.querySelector("img");
+        const imgSrc = imgElement.getAttribute("src");
+        const link = movie.querySelector("a").href;
 
-      /* Add title below poster */
-      const titleDiv = document.createElement("div");
-      titleDiv.classList.add("movie-title");
-      titleDiv.textContent = title;
-      movie.appendChild(titleDiv);
+        // Get clean filename without extension
+        const fileName = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
+        const cleanTitle = fileName.replace(/\.[^/.]+$/, "");
 
-      /* Create slider */
-      const slide = document.createElement("div");
-      slide.classList.add("slide");
-      if (index === 0) slide.classList.add("active");
+        const title = decodeURIComponent(cleanTitle);
 
-      slide.style.backgroundImage = `url('${img}')`;
+        // ADD TITLE BELOW POSTER
+        const titleDiv = document.createElement("div");
+        titleDiv.className = "movie-title";
+        titleDiv.textContent = title;
+        movie.appendChild(titleDiv);
 
-      slide.innerHTML = `
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <h1>${title}</h1>
-          <a href="${link}" target="_blank">
-            <button class="play-btn">▶ Play</button>
-          </a>
-        </div>
-      `;
+        // CREATE HERO SLIDE
+        const slide = document.createElement("div");
+        slide.classList.add("slide");
+        if (index === 0) slide.classList.add("active");
 
-      hero.appendChild(slide);
+        slide.style.backgroundImage = `url('${imgSrc}')`;
+
+        slide.innerHTML = `
+          <div class="overlay"></div>
+          <div class="hero-content">
+            <h1>${title}</h1>
+            <a href="${link}" target="_blank">
+              <button class="play-btn">▶ Play</button>
+            </a>
+          </div>
+        `;
+
+        hero.appendChild(slide);
+      });
+
+      const slides = document.querySelectorAll(".slide");
+      let current = 0;
+
+      setInterval(() => {
+        slides[current].classList.remove("active");
+        current = (current + 1) % slides.length;
+        slides[current].classList.add("active");
+      }, 3000);
+
     });
-
-    const slides = document.querySelectorAll(".slide");
-    let current = 0;
-
-    setInterval(() => {
-      slides[current].classList.remove("active");
-      current = (current + 1) % slides.length;
-      slides[current].classList.add("active");
-    }, 3000);
   </script>
 
 </body>
