@@ -29,7 +29,6 @@
       padding: 100px 60px 40px;
     }
 
-    /* FILTER BUTTONS */
     .filters {
       margin-bottom: 30px;
     }
@@ -100,7 +99,6 @@
       transform: translateY(0);
     }
 
-    /* MODAL */
     .modal {
       position: fixed;
       inset: 0;
@@ -142,49 +140,35 @@
   </div>
 
   <div class="section">
-    <h2>Trending Now</h2>
+    <h2>Browse Movies</h2>
 
-    <!-- FILTER BUTTONS -->
     <div class="filters">
-      <button class="active" onclick="filterMovies('all')">All</button>
-      <button onclick="filterMovies('bollywood')">Bollywood</button>
-      <button onclick="filterMovies('hollywood')">Hollywood</button>
+      <button class="active" onclick="filterMovies('all', this)">All</button>
+      <button onclick="filterMovies('bollywood', this)">Bollywood</button>
+      <button onclick="filterMovies('hollywood', this)">Hollywood</button>
     </div>
 
     <div class="row">
 
-      <!-- Bollywood Movies -->
-      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview">
-        <div class="poster-box"><img src="Dhurandhar.gif"></div>
-      </div>
+      <!-- Bollywood -->
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"><div class="poster-box"><img src="Dhurandhar.gif"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"><div class="poster-box"><img src="Aap Jaisa Koi.jpeg"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"><div class="poster-box"><img src="Baaghi 4.gif"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"><div class="poster-box"><img src="Nikita Roy.jpeg"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"><div class="poster-box"><img src="Deva.gif"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"><div class="poster-box"><img src="Housefull 5.gif"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"><div class="poster-box"><img src="Maalik.jpeg"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"><div class="poster-box"><img src="Raid 2.gif"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"><div class="poster-box"><img src="Jolly LLB 3.gif"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"><div class="poster-box"><img src="Maargan.jpg"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"><div class="poster-box"><img src="Saiyaara.gif"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"><div class="poster-box"><img src="Sikandar.gif"></div></div>
+      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"><div class="poster-box"><img src="War 2.gif"></div></div>
 
-      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview">
-        <div class="poster-box"><img src="Aap Jaisa Koi.jpeg"></div>
-      </div>
-
-      <div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview">
-        <div class="poster-box"><img src="Apocalypse Of Ice.gif"></div>
-      </div>
-
-      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview">
-        <div class="poster-box"><img src="Baaghi 4.gif"></div>
-      </div>
-
-      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview">
-        <div class="poster-box"><img src="Nikita Roy.jpeg"></div>
-      </div>
-
-      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview">
-        <div class="poster-box"><img src="Deva.gif"></div>
-      </div>
-
-      <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview">
-        <div class="poster-box"><img src="Housefull 5.gif"></div>
-      </div>
-
-      <div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview">
-        <div class="poster-box"><img src="65.gif"></div>
-      </div>
+      <!-- Hollywood -->
+      <div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"><div class="poster-box"><img src="Apocalypse Of Ice.gif"></div></div>
+      <div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"><div class="poster-box"><img src="The Diplomat.gif"></div></div>
+      <div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"><div class="poster-box"><img src="65.gif"></div></div>
 
     </div>
   </div>
@@ -197,72 +181,48 @@
     </div>
   </div>
 
-  <script>
-    const movies = document.querySelectorAll(".movie");
-    const modal = document.getElementById("videoModal");
-    const frame = document.getElementById("videoFrame");
-    const closeBtn = document.getElementById("closeModal");
-    const buttons = document.querySelectorAll(".filters button");
+<script>
+const movies = document.querySelectorAll(".movie");
+const modal = document.getElementById("videoModal");
+const frame = document.getElementById("videoFrame");
+const closeBtn = document.getElementById("closeModal");
 
-    function formatTitle(filename) {
-      let name = filename.replace(/\.[^/.]+$/, "");
-      name = decodeURIComponent(name);
-      name = name.replace(/[-_]/g, " ");
-      name = name.split(" ")
-        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(" ");
-      return name;
-    }
+function formatTitle(filename){
+  let name = filename.replace(/\.[^/.]+$/, "");
+  name = decodeURIComponent(name);
+  name = name.replace(/[-_]/g, " ");
+  name = name.split(" ").map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(" ");
+  return name;
+}
 
-    movies.forEach(movie => {
-      const img = movie.querySelector("img").src;
-      const fileName = img.substring(img.lastIndexOf("/") + 1);
-      const title = formatTitle(fileName);
+movies.forEach(movie=>{
+  const img = movie.querySelector("img").src;
+  const fileName = img.substring(img.lastIndexOf("/")+1);
+  const title = formatTitle(fileName);
 
-      const titleDiv = document.createElement("div");
-      titleDiv.className = "movie-title";
-      titleDiv.textContent = title;
-      movie.appendChild(titleDiv);
+  const titleDiv = document.createElement("div");
+  titleDiv.className="movie-title";
+  titleDiv.textContent=title;
+  movie.appendChild(titleDiv);
 
-      movie.addEventListener("click", () => {
-        const videoURL = movie.getAttribute("data-video");
-        frame.src = videoURL;
-        modal.style.display = "flex";
-      });
-    });
+  movie.addEventListener("click", ()=>{
+    frame.src = movie.getAttribute("data-video");
+    modal.style.display="flex";
+  });
+});
 
-    function filterMovies(category) {
-      movies.forEach(movie => {
-        if (category === "all" || movie.dataset.category === category) {
-          movie.style.display = "block";
-        } else {
-          movie.style.display = "none";
-        }
-      });
+function filterMovies(category,btn){
+  movies.forEach(movie=>{
+    movie.style.display=(category==="all"||movie.dataset.category===category)?"block":"none";
+  });
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
 
-      buttons.forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
-    }
-
-    closeBtn.onclick = () => {
-      modal.style.display = "none";
-      frame.src = "";
-    };
-
-    window.onclick = e => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-        frame.src = "";
-      }
-    };
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") {
-        modal.style.display = "none";
-        frame.src = "";
-      }
-    });
-  </script>
+closeBtn.onclick=()=>{modal.style.display="none";frame.src="";};
+window.onclick=e=>{if(e.target===modal){modal.style.display="none";frame.src="";}};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){modal.style.display="none";frame.src="";}});
+</script>
 
 </body>
 </html>
