@@ -35,19 +35,40 @@ body{
   background:linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
   z-index:100;
 }
+
 .logo{
   color:#e50914;
   font-size:28px;
   font-weight:bold;
 }
 
-/* SEARCH */
-.search-box input{
-  padding:6px 12px;
-  border-radius:4px;
-  border:none;
-  outline:none;
+/* NETFLIX SEARCH STYLE */
+.search-container{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+.search-container input{
+  width:0;
+  opacity:0;
+  padding:6px 10px;
+  background:black;
+  border:1px solid white;
+  color:white;
+  transition:0.4s ease;
   font-size:14px;
+}
+
+.search-container.active input{
+  width:250px;
+  opacity:1;
+  margin-left:10px;
+}
+
+.search-icon{
+  font-size:22px;
+  cursor:pointer;
 }
 
 /* HERO */
@@ -107,7 +128,7 @@ body{
   background:#e50914;
 }
 
-/* MOVIE GRID */
+/* MOVIES */
 .row{
   display:flex;
   gap:20px;
@@ -175,8 +196,10 @@ body{
 
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search movies...">
+
+  <div class="search-container" id="searchContainer">
+    <span class="search-icon" id="searchIcon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Titles, people, genres">
   </div>
 </div>
 
@@ -232,7 +255,6 @@ const frame = document.getElementById("videoFrame");
 
 /* BUILD MOVIES */
 movieData.forEach((movie,index)=>{
-
   const card = document.createElement("div");
   card.className="movie";
   card.dataset.category = movie.category;
@@ -241,17 +263,13 @@ movieData.forEach((movie,index)=>{
   const staticImg = movie.title + ".jpg";
   const gifImg = movie.title + ".gif";
 
-  card.innerHTML=`
-    <div class="poster-box">
+  card.innerHTML=`<div class="poster-box">
       <img src="${staticImg}" loading="lazy">
-    </div>
-  `;
+  </div>`;
 
   const img = card.querySelector("img");
-
   card.addEventListener("mouseenter",()=>{ img.src = gifImg; });
   card.addEventListener("mouseleave",()=>{ img.src = staticImg; });
-
   card.addEventListener("click",()=>{
     frame.src = movie.video;
     modal.style.display="flex";
@@ -265,32 +283,27 @@ movieData.forEach((movie,index)=>{
     if(index===0) slide.classList.add("active");
     slide.style.backgroundImage=`url('${staticImg}')`;
     slide.innerHTML=`<div class="hero-overlay"></div>
-                     <div class="hero-content">
-                       <h1>${movie.title}</h1>
-                     </div>`;
+                     <div class="hero-content"><h1>${movie.title}</h1></div>`;
     hero.appendChild(slide);
   }
-
 });
 
-/* SEARCH */
+/* SEARCH EXPAND */
+const searchContainer = document.getElementById("searchContainer");
+const searchIcon = document.getElementById("searchIcon");
+
+searchIcon.addEventListener("click",()=>{
+  searchContainer.classList.toggle("active");
+  document.getElementById("searchInput").focus();
+});
+
+/* SEARCH FILTER */
 document.getElementById("searchInput").addEventListener("input",function(){
   const value = this.value.toLowerCase();
   document.querySelectorAll(".movie").forEach(movie=>{
     movie.style.display = movie.dataset.title.includes(value) ? "block" : "none";
   });
 });
-
-/* FILTER */
-function filterMovies(category, btn){
-  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-
-  document.querySelectorAll(".movie").forEach(movie=>{
-    movie.style.display = (category==="all" || movie.dataset.category===category)
-      ? "block" : "none";
-  });
-}
 
 /* HERO AUTO */
 let slides=document.querySelectorAll(".slide");
@@ -301,7 +314,7 @@ setInterval(()=>{
   slides[current].classList.add("active");
 },4000);
 
-/* INTRO ONLY ONCE EVER */
+/* INTRO ONLY ONCE */
 window.addEventListener("load",()=>{
   if(!localStorage.getItem("introPlayed")){
     document.getElementById("introSound").play();
