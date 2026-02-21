@@ -83,7 +83,6 @@ body{
 .section{
   padding:40px 60px;
 }
-
 .filters{
   margin-bottom:30px;
 }
@@ -190,7 +189,6 @@ body{
 
 <div class="row">
 
-<!-- ALL MOVIES (UNCHANGED) -->
 <!-- Hollywood -->
 <div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"><div class="poster-box"><img src="Apocalypse Of Ice.gif"></div></div>
 <div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"><div class="poster-box"><img src="65.gif"></div></div>
@@ -252,19 +250,44 @@ movies.forEach(movie=>{
   });
 });
 
-/* HERO - ALL MOVIES */
-  const img=movie.querySelector("img").src;
+/* HERO BUILD */
+movies.forEach((movie,index)=>{
+  const imgSrc=movie.querySelector("img").src;
+  const fileName=imgSrc.substring(imgSrc.lastIndexOf("/")+1);
+  const title=cleanTitle(fileName);
+  const video=movie.dataset.video;
 
-/* HERO CHANGE 4 SECONDS */
-const slides=document.querySelectorAll(".slide");
+  const slide=document.createElement("div");
+  slide.className="slide";
+  if(index===0) slide.classList.add("active");
+
+  slide.style.backgroundImage=`url('${imgSrc}')`;
+
+  slide.innerHTML=`
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>${title}</h1>
+      <button class="hero-btn" onclick="playHeroMovie('${video}')">▶ Play</button>
+    </div>
+  `;
+  hero.appendChild(slide);
+});
+
+let slides=document.querySelectorAll(".slide");
 let current=0;
+
 setInterval(()=>{
   slides[current].classList.remove("active");
   current=(current+1)%slides.length;
   slides[current].classList.add("active");
 },4000);
 
-/* INTRO ONLY ONCE WITH SOUND */
+function playHeroMovie(video){
+  frame.src=video;
+  modal.style.display="flex";
+}
+
+/* INTRO ONLY ONCE */
 window.addEventListener("load",()=>{
   if(!localStorage.getItem("introPlayed")){
     intro.style.display="flex";
