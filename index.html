@@ -29,6 +29,9 @@ body{
   position:fixed;
   width:100%;
   padding:15px 60px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   background:linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
   z-index:100;
 }
@@ -36,6 +39,15 @@ body{
   color:#e50914;
   font-size:28px;
   font-weight:bold;
+}
+
+/* SEARCH */
+.search-box input{
+  padding:6px 12px;
+  border-radius:4px;
+  border:none;
+  outline:none;
+  font-size:14px;
 }
 
 /* HERO */
@@ -72,6 +84,7 @@ body{
 /* SECTION */
 .section{
   padding:40px 60px;
+  margin-top:60px;
 }
 
 /* FILTER BUTTONS */
@@ -120,7 +133,6 @@ body{
   transition:0.3s;
 }
 
-/* HOVER EFFECT */
 .movie:hover .poster-box img{
   transform:scale(1.05);
 }
@@ -163,6 +175,9 @@ body{
 
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search movies...">
+  </div>
 </div>
 
 <div class="hero" id="heroSlider"></div>
@@ -187,8 +202,6 @@ body{
 </div>
 
 <script>
-
-/* MOVIE DATA (JPG + GIF SAME NAME REQUIRED) */
 
 const movieData = [
 
@@ -218,12 +231,12 @@ const modal = document.getElementById("videoModal");
 const frame = document.getElementById("videoFrame");
 
 /* BUILD MOVIES */
-
 movieData.forEach((movie,index)=>{
 
   const card = document.createElement("div");
   card.className="movie";
   card.dataset.category = movie.category;
+  card.dataset.title = movie.title.toLowerCase();
 
   const staticImg = movie.title + ".jpg";
   const gifImg = movie.title + ".gif";
@@ -236,17 +249,9 @@ movieData.forEach((movie,index)=>{
 
   const img = card.querySelector("img");
 
-  /* HOVER START */
-  card.addEventListener("mouseenter",()=>{
-    img.src = gifImg;
-  });
+  card.addEventListener("mouseenter",()=>{ img.src = gifImg; });
+  card.addEventListener("mouseleave",()=>{ img.src = staticImg; });
 
-  /* HOVER END */
-  card.addEventListener("mouseleave",()=>{
-    img.src = staticImg;
-  });
-
-  /* CLICK PLAY */
   card.addEventListener("click",()=>{
     frame.src = movie.video;
     modal.style.display="flex";
@@ -254,7 +259,6 @@ movieData.forEach((movie,index)=>{
 
   row.appendChild(card);
 
-  /* HERO (First 4 Only For Speed) */
   if(index < 4){
     const slide=document.createElement("div");
     slide.className="slide";
@@ -269,7 +273,15 @@ movieData.forEach((movie,index)=>{
 
 });
 
-/* FILTER FUNCTION */
+/* SEARCH */
+document.getElementById("searchInput").addEventListener("input",function(){
+  const value = this.value.toLowerCase();
+  document.querySelectorAll(".movie").forEach(movie=>{
+    movie.style.display = movie.dataset.title.includes(value) ? "block" : "none";
+  });
+});
+
+/* FILTER */
 function filterMovies(category, btn){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
@@ -289,13 +301,13 @@ setInterval(()=>{
   slides[current].classList.add("active");
 },4000);
 
-/* INTRO ONCE */
+/* INTRO ONLY ONCE EVER */
 window.addEventListener("load",()=>{
-  if(!sessionStorage.getItem("introPlayed")){
+  if(!localStorage.getItem("introPlayed")){
     document.getElementById("introSound").play();
     setTimeout(()=>{
       document.getElementById("intro").style.display="none";
-      sessionStorage.setItem("introPlayed","yes");
+      localStorage.setItem("introPlayed","yes");
     },3000);
   } else {
     document.getElementById("intro").style.display="none";
