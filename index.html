@@ -281,12 +281,10 @@ movies.forEach((movie,index)=>{
 
 document.querySelectorAll(".hero-btn").forEach(btn=>{
   btn.addEventListener("click",function(e){
-      e.stopPropagation();   // 🔥 IMPORTANT FIX
+      e.stopPropagation();
       const videoURL = this.getAttribute("data-video");
-     frame.src = "";
-setTimeout(()=>{
-    frame.src = videoURL + "?autoplay=1&cache=" + new Date().getTime();
-},200);
+
+      frame.src = videoURL;   // ✔ no extra parameters
       modal.style.display = "flex";
   });
 });
