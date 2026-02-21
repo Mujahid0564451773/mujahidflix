@@ -253,26 +253,7 @@ movies.forEach(movie=>{
 });
 
 /* HERO - ALL MOVIES */
-movies.forEach((movie,index)=>{
   const img=movie.querySelector("img").src;
-  const fileName=img.substring(img.lastIndexOf("/")+1);
-  const title=cleanTitle(fileName);
-
-  const slide=document.createElement("div");
-  slide.className="slide";
-  if(index===0) slide.classList.add("active");
-  slide.style.backgroundImage=`url('${img}')`;
-
-  slide.innerHTML=`
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>${title}</h1>
-      <button class="hero-btn" onclick="frame.src='${movie.dataset.video}';modal.style.display='flex'">▶ Play</button>
-    </div>
-  `;
-
-  hero.appendChild(slide);
-});
 
 /* HERO CHANGE 4 SECONDS */
 const slides=document.querySelectorAll(".slide");
