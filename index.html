@@ -22,7 +22,7 @@ body{
   align-items:center;
   z-index:9999;
 }
-#intro img{ width:350px; }
+#intro img{ width:300px; }
 
 /* NAVBAR */
 .navbar{
@@ -41,7 +41,7 @@ body{
 /* HERO */
 .hero{
   position:relative;
-  height:75vh;
+  height:70vh;
   overflow:hidden;
 }
 .slide{
@@ -51,7 +51,7 @@ body{
   background-size:cover;
   background-position:center;
   opacity:0;
-  transition:opacity 1s ease-in-out;
+  transition:opacity 0.8s ease-in-out;
 }
 .slide.active{ opacity:1; }
 
@@ -62,11 +62,11 @@ body{
 }
 .hero-content{
   position:absolute;
-  bottom:100px;
+  bottom:80px;
   left:60px;
 }
 .hero-content h1{
-  font-size:48px;
+  font-size:42px;
 }
 
 /* SECTION */
@@ -86,8 +86,8 @@ body{
   margin-right:10px;
   border-radius:4px;
   cursor:pointer;
-  transition:0.3s;
   font-weight:bold;
+  transition:0.3s;
 }
 .filters button.active,
 .filters button:hover{
@@ -101,7 +101,6 @@ body{
   flex-wrap:wrap;
 }
 
-/* MOVIE CARD */
 .movie{
   width:23%;
   position:relative;
@@ -118,44 +117,12 @@ body{
   width:100%;
   height:100%;
   object-fit:cover;
+  transition:0.3s;
 }
 
-/* EXPAND CARD */
-.expand-card{
-  position:absolute;
-  top:-60px;
-  left:0;
-  width:100%;
-  background:#181818;
-  border-radius:8px;
-  opacity:0;
-  transform:scale(0.95);
-  transition:0.3s ease;
-  z-index:100;
-  box-shadow:0 20px 50px rgba(0,0,0,0.8);
-}
-
-.expand-content{
-  padding:15px;
-}
-
-.play-btn{
-  background:white;
-  color:black;
-  border:none;
-  padding:6px 12px;
-  border-radius:4px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-bottom:10px;
-}
-
-.movie:hover{
-  z-index:200;
-}
-.movie:hover .expand-card{
-  opacity:1;
-  transform:scale(1);
+/* HOVER EFFECT */
+.movie:hover .poster-box img{
+  transform:scale(1.05);
 }
 
 /* MODAL */
@@ -221,27 +188,27 @@ body{
 
 <script>
 
+/* MOVIE DATA (JPG + GIF SAME NAME REQUIRED) */
+
 const movieData = [
 
-/* Hollywood */
-{img:"Apocalypse Of Ice.gif", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
-{img:"65.gif", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
+{title:"Apocalypse Of Ice", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
+{title:"65", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
 
-/* Bollywood */
-{img:"Dhurandhar.gif", category:"bollywood", video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
-{img:"Aap Jaisa Koi.jpeg", category:"bollywood", video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
-{img:"Baaghi 4.gif", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
-{img:"Nikita Roy.jpeg", category:"bollywood", video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
-{img:"Deva.gif", category:"bollywood", video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
-{img:"Housefull 5.gif", category:"bollywood", video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
-{img:"Maalik.jpeg", category:"bollywood", video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
-{img:"Raid 2.gif", category:"bollywood", video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
-{img:"Jolly LLB 3.gif", category:"bollywood", video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
-{img:"Maargan.jpg", category:"bollywood", video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
-{img:"Saiyaara.gif", category:"bollywood", video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
-{img:"The Diplomat.gif", category:"bollywood", video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
-{img:"Sikandar.gif", category:"bollywood", video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
-{img:"War 2.gif", category:"bollywood", video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
+{title:"Dhurandhar", category:"bollywood", video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
+{title:"Aap Jaisa Koi", category:"bollywood", video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
+{title:"Baaghi 4", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
+{title:"Nikita Roy", category:"bollywood", video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
+{title:"Deva", category:"bollywood", video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
+{title:"Housefull 5", category:"bollywood", video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
+{title:"Maalik", category:"bollywood", video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
+{title:"Raid 2", category:"bollywood", video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
+{title:"Jolly LLB 3", category:"bollywood", video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
+{title:"Maargan", category:"bollywood", video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
+{title:"Saiyaara", category:"bollywood", video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
+{title:"The Diplomat", category:"bollywood", video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
+{title:"Sikandar", category:"bollywood", video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
+{title:"War 2", category:"bollywood", video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
 
 ];
 
@@ -251,42 +218,55 @@ const modal = document.getElementById("videoModal");
 const frame = document.getElementById("videoFrame");
 
 /* BUILD MOVIES */
+
 movieData.forEach((movie,index)=>{
 
   const card = document.createElement("div");
   card.className="movie";
   card.dataset.category = movie.category;
 
+  const staticImg = movie.title + ".jpg";
+  const gifImg = movie.title + ".gif";
+
   card.innerHTML=`
     <div class="poster-box">
-      <img src="${movie.img}">
-    </div>
-    <div class="expand-card">
-      <div class="expand-content">
-        <button class="play-btn">▶ Play</button>
-        <p>${movie.img.replace(/\.[^/.]+$/, "")}</p>
-      </div>
+      <img src="${staticImg}" loading="lazy">
     </div>
   `;
 
-  card.querySelector(".play-btn").addEventListener("click",(e)=>{
-    e.stopPropagation();
+  const img = card.querySelector("img");
+
+  /* HOVER START */
+  card.addEventListener("mouseenter",()=>{
+    img.src = gifImg;
+  });
+
+  /* HOVER END */
+  card.addEventListener("mouseleave",()=>{
+    img.src = staticImg;
+  });
+
+  /* CLICK PLAY */
+  card.addEventListener("click",()=>{
     frame.src = movie.video;
     modal.style.display="flex";
   });
 
   row.appendChild(card);
 
-  /* HERO */
-  const slide=document.createElement("div");
-  slide.className="slide";
-  if(index===0) slide.classList.add("active");
-  slide.style.backgroundImage=`url('${movie.img}')`;
-  slide.innerHTML=`<div class="hero-overlay"></div>
-                   <div class="hero-content">
-                     <h1>${movie.img.replace(/\.[^/.]+$/, "")}</h1>
-                   </div>`;
-  hero.appendChild(slide);
+  /* HERO (First 4 Only For Speed) */
+  if(index < 4){
+    const slide=document.createElement("div");
+    slide.className="slide";
+    if(index===0) slide.classList.add("active");
+    slide.style.backgroundImage=`url('${staticImg}')`;
+    slide.innerHTML=`<div class="hero-overlay"></div>
+                     <div class="hero-content">
+                       <h1>${movie.title}</h1>
+                     </div>`;
+    hero.appendChild(slide);
+  }
+
 });
 
 /* FILTER FUNCTION */
@@ -309,10 +289,17 @@ setInterval(()=>{
   slides[current].classList.add("active");
 },4000);
 
-/* INTRO */
+/* INTRO ONCE */
 window.addEventListener("load",()=>{
-  document.getElementById("introSound").play();
-  setTimeout(()=>{document.getElementById("intro").style.display="none";},3000);
+  if(!sessionStorage.getItem("introPlayed")){
+    document.getElementById("introSound").play();
+    setTimeout(()=>{
+      document.getElementById("intro").style.display="none";
+      sessionStorage.setItem("introPlayed","yes");
+    },3000);
+  } else {
+    document.getElementById("intro").style.display="none";
+  }
 });
 
 function closeModal(){
