@@ -280,7 +280,8 @@ movies.forEach((movie,index)=>{
 /* Attach Click To Hero Buttons */
 
 document.querySelectorAll(".hero-btn").forEach(btn=>{
-  btn.addEventListener("click",function(){
+  btn.addEventListener("click",function(e){
+      e.stopPropagation();   // 🔥 IMPORTANT FIX
       const videoURL = this.getAttribute("data-video");
       frame.src = videoURL;
       modal.style.display = "flex";
