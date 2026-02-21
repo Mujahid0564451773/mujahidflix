@@ -228,7 +228,6 @@ const frame=document.getElementById("videoFrame");
 const intro=document.getElementById("intro");
 const introSound=document.getElementById("introSound");
 
-/* CLEAN TITLE */
 function cleanTitle(name){
   return decodeURIComponent(name).replace(/\.[^/.]+$/,"");
 }
@@ -250,7 +249,7 @@ movies.forEach(movie=>{
   });
 });
 
-/* HERO BUILD */
+/* HERO BUILD SAFE */
 movies.forEach((movie,index)=>{
   const imgSrc=movie.querySelector("img").src;
   const fileName=imgSrc.substring(imgSrc.lastIndexOf("/")+1);
@@ -267,36 +266,34 @@ movies.forEach((movie,index)=>{
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>${title}</h1>
-      <button class="hero-btn" onclick="playHeroMovie('${video}')">▶ Play</button>
+      <button class="hero-btn">▶ Play</button>
     </div>
   `;
+
+  slide.querySelector(".hero-btn").addEventListener("click",()=>{
+    frame.src=video;
+    modal.style.display="flex";
+  });
+
   hero.appendChild(slide);
 });
 
+/* HERO AUTO CHANGE 4 SEC */
 let slides=document.querySelectorAll(".slide");
 let current=0;
-
 setInterval(()=>{
   slides[current].classList.remove("active");
   current=(current+1)%slides.length;
   slides[current].classList.add("active");
 },4000);
 
-function playHeroMovie(video){
-  frame.src=video;
-  modal.style.display="flex";
-}
-
-/* INTRO ONLY ONCE */
+/* INTRO EVERY LOAD */
 window.addEventListener("load",()=>{
-  if(!localStorage.getItem("introPlayed")){
-    intro.style.display="flex";
-    introSound.play();
-    setTimeout(()=>{
-      intro.style.display="none";
-      localStorage.setItem("introPlayed","yes");
-    },3000);
-  }
+  intro.style.display="flex";
+  introSound.play();
+  setTimeout(()=>{
+    intro.style.display="none";
+  },3000);
 });
 
 function filterMovies(category,btn){
