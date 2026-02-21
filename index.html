@@ -13,44 +13,92 @@ body{
   overflow-x:hidden;
 }
 
+/* ===================== */
 /* NETFLIX STYLE INTRO */
-#logoIntro{
+/* ===================== */
+
+#intro{
   position:fixed;
   inset:0;
   background:black;
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:5000;
+  z-index:9999;
+  overflow:hidden;
 }
 
-#logoIntro h1{
-  color:#e50914;
+.intro-text{
   font-size:90px;
   font-weight:bold;
+  color:#e50914;
   letter-spacing:8px;
-  transform:scale(0.5);
-  animation: netflixAnim 2.5s ease forwards;
+  opacity:0;
+  transform:scale(0.7);
+  animation:textReveal 2.5s ease forwards;
 }
 
-@keyframes netflixAnim{
+@keyframes textReveal{
   0%{
-    transform:scale(0.5);
-    letter-spacing:20px;
+    opacity:0;
+    transform:scale(0.7);
   }
   40%{
+    opacity:1;
     transform:scale(1.2);
-    letter-spacing:5px;
   }
   70%{
-    transform:scale(0.9);
+    transform:scale(0.95);
   }
   100%{
     transform:scale(1);
   }
 }
 
+/* LIGHT SLASH EFFECT */
+
+.light-line{
+  position:absolute;
+  width:4px;
+  height:120%;
+  background:linear-gradient(to bottom, transparent, #ff1a1a, transparent);
+  animation:lightSlash 1.5s ease forwards;
+  opacity:0;
+}
+
+@keyframes lightSlash{
+  0%{
+    left:-20%;
+    opacity:0;
+  }
+  30%{
+    opacity:1;
+  }
+  50%{
+    left:50%;
+  }
+  100%{
+    left:120%;
+    opacity:0;
+  }
+}
+
+/* FADE OUT INTRO */
+.fade-out{
+  animation:fadeOut 1s ease forwards;
+}
+
+@keyframes fadeOut{
+  to{
+    opacity:0;
+    visibility:hidden;
+  }
+}
+
+/* ===================== */
 /* NAVBAR */
+/* ===================== */
+
 .navbar{
   position:fixed;
   top:0;
@@ -58,18 +106,17 @@ body{
   padding:15px 0;
   display:flex;
   justify-content:center;
-  align-items:center;
   background:#000;
   z-index:1000;
 }
 
-/* SEARCH CENTER */
+/* CENTER SEARCH */
 .search-container{
   display:flex;
   align-items:center;
   background:black;
   border:1px solid #444;
-  padding:6px 15px;
+  padding:8px 20px;
   border-radius:4px;
 }
 
@@ -78,15 +125,18 @@ body{
   border:none;
   color:white;
   outline:none;
-  width:250px;
-  font-size:14px;
+  width:280px;
+  font-size:15px;
 }
 
 .search-container input::placeholder{
   color:#aaa;
 }
 
+/* ===================== */
 /* HERO */
+/* ===================== */
+
 .hero{
   margin-top:80px;
   position:relative;
@@ -121,12 +171,14 @@ body{
   font-size:32px;
 }
 
+/* ===================== */
 /* SECTION */
+/* ===================== */
+
 .section{
   padding:40px 60px;
 }
 
-/* FILTERS */
 .filters{
   margin-bottom:25px;
 }
@@ -146,7 +198,6 @@ body{
   background:#e50914;
 }
 
-/* MOVIES */
 .row{
   display:flex;
   gap:20px;
@@ -176,7 +227,10 @@ body{
   transform:scale(1.05);
 }
 
+/* ===================== */
 /* MODAL */
+/* ===================== */
+
 .modal{
   position:fixed;
   inset:0;
@@ -202,11 +256,13 @@ body{
 
 <body>
 
-<!-- LOGO INTRO -->
-<div id="logoIntro">
-  <h1>MUJAHID FLIX</h1>
+<!-- INTRO -->
+<div id="intro">
+  <div class="light-line"></div>
+  <div class="intro-text">MUJAHID FLIX</div>
 </div>
 
+<!-- NAVBAR -->
 <div class="navbar">
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search movies...">
@@ -234,21 +290,18 @@ body{
 
 <script>
 
-/* REMOVE INTRO AFTER ANIMATION */
+/* REMOVE INTRO AFTER EFFECT */
 setTimeout(()=>{
-  document.getElementById("logoIntro").style.display="none";
+  document.getElementById("intro").classList.add("fade-out");
 },2500);
 
+/* MOVIE DATA */
 const movieData=[
 {title:"Apocalypse Of Ice", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
 {title:"65", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
 {title:"Dhurandhar", category:"bollywood", video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
 {title:"Aap Jaisa Koi", category:"bollywood", video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
-{title:"Baaghi 4", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
-{title:"Nikita Roy", category:"bollywood", video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
-{title:"Deva", category:"bollywood", video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
-{title:"Housefull 5", category:"bollywood", video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
-{title:"War 2", category:"bollywood", video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
+{title:"Baaghi 4", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"}
 ];
 
 const row=document.getElementById("movieRow");
@@ -256,8 +309,8 @@ const hero=document.getElementById("heroSlider");
 const modal=document.getElementById("videoModal");
 const frame=document.getElementById("videoFrame");
 
-/* HERO FIRST 5 */
-movieData.slice(0,5).forEach((movie,index)=>{
+/* BUILD */
+movieData.forEach((movie,index)=>{
   const slide=document.createElement("div");
   slide.className="slide";
   if(index===0) slide.classList.add("active");
@@ -265,43 +318,20 @@ movieData.slice(0,5).forEach((movie,index)=>{
   slide.innerHTML=`<div class="hero-overlay"></div>
                    <div class="hero-content"><h1>${movie.title}</h1></div>`;
   hero.appendChild(slide);
-});
 
-/* BUILD MOVIES */
-movieData.forEach(movie=>{
   const card=document.createElement("div");
   card.className="movie";
   card.dataset.category=movie.category;
   card.dataset.title=movie.title.toLowerCase();
-
   card.innerHTML=`<div class="poster-box">
       <img src="${movie.title}.jpg" loading="lazy">
   </div>`;
-
   card.addEventListener("click",()=>{
     frame.src=movie.video;
     modal.style.display="flex";
   });
-
   row.appendChild(card);
 });
-
-/* SEARCH */
-document.getElementById("searchInput").addEventListener("input",function(){
-  const val=this.value.toLowerCase();
-  document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display=m.dataset.title.includes(val)?"block":"none";
-  });
-});
-
-/* FILTER */
-function filterMovies(category,btn){
-  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display=(category==="all"||m.dataset.category===category)?"block":"none";
-  });
-}
 
 /* HERO AUTO */
 let slides=document.querySelectorAll(".slide");
@@ -311,6 +341,22 @@ setInterval(()=>{
   current=(current+1)%slides.length;
   slides[current].classList.add("active");
 },4000);
+
+/* SEARCH */
+document.getElementById("searchInput").addEventListener("input",function(){
+  const val=this.value.toLowerCase();
+  document.querySelectorAll(".movie").forEach(m=>{
+    m.style.display=m.dataset.title.includes(val)?"block":"none";
+  });
+});
+
+function filterMovies(category,btn){
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".movie").forEach(m=>{
+    m.style.display=(category==="all"||m.dataset.category===category)?"block":"none";
+  });
+}
 
 function closeModal(){
   modal.style.display="none";
