@@ -13,9 +13,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ===================== */
-/* NETFLIX STYLE INTRO */
-/* ===================== */
+/* ================= INTRO ================= */
 
 #intro{
   position:fixed;
@@ -33,29 +31,16 @@ body{
   font-weight:bold;
   color:#e50914;
   letter-spacing:8px;
-  opacity:0;
   transform:scale(0.7);
   animation:textReveal 2.5s ease forwards;
 }
 
 @keyframes textReveal{
-  0%{
-    opacity:0;
-    transform:scale(0.7);
-  }
-  40%{
-    opacity:1;
-    transform:scale(1.2);
-  }
-  70%{
-    transform:scale(0.95);
-  }
-  100%{
-    transform:scale(1);
-  }
+  0%{opacity:0;transform:scale(0.7);}
+  40%{opacity:1;transform:scale(1.2);}
+  70%{transform:scale(0.95);}
+  100%{transform:scale(1);}
 }
-
-/* LIGHT SLASH EFFECT */
 
 .light-line{
   position:absolute;
@@ -63,57 +48,57 @@ body{
   height:120%;
   background:linear-gradient(to bottom, transparent, #ff1a1a, transparent);
   animation:lightSlash 1.5s ease forwards;
-  opacity:0;
 }
 
 @keyframes lightSlash{
-  0%{
-    left:-20%;
-    opacity:0;
-  }
-  30%{
-    opacity:1;
-  }
-  50%{
-    left:50%;
-  }
-  100%{
-    left:120%;
-    opacity:0;
-  }
+  0%{left:-20%;opacity:0;}
+  30%{opacity:1;}
+  50%{left:50%;}
+  100%{left:120%;opacity:0;}
 }
 
-/* FADE OUT INTRO */
 .fade-out{
   animation:fadeOut 1s ease forwards;
 }
 
 @keyframes fadeOut{
-  to{
-    opacity:0;
-    visibility:hidden;
-  }
+  to{opacity:0;visibility:hidden;}
 }
 
-/* ===================== */
-/* NAVBAR */
-/* ===================== */
+/* ================= NAVBAR ================= */
 
 .navbar{
   position:fixed;
   top:0;
   width:100%;
-  padding:15px 0;
-  display:flex;
-  justify-content:center;
+  height:70px;
   background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   z-index:1000;
 }
 
+/* TOP LEFT LOGO */
+
+.logo{
+  position:absolute;
+  left:40px;
+  font-size:28px;
+  font-weight:bold;
+  color:#e50914;
+  letter-spacing:3px;
+  animation:logoGlow 3s infinite alternate;
+}
+
+@keyframes logoGlow{
+  from{text-shadow:0 0 5px #e50914;}
+  to{text-shadow:0 0 20px #ff0000;}
+}
+
 /* CENTER SEARCH */
+
 .search-container{
-  display:flex;
-  align-items:center;
   background:black;
   border:1px solid #444;
   padding:8px 20px;
@@ -133,9 +118,7 @@ body{
   color:#aaa;
 }
 
-/* ===================== */
-/* HERO */
-/* ===================== */
+/* ================= HERO ================= */
 
 .hero{
   margin-top:80px;
@@ -171,9 +154,7 @@ body{
   font-size:32px;
 }
 
-/* ===================== */
-/* SECTION */
-/* ===================== */
+/* ================= SECTION ================= */
 
 .section{
   padding:40px 60px;
@@ -227,9 +208,7 @@ body{
   transform:scale(1.05);
 }
 
-/* ===================== */
-/* MODAL */
-/* ===================== */
+/* ================= MODAL ================= */
 
 .modal{
   position:fixed;
@@ -264,6 +243,7 @@ body{
 
 <!-- NAVBAR -->
 <div class="navbar">
+  <div class="logo">MUJAHID FLIX</div>
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search movies...">
   </div>
@@ -290,34 +270,44 @@ body{
 
 <script>
 
-/* REMOVE INTRO AFTER EFFECT */
+/* REMOVE INTRO */
 setTimeout(()=>{
   document.getElementById("intro").classList.add("fade-out");
 },2500);
 
-/* MOVIE DATA */
+/* FULL MOVIE LIST */
 const movieData=[
 {title:"Apocalypse Of Ice", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
 {title:"65", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
 {title:"Dhurandhar", category:"bollywood", video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
 {title:"Aap Jaisa Koi", category:"bollywood", video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
-{title:"Baaghi 4", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"}
+{title:"Baaghi 4", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
+{title:"Nikita Roy", category:"bollywood", video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
+{title:"Deva", category:"bollywood", video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
+{title:"Housefull 5", category:"bollywood", video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
+{title:"Maalik", category:"bollywood", video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
+{title:"Raid 2", category:"bollywood", video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
+{title:"Jolly LLB 3", category:"bollywood", video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
+{title:"Maargan", category:"bollywood", video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
+{title:"Saiyaara", category:"bollywood", video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
+{title:"The Diplomat", category:"bollywood", video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
+{title:"Sikandar", category:"bollywood", video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
+{title:"War 2", category:"bollywood", video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
 ];
 
 const row=document.getElementById("movieRow");
 const hero=document.getElementById("heroSlider");
-const modal=document.getElementById("videoModal");
-const frame=document.getElementById("videoFrame");
 
-/* BUILD */
 movieData.forEach((movie,index)=>{
-  const slide=document.createElement("div");
-  slide.className="slide";
-  if(index===0) slide.classList.add("active");
-  slide.style.backgroundImage=`url('${movie.title}.jpg')`;
-  slide.innerHTML=`<div class="hero-overlay"></div>
-                   <div class="hero-content"><h1>${movie.title}</h1></div>`;
-  hero.appendChild(slide);
+  if(index<5){
+    const slide=document.createElement("div");
+    slide.className="slide";
+    if(index===0) slide.classList.add("active");
+    slide.style.backgroundImage=`url('${movie.title}.jpg')`;
+    slide.innerHTML=`<div class="hero-overlay"></div>
+                     <div class="hero-content"><h1>${movie.title}</h1></div>`;
+    hero.appendChild(slide);
+  }
 
   const card=document.createElement("div");
   card.className="movie";
@@ -326,10 +316,6 @@ movieData.forEach((movie,index)=>{
   card.innerHTML=`<div class="poster-box">
       <img src="${movie.title}.jpg" loading="lazy">
   </div>`;
-  card.addEventListener("click",()=>{
-    frame.src=movie.video;
-    modal.style.display="flex";
-  });
   row.appendChild(card);
 });
 
@@ -349,19 +335,6 @@ document.getElementById("searchInput").addEventListener("input",function(){
     m.style.display=m.dataset.title.includes(val)?"block":"none";
   });
 });
-
-function filterMovies(category,btn){
-  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display=(category==="all"||m.dataset.category===category)?"block":"none";
-  });
-}
-
-function closeModal(){
-  modal.style.display="none";
-  frame.src="";
-}
 
 </script>
 
