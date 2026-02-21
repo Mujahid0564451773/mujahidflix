@@ -31,12 +31,12 @@ body{
   font-weight:bold;
 }
 
-/* SEARCH */
+/* SEARCH BAR (ALWAYS VISIBLE ICON) */
 .search-container{
   display:flex;
   align-items:center;
   background:black;
-  border:1px solid #555;
+  border:1px solid #444;
   padding:5px 10px;
   border-radius:4px;
 }
@@ -46,19 +46,17 @@ body{
   border:none;
   color:white;
   outline:none;
-  width:0;
-  transition:0.3s ease;
+  width:180px;   /* ALWAYS VISIBLE */
   font-size:14px;
 }
 
-.search-container.active input{
-  width:200px;
-  margin-left:8px;
+.search-container input::placeholder{
+  color:#aaa;
 }
 
 .search-icon{
-  cursor:pointer;
-  font-size:18px;
+  margin-right:8px;
+  font-size:16px;
 }
 
 /* HERO */
@@ -180,8 +178,8 @@ body{
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
 
-  <div class="search-container" id="searchContainer">
-    <span class="search-icon" id="searchIcon">🔍</span>
+  <div class="search-container">
+    <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" placeholder="Search movies...">
   </div>
 </div>
@@ -231,7 +229,7 @@ const hero=document.getElementById("heroSlider");
 const modal=document.getElementById("videoModal");
 const frame=document.getElementById("videoFrame");
 
-/* HERO - FIRST 5 */
+/* HERO FIRST 5 */
 movieData.slice(0,5).forEach((movie,index)=>{
   const slide=document.createElement("div");
   slide.className="slide";
@@ -261,13 +259,6 @@ movieData.forEach(movie=>{
   row.appendChild(card);
 });
 
-/* SEARCH EXPAND */
-const searchContainer=document.getElementById("searchContainer");
-document.getElementById("searchIcon").addEventListener("click",()=>{
-  searchContainer.classList.toggle("active");
-  document.getElementById("searchInput").focus();
-});
-
 /* SEARCH FILTER */
 document.getElementById("searchInput").addEventListener("input",function(){
   const val=this.value.toLowerCase();
@@ -276,7 +267,7 @@ document.getElementById("searchInput").addEventListener("input",function(){
   });
 });
 
-/* FILTER */
+/* FILTER BUTTONS */
 function filterMovies(category,btn){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
