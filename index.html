@@ -12,6 +12,20 @@ body{
   overflow-x:hidden;
 }
 
+/* FULL SCREEN INTRO */
+#intro{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+#intro img{
+  width:500px;
+}
+
 /* NAVBAR */
 .navbar{
   position:fixed;
@@ -26,10 +40,10 @@ body{
   font-weight:bold;
 }
 
-/* HERO SLIDER */
+/* HERO */
 .hero{
   position:relative;
-  height:70vh;
+  height:75vh;
   overflow:hidden;
 }
 .slide{
@@ -44,10 +58,28 @@ body{
 .slide.active{
   opacity:1;
 }
-.overlay{
+.hero-overlay{
   position:absolute;
   inset:0;
   background:linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+}
+.hero-content{
+  position:absolute;
+  bottom:100px;
+  left:60px;
+}
+.hero-content h1{
+  font-size:48px;
+  margin-bottom:15px;
+}
+.hero-btn{
+  padding:10px 25px;
+  background:#e50914;
+  border:none;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  border-radius:4px;
 }
 
 /* SECTION */
@@ -103,20 +135,6 @@ body{
   color:black;
   padding:6px;
   border-radius:4px;
-}
-
-/* INTRO SCREEN */
-#intro{
-  position:fixed;
-  inset:0;
-  background:black;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-#intro img{
-  width:400px;
 }
 
 /* MODAL */
@@ -203,7 +221,6 @@ const modal=document.getElementById("videoModal");
 const frame=document.getElementById("videoFrame");
 const intro=document.getElementById("intro");
 
-/* TITLE FIX */
 function cleanTitle(name){
   return decodeURIComponent(name).replace(/\.[^/.]+$/, "");
 }
@@ -219,27 +236,29 @@ movies.forEach(movie=>{
   titleDiv.textContent=title;
   movie.appendChild(titleDiv);
 
-  /* CLICK WITH INTRO */
-  movie.addEventListener("click",()=>{
-    intro.style.display="flex";
-
-    setTimeout(()=>{
-      intro.style.display="none";
-      frame.src=movie.dataset.video;
-      modal.style.display="flex";
-    },3000);
-  });
+  movie.addEventListener("click",()=>playWithIntro(movie.dataset.video));
 });
 
-/* HERO AUTO SLIDER */
+/* HERO SLIDER */
 movies.forEach((movie,index)=>{
   if(index<5){
     const img=movie.querySelector("img").src;
+    const fileName=img.substring(img.lastIndexOf("/")+1);
+    const title=cleanTitle(fileName);
+
     const slide=document.createElement("div");
     slide.className="slide";
     if(index===0) slide.classList.add("active");
     slide.style.backgroundImage=`url('${img}')`;
-    slide.innerHTML="<div class='overlay'></div>";
+
+    slide.innerHTML=`
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>${title}</h1>
+        <button class="hero-btn" onclick="playWithIntro('${movie.dataset.video}')">▶ Play</button>
+      </div>
+    `;
+
     hero.appendChild(slide);
   }
 });
@@ -251,6 +270,16 @@ setInterval(()=>{
   current=(current+1)%slides.length;
   slides[current].classList.add("active");
 },2000);
+
+/* PLAY WITH INTRO */
+function playWithIntro(videoURL){
+  intro.style.display="flex";
+  setTimeout(()=>{
+    intro.style.display="none";
+    frame.src=videoURL;
+    modal.style.display="flex";
+  },3000);
+}
 
 /* FILTER */
 function filterMovies(category,btn){
@@ -266,6 +295,13 @@ function closeModal(){
   modal.style.display="none";
   frame.src="";
 }
+
+/* WEBSITE OPEN INTRO */
+window.onload=()=>{
+  setTimeout(()=>{
+    intro.style.display="none";
+  },3000);
+};
 </script>
 
 </body>
