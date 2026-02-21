@@ -12,12 +12,12 @@ body{
   overflow-x:hidden;
 }
 
-/* FULL SCREEN INTRO */
+/* INTRO */
 #intro{
   position:fixed;
   inset:0;
   background:black;
-  display:flex;
+  display:none;
   justify-content:center;
   align-items:center;
   z-index:9999;
@@ -221,8 +221,9 @@ const modal=document.getElementById("videoModal");
 const frame=document.getElementById("videoFrame");
 const intro=document.getElementById("intro");
 
+/* CLEAN TITLE */
 function cleanTitle(name){
-  return decodeURIComponent(name).replace(/\.[^/.]+$/, "");
+  return decodeURIComponent(name).replace(/\.[^/.]+$/,"");
 }
 
 /* ADD TITLES */
@@ -239,30 +240,29 @@ movies.forEach(movie=>{
   movie.addEventListener("click",()=>playWithIntro(movie.dataset.video));
 });
 
-/* HERO SLIDER */
+/* HERO SLIDER - ALL MOVIES */
 movies.forEach((movie,index)=>{
-  if(index<5){
-    const img=movie.querySelector("img").src;
-    const fileName=img.substring(img.lastIndexOf("/")+1);
-    const title=cleanTitle(fileName);
+  const img=movie.querySelector("img").src;
+  const fileName=img.substring(img.lastIndexOf("/")+1);
+  const title=cleanTitle(fileName);
 
-    const slide=document.createElement("div");
-    slide.className="slide";
-    if(index===0) slide.classList.add("active");
-    slide.style.backgroundImage=`url('${img}')`;
+  const slide=document.createElement("div");
+  slide.className="slide";
+  if(index===0) slide.classList.add("active");
+  slide.style.backgroundImage=`url('${img}')`;
 
-    slide.innerHTML=`
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1>${title}</h1>
-        <button class="hero-btn" onclick="playWithIntro('${movie.dataset.video}')">▶ Play</button>
-      </div>
-    `;
+  slide.innerHTML=`
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>${title}</h1>
+      <button class="hero-btn" onclick="playWithIntro('${movie.dataset.video}')">▶ Play</button>
+    </div>
+  `;
 
-    hero.appendChild(slide);
-  }
+  hero.appendChild(slide);
 });
 
+/* HERO CHANGE TIME 4 SECONDS */
 const slides=document.querySelectorAll(".slide");
 let current=0;
 setInterval(()=>{
@@ -296,12 +296,16 @@ function closeModal(){
   frame.src="";
 }
 
-/* WEBSITE OPEN INTRO */
-window.onload=()=>{
-  setTimeout(()=>{
-    intro.style.display="none";
-  },3000);
-};
+/* INTRO ONLY ONCE */
+window.addEventListener("load",()=>{
+  if(!localStorage.getItem("introPlayed")){
+    intro.style.display="flex";
+    setTimeout(()=>{
+      intro.style.display="none";
+      localStorage.setItem("introPlayed","yes");
+    },3000);
+  }
+});
 </script>
 
 </body>
