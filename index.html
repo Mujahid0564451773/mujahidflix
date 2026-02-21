@@ -1,32 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mujahid Flix</title>
+<title>Mujahid Flix</title>
 
 <style>
 body{
   margin:0;
   background:#141414;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   color:white;
   overflow-x:hidden;
 }
 
-/* NETFLIX INTRO */
-#intro{
-  position:fixed;
-  inset:0;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-
-#intro img{
-  width:400px;
-}
-
+/* NAVBAR */
 .navbar{
   position:fixed;
   width:100%;
@@ -34,21 +20,44 @@ body{
   background:linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
   z-index:10;
 }
-
 .logo{
   color:#e50914;
   font-size:28px;
   font-weight:bold;
 }
 
+/* HERO SLIDER */
+.hero{
+  position:relative;
+  height:70vh;
+  overflow:hidden;
+}
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transition:opacity 1s ease-in-out;
+}
+.slide.active{
+  opacity:1;
+}
+.overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+}
+
+/* SECTION */
 .section{
-  padding:100px 60px 40px;
+  padding:40px 60px;
 }
 
 .filters{
   margin-bottom:30px;
 }
-
 .filters button{
   background:#333;
   color:white;
@@ -58,7 +67,6 @@ body{
   border-radius:4px;
   cursor:pointer;
 }
-
 .filters button.active{
   background:#e50914;
 }
@@ -74,14 +82,12 @@ body{
   cursor:pointer;
   margin-bottom:30px;
 }
-
 .poster-box{
   width:100%;
   aspect-ratio:16/9;
   overflow:hidden;
   border-radius:8px;
 }
-
 .poster-box img{
   width:100%;
   height:100%;
@@ -99,6 +105,20 @@ body{
   border-radius:4px;
 }
 
+/* INTRO SCREEN */
+#intro{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+#intro img{
+  width:400px;
+}
+
 /* MODAL */
 .modal{
   position:fixed;
@@ -109,18 +129,15 @@ body{
   align-items:center;
   z-index:100;
 }
-
 .modal-content{
   width:80%;
   max-width:900px;
 }
-
 .modal iframe{
   width:100%;
   height:500px;
   border-radius:8px;
 }
-
 .close-btn{
   position:absolute;
   top:20px;
@@ -133,7 +150,7 @@ body{
 
 <body>
 
-<!-- NETFLIX INTRO GIF -->
+<!-- INTRO -->
 <div id="intro">
   <img src="netflix-intro.gif">
 </div>
@@ -141,6 +158,9 @@ body{
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
 </div>
+
+<!-- HERO -->
+<div class="hero" id="heroSlider"></div>
 
 <div class="section">
 <h2>Browse Movies</h2>
@@ -164,14 +184,6 @@ body{
 <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"><div class="poster-box"><img src="Nikita Roy.jpeg"></div></div>
 <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"><div class="poster-box"><img src="Deva.gif"></div></div>
 <div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"><div class="poster-box"><img src="Housefull 5.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"><div class="poster-box"><img src="Maalik.jpeg"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"><div class="poster-box"><img src="Raid 2.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"><div class="poster-box"><img src="Jolly LLB 3.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"><div class="poster-box"><img src="Maargan.jpg"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"><div class="poster-box"><img src="Saiyaara.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"><div class="poster-box"><img src="The Diplomat.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"><div class="poster-box"><img src="Sikandar.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"><div class="poster-box"><img src="War 2.gif"></div></div>
 
 </div>
 </div>
@@ -186,14 +198,17 @@ body{
 
 <script>
 const movies=document.querySelectorAll(".movie");
+const hero=document.getElementById("heroSlider");
 const modal=document.getElementById("videoModal");
 const frame=document.getElementById("videoFrame");
+const intro=document.getElementById("intro");
 
-/* FIX %20 ISSUE */
+/* TITLE FIX */
 function cleanTitle(name){
   return decodeURIComponent(name).replace(/\.[^/.]+$/, "");
 }
 
+/* ADD TITLES */
 movies.forEach(movie=>{
   const img=movie.querySelector("img").src;
   const fileName=img.substring(img.lastIndexOf("/")+1);
@@ -204,12 +219,40 @@ movies.forEach(movie=>{
   titleDiv.textContent=title;
   movie.appendChild(titleDiv);
 
+  /* CLICK WITH INTRO */
   movie.addEventListener("click",()=>{
-    frame.src=movie.dataset.video;
-    modal.style.display="flex";
+    intro.style.display="flex";
+
+    setTimeout(()=>{
+      intro.style.display="none";
+      frame.src=movie.dataset.video;
+      modal.style.display="flex";
+    },3000);
   });
 });
 
+/* HERO AUTO SLIDER */
+movies.forEach((movie,index)=>{
+  if(index<5){
+    const img=movie.querySelector("img").src;
+    const slide=document.createElement("div");
+    slide.className="slide";
+    if(index===0) slide.classList.add("active");
+    slide.style.backgroundImage=`url('${img}')`;
+    slide.innerHTML="<div class='overlay'></div>";
+    hero.appendChild(slide);
+  }
+});
+
+const slides=document.querySelectorAll(".slide");
+let current=0;
+setInterval(()=>{
+  slides[current].classList.remove("active");
+  current=(current+1)%slides.length;
+  slides[current].classList.add("active");
+},2000);
+
+/* FILTER */
 function filterMovies(category,btn){
   movies.forEach(movie=>{
     movie.style.display=(category==="all"||movie.dataset.category===category)?"block":"none";
@@ -218,15 +261,11 @@ function filterMovies(category,btn){
   btn.classList.add("active");
 }
 
+/* CLOSE */
 function closeModal(){
   modal.style.display="none";
   frame.src="";
 }
-
-/* INTRO AUTO HIDE */
-setTimeout(()=>{
-  document.getElementById("intro").style.display="none";
-},3500);
 </script>
 
 </body>
