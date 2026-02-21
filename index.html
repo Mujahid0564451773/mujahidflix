@@ -71,7 +71,7 @@ body{
   position:fixed;
   top:0;
   width:100%;
-  height:70px;
+  height:80px;
   background:#000;
   display:flex;
   align-items:center;
@@ -79,12 +79,21 @@ body{
   z-index:1000;
 }
 
-/* TOP LEFT LOGO */
+/* CLOCK TOP LEFT */
+.clock{
+  position:absolute;
+  left:30px;
+  font-size:14px;
+  color:#ccc;
+  font-weight:500;
+}
 
+/* LOGO */
 .logo{
   position:absolute;
-  left:40px;
-  font-size:28px;
+  left:30px;
+  top:45px;
+  font-size:26px;
   font-weight:bold;
   color:#e50914;
   letter-spacing:3px;
@@ -97,7 +106,6 @@ body{
 }
 
 /* CENTER SEARCH */
-
 .search-container{
   background:black;
   border:1px solid #444;
@@ -121,7 +129,7 @@ body{
 /* ================= HERO ================= */
 
 .hero{
-  margin-top:80px;
+  margin-top:100px;
   position:relative;
   height:55vh;
   overflow:hidden;
@@ -208,6 +216,13 @@ body{
   transform:scale(1.05);
 }
 
+.movie-title{
+  margin-top:8px;
+  font-size:14px;
+  text-align:center;
+  color:#ddd;
+}
+
 /* ================= MODAL ================= */
 
 .modal{
@@ -243,7 +258,9 @@ body{
 
 <!-- NAVBAR -->
 <div class="navbar">
+  <div class="clock" id="clock"></div>
   <div class="logo">MUJAHID FLIX</div>
+
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search movies...">
   </div>
@@ -263,11 +280,6 @@ body{
 <div class="row" id="movieRow"></div>
 </div>
 
-<div class="modal" id="videoModal">
-<span class="close-btn" onclick="closeModal()">✖</span>
-<iframe id="videoFrame" src="" allowfullscreen></iframe>
-</div>
-
 <script>
 
 /* REMOVE INTRO */
@@ -275,37 +287,60 @@ setTimeout(()=>{
   document.getElementById("intro").classList.add("fade-out");
 },2500);
 
-/* FULL MOVIE LIST */
+/* DIGITAL CLOCK */
+function updateClock(){
+  const now=new Date();
+  const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  let hours=now.getHours();
+  const minutes=String(now.getMinutes()).padStart(2,'0');
+  const seconds=String(now.getSeconds()).padStart(2,'0');
+  const ampm=hours>=12?'pm':'am';
+  hours=hours%12||12;
+
+  const formatted=
+    days[now.getDay()]+" "+
+    now.getDate()+" "+
+    months[now.getMonth()]+" "+
+    now.getFullYear()+" "+
+    hours+":"+minutes+":"+seconds+" "+ampm;
+
+  document.getElementById("clock").innerText=formatted;
+}
+setInterval(updateClock,1000);
+updateClock();
+
+/* MOVIE DATA */
 const movieData=[
-{title:"Apocalypse Of Ice", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
-{title:"65", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
-{title:"Dhurandhar", category:"bollywood", video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
-{title:"Aap Jaisa Koi", category:"bollywood", video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
-{title:"Baaghi 4", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
-{title:"Nikita Roy", category:"bollywood", video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
-{title:"Deva", category:"bollywood", video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
-{title:"Housefull 5", category:"bollywood", video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
-{title:"Maalik", category:"bollywood", video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
-{title:"Raid 2", category:"bollywood", video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
-{title:"Jolly LLB 3", category:"bollywood", video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
-{title:"Maargan", category:"bollywood", video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
-{title:"Saiyaara", category:"bollywood", video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
-{title:"The Diplomat", category:"bollywood", video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
-{title:"Sikandar", category:"bollywood", video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
-{title:"War 2", category:"bollywood", video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
+{title:"Apocalypse Of Ice", category:"hollywood"},
+{title:"65", category:"hollywood"},
+{title:"Dhurandhar", category:"bollywood"},
+{title:"Aap Jaisa Koi", category:"bollywood"},
+{title:"Baaghi 4", category:"bollywood"},
+{title:"Nikita Roy", category:"bollywood"},
+{title:"Deva", category:"bollywood"},
+{title:"Housefull 5", category:"bollywood"},
+{title:"Maalik", category:"bollywood"},
+{title:"Raid 2", category:"bollywood"},
+{title:"Jolly LLB 3", category:"bollywood"},
+{title:"Maargan", category:"bollywood"},
+{title:"Saiyaara", category:"bollywood"},
+{title:"The Diplomat", category:"bollywood"},
+{title:"Sikandar", category:"bollywood"},
+{title:"War 2", category:"bollywood"}
 ];
 
 const row=document.getElementById("movieRow");
 const hero=document.getElementById("heroSlider");
 
 movieData.forEach((movie,index)=>{
+
   if(index<5){
     const slide=document.createElement("div");
     slide.className="slide";
     if(index===0) slide.classList.add("active");
     slide.style.backgroundImage=`url('${movie.title}.jpg')`;
-    slide.innerHTML=`<div class="hero-overlay"></div>
-                     <div class="hero-content"><h1>${movie.title}</h1></div>`;
     hero.appendChild(slide);
   }
 
@@ -313,9 +348,14 @@ movieData.forEach((movie,index)=>{
   card.className="movie";
   card.dataset.category=movie.category;
   card.dataset.title=movie.title.toLowerCase();
-  card.innerHTML=`<div class="poster-box">
+
+  card.innerHTML=`
+    <div class="poster-box">
       <img src="${movie.title}.jpg" loading="lazy">
-  </div>`;
+    </div>
+    <div class="movie-title">${movie.title}</div>
+  `;
+
   row.appendChild(card);
 });
 
@@ -335,6 +375,14 @@ document.getElementById("searchInput").addEventListener("input",function(){
     m.style.display=m.dataset.title.includes(val)?"block":"none";
   });
 });
+
+function filterMovies(category,btn){
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".movie").forEach(m=>{
+    m.style.display=(category==="all"||m.dataset.category===category)?"block":"none";
+  });
+}
 
 </script>
 
