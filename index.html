@@ -3,6 +3,8 @@
 <head>
 <title>Mujahid Flix</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body{
   margin:0;
@@ -22,29 +24,29 @@ body{
   align-items:center;
   z-index:9999;
 }
-#intro img{ width:300px; }
+#intro img{ width:280px; }
 
 /* NAVBAR */
 .navbar{
   position:fixed;
+  top:0;
   width:100%;
   padding:15px 60px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-  z-index:100;
+  background:rgba(0,0,0,0.95);
+  z-index:1000;
 }
 
 .logo{
   color:#e50914;
-  font-size:28px;
+  font-size:26px;
   font-weight:bold;
 }
 
-/* NETFLIX SEARCH STYLE */
+/* SEARCH */
 .search-container{
-  position:relative;
   display:flex;
   align-items:center;
 }
@@ -56,27 +58,28 @@ body{
   background:black;
   border:1px solid white;
   color:white;
-  transition:0.4s ease;
-  font-size:14px;
+  transition:0.3s ease;
 }
 
 .search-container.active input{
-  width:250px;
+  width:220px;
   opacity:1;
   margin-left:10px;
 }
 
 .search-icon{
-  font-size:22px;
+  font-size:18px;
   cursor:pointer;
 }
 
 /* HERO */
 .hero{
+  margin-top:80px;
   position:relative;
-  height:70vh;
+  height:60vh;
   overflow:hidden;
 }
+
 .slide{
   position:absolute;
   width:100%;
@@ -93,22 +96,23 @@ body{
   inset:0;
   background:linear-gradient(to right, rgba(0,0,0,0.85), transparent);
 }
+
 .hero-content{
   position:absolute;
-  bottom:80px;
+  bottom:60px;
   left:60px;
 }
+
 .hero-content h1{
-  font-size:42px;
+  font-size:36px;
 }
 
 /* SECTION */
 .section{
   padding:40px 60px;
-  margin-top:60px;
 }
 
-/* FILTER BUTTONS */
+/* FILTERS */
 .filters{
   margin-bottom:25px;
 }
@@ -116,7 +120,7 @@ body{
   background:#333;
   color:white;
   border:none;
-  padding:8px 18px;
+  padding:8px 16px;
   margin-right:10px;
   border-radius:4px;
   cursor:pointer;
@@ -137,24 +141,24 @@ body{
 
 .movie{
   width:23%;
-  position:relative;
+  cursor:pointer;
 }
 
 .poster-box{
   width:100%;
   aspect-ratio:16/9;
   overflow:hidden;
-  border-radius:8px;
+  border-radius:6px;
 }
 
 .poster-box img{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition:0.3s;
+  transition:0.3s ease;
 }
 
-.movie:hover .poster-box img{
+.movie:hover img{
   transform:scale(1.05);
 }
 
@@ -162,26 +166,21 @@ body{
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.85);
+  background:rgba(0,0,0,0.9);
   display:none;
   justify-content:center;
   align-items:center;
-  z-index:500;
-}
-.modal-content{
-  width:80%;
-  max-width:900px;
+  z-index:2000;
 }
 .modal iframe{
-  width:100%;
+  width:80%;
   height:500px;
-  border-radius:8px;
 }
 .close-btn{
   position:absolute;
   top:20px;
   right:40px;
-  font-size:30px;
+  font-size:28px;
   cursor:pointer;
 }
 </style>
@@ -219,18 +218,15 @@ body{
 
 <div class="modal" id="videoModal">
 <span class="close-btn" onclick="closeModal()">✖</span>
-<div class="modal-content">
 <iframe id="videoFrame" src="" allowfullscreen></iframe>
-</div>
 </div>
 
 <script>
 
-const movieData = [
-
+/* MOVIE DATA */
+const movieData=[
 {title:"Apocalypse Of Ice", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
 {title:"65", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
-
 {title:"Dhurandhar", category:"bollywood", video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
 {title:"Aap Jaisa Koi", category:"bollywood", video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
 {title:"Baaghi 4", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
@@ -245,64 +241,54 @@ const movieData = [
 {title:"The Diplomat", category:"bollywood", video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
 {title:"Sikandar", category:"bollywood", video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
 {title:"War 2", category:"bollywood", video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
-
 ];
 
-const row = document.getElementById("movieRow");
-const hero = document.getElementById("heroSlider");
-const modal = document.getElementById("videoModal");
-const frame = document.getElementById("videoFrame");
+const row=document.getElementById("movieRow");
+const hero=document.getElementById("heroSlider");
+const modal=document.getElementById("videoModal");
+const frame=document.getElementById("videoFrame");
+
+/* HERO ONLY FIRST 5 (JPG ONLY) */
+movieData.slice(0,5).forEach((movie,index)=>{
+  const slide=document.createElement("div");
+  slide.className="slide";
+  if(index===0) slide.classList.add("active");
+  slide.style.backgroundImage=`url('${movie.title}.jpg')`;
+  slide.innerHTML=`<div class="hero-overlay"></div>
+                   <div class="hero-content"><h1>${movie.title}</h1></div>`;
+  hero.appendChild(slide);
+});
 
 /* BUILD MOVIES */
-movieData.forEach((movie,index)=>{
-  const card = document.createElement("div");
+movieData.forEach(movie=>{
+  const card=document.createElement("div");
   card.className="movie";
-  card.dataset.category = movie.category;
-  card.dataset.title = movie.title.toLowerCase();
+  card.dataset.category=movie.category;
+  card.dataset.title=movie.title.toLowerCase();
 
-  const staticImg = movie.title + ".jpg";
-  const gifImg = movie.title + ".gif";
+  const staticImg=movie.title+".jpg";
+  const gifImg=movie.title+".gif";
 
   card.innerHTML=`<div class="poster-box">
       <img src="${staticImg}" loading="lazy">
   </div>`;
 
-  const img = card.querySelector("img");
-  card.addEventListener("mouseenter",()=>{ img.src = gifImg; });
-  card.addEventListener("mouseleave",()=>{ img.src = staticImg; });
+  const img=card.querySelector("img");
+
+  card.addEventListener("mouseenter",()=>{
+    img.src=gifImg;
+  });
+
+  card.addEventListener("mouseleave",()=>{
+    img.src=staticImg;
+  });
+
   card.addEventListener("click",()=>{
-    frame.src = movie.video;
+    frame.src=movie.video;
     modal.style.display="flex";
   });
 
   row.appendChild(card);
-
-  if(index < 4){
-    const slide=document.createElement("div");
-    slide.className="slide";
-    if(index===0) slide.classList.add("active");
-    slide.style.backgroundImage=`url('${staticImg}')`;
-    slide.innerHTML=`<div class="hero-overlay"></div>
-                     <div class="hero-content"><h1>${movie.title}</h1></div>`;
-    hero.appendChild(slide);
-  }
-});
-
-/* SEARCH EXPAND */
-const searchContainer = document.getElementById("searchContainer");
-const searchIcon = document.getElementById("searchIcon");
-
-searchIcon.addEventListener("click",()=>{
-  searchContainer.classList.toggle("active");
-  document.getElementById("searchInput").focus();
-});
-
-/* SEARCH FILTER */
-document.getElementById("searchInput").addEventListener("input",function(){
-  const value = this.value.toLowerCase();
-  document.querySelectorAll(".movie").forEach(movie=>{
-    movie.style.display = movie.dataset.title.includes(value) ? "block" : "none";
-  });
 });
 
 /* HERO AUTO */
@@ -314,6 +300,30 @@ setInterval(()=>{
   slides[current].classList.add("active");
 },4000);
 
+/* SEARCH EXPAND */
+const searchContainer=document.getElementById("searchContainer");
+document.getElementById("searchIcon").addEventListener("click",()=>{
+  searchContainer.classList.toggle("active");
+  document.getElementById("searchInput").focus();
+});
+
+/* SEARCH FILTER */
+document.getElementById("searchInput").addEventListener("input",function(){
+  const val=this.value.toLowerCase();
+  document.querySelectorAll(".movie").forEach(m=>{
+    m.style.display=m.dataset.title.includes(val)?"block":"none";
+  });
+});
+
+/* FILTER */
+function filterMovies(category,btn){
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".movie").forEach(m=>{
+    m.style.display=(category==="all"||m.dataset.category===category)?"block":"none";
+  });
+}
+
 /* INTRO ONLY ONCE */
 window.addEventListener("load",()=>{
   if(!localStorage.getItem("introPlayed")){
@@ -321,8 +331,8 @@ window.addEventListener("load",()=>{
     setTimeout(()=>{
       document.getElementById("intro").style.display="none";
       localStorage.setItem("introPlayed","yes");
-    },3000);
-  } else {
+    },2500);
+  }else{
     document.getElementById("intro").style.display="none";
   }
 });
