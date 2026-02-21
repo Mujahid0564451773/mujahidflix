@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mujahid Flix</title>
+<title>Mujahid Flix</title>
 
 <style>
 body{
@@ -12,7 +12,7 @@ body{
   overflow-x:hidden;
 }
 
-/* NETFLIX INTRO */
+/* INTRO */
 #intro{
   position:fixed;
   inset:0;
@@ -22,33 +22,62 @@ body{
   align-items:center;
   z-index:9999;
 }
+#intro img{ width:350px; }
 
-#intro img{
-  width:400px;
-}
-
+/* NAVBAR */
 .navbar{
   position:fixed;
   width:100%;
   padding:15px 60px;
   background:linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-  z-index:10;
+  z-index:100;
 }
-
 .logo{
   color:#e50914;
   font-size:28px;
   font-weight:bold;
 }
 
+/* HERO */
+.hero{
+  position:relative;
+  height:75vh;
+  overflow:hidden;
+}
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transition:opacity 1s ease-in-out;
+}
+.slide.active{ opacity:1; }
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to right, rgba(0,0,0,0.85), transparent);
+}
+.hero-content{
+  position:absolute;
+  bottom:100px;
+  left:60px;
+}
+.hero-content h1{
+  font-size:48px;
+}
+
+/* SECTION */
 .section{
-  padding:100px 60px 40px;
+  padding:40px 60px;
 }
 
+/* FILTER BUTTONS */
 .filters{
-  margin-bottom:30px;
+  margin-bottom:25px;
 }
-
 .filters button{
   background:#333;
   color:white;
@@ -57,22 +86,25 @@ body{
   margin-right:10px;
   border-radius:4px;
   cursor:pointer;
+  transition:0.3s;
+  font-weight:bold;
 }
-
-.filters button.active{
+.filters button.active,
+.filters button:hover{
   background:#e50914;
 }
 
+/* MOVIE GRID */
 .row{
   display:flex;
   gap:20px;
   flex-wrap:wrap;
 }
 
+/* MOVIE CARD */
 .movie{
   width:23%;
-  cursor:pointer;
-  margin-bottom:30px;
+  position:relative;
 }
 
 .poster-box{
@@ -88,15 +120,42 @@ body{
   object-fit:cover;
 }
 
-.movie-title{
-  margin-top:8px;
-  text-align:center;
-  font-weight:bold;
-  font-size:14px;
-  background:#e50914;
+/* EXPAND CARD */
+.expand-card{
+  position:absolute;
+  top:-60px;
+  left:0;
+  width:100%;
+  background:#181818;
+  border-radius:8px;
+  opacity:0;
+  transform:scale(0.95);
+  transition:0.3s ease;
+  z-index:100;
+  box-shadow:0 20px 50px rgba(0,0,0,0.8);
+}
+
+.expand-content{
+  padding:15px;
+}
+
+.play-btn{
+  background:white;
   color:black;
-  padding:6px;
+  border:none;
+  padding:6px 12px;
   border-radius:4px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-bottom:10px;
+}
+
+.movie:hover{
+  z-index:200;
+}
+.movie:hover .expand-card{
+  opacity:1;
+  transform:scale(1);
 }
 
 /* MODAL */
@@ -107,20 +166,17 @@ body{
   display:none;
   justify-content:center;
   align-items:center;
-  z-index:100;
+  z-index:500;
 }
-
 .modal-content{
   width:80%;
   max-width:900px;
 }
-
 .modal iframe{
   width:100%;
   height:500px;
   border-radius:8px;
 }
-
 .close-btn{
   position:absolute;
   top:20px;
@@ -133,50 +189,29 @@ body{
 
 <body>
 
-<!-- NETFLIX INTRO GIF -->
 <div id="intro">
   <img src="netflix-intro.gif">
+  <audio id="introSound" src="netflix-sound.mp3"></audio>
 </div>
 
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
 </div>
 
+<div class="hero" id="heroSlider"></div>
+
 <div class="section">
 <h2>Browse Movies</h2>
 
 <div class="filters">
-<button class="active" onclick="filterMovies('all', this)">All</button>
-<button onclick="filterMovies('hollywood', this)">Hollywood</button>
-<button onclick="filterMovies('bollywood', this)">Bollywood</button>
+  <button class="active" onclick="filterMovies('all', this)">All</button>
+  <button onclick="filterMovies('hollywood', this)">Hollywood</button>
+  <button onclick="filterMovies('bollywood', this)">Bollywood</button>
 </div>
 
-<div class="row">
-
-<!-- Hollywood -->
-<div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"><div class="poster-box"><img src="Apocalypse Of Ice.gif"></div></div>
-<div class="movie" data-category="hollywood" data-video="https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"><div class="poster-box"><img src="65.gif"></div></div>
-
-<!-- Bollywood -->
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"><div class="poster-box"><img src="Dhurandhar.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"><div class="poster-box"><img src="Aap Jaisa Koi.jpeg"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"><div class="poster-box"><img src="Baaghi 4.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"><div class="poster-box"><img src="Nikita Roy.jpeg"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"><div class="poster-box"><img src="Deva.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"><div class="poster-box"><img src="Housefull 5.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"><div class="poster-box"><img src="Maalik.jpeg"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"><div class="poster-box"><img src="Raid 2.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"><div class="poster-box"><img src="Jolly LLB 3.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"><div class="poster-box"><img src="Maargan.jpg"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"><div class="poster-box"><img src="Saiyaara.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"><div class="poster-box"><img src="The Diplomat.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"><div class="poster-box"><img src="Sikandar.gif"></div></div>
-<div class="movie" data-category="bollywood" data-video="https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"><div class="poster-box"><img src="War 2.gif"></div></div>
-
-</div>
+<div class="row" id="movieRow"></div>
 </div>
 
-<!-- MODAL -->
 <div class="modal" id="videoModal">
 <span class="close-btn" onclick="closeModal()">✖</span>
 <div class="modal-content">
@@ -185,48 +220,106 @@ body{
 </div>
 
 <script>
-const movies=document.querySelectorAll(".movie");
-const modal=document.getElementById("videoModal");
-const frame=document.getElementById("videoFrame");
 
-/* FIX %20 ISSUE */
-function cleanTitle(name){
-  return decodeURIComponent(name).replace(/\.[^/.]+$/, "");
-}
+const movieData = [
 
-movies.forEach(movie=>{
-  const img=movie.querySelector("img").src;
-  const fileName=img.substring(img.lastIndexOf("/")+1);
-  const title=cleanTitle(fileName);
+/* Hollywood */
+{img:"Apocalypse Of Ice.gif", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
+{img:"65.gif", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
 
-  const titleDiv=document.createElement("div");
-  titleDiv.className="movie-title";
-  titleDiv.textContent=title;
-  movie.appendChild(titleDiv);
+/* Bollywood */
+{img:"Dhurandhar.gif", category:"bollywood", video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
+{img:"Aap Jaisa Koi.jpeg", category:"bollywood", video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
+{img:"Baaghi 4.gif", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
+{img:"Nikita Roy.jpeg", category:"bollywood", video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
+{img:"Deva.gif", category:"bollywood", video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
+{img:"Housefull 5.gif", category:"bollywood", video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
+{img:"Maalik.jpeg", category:"bollywood", video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
+{img:"Raid 2.gif", category:"bollywood", video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
+{img:"Jolly LLB 3.gif", category:"bollywood", video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
+{img:"Maargan.jpg", category:"bollywood", video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
+{img:"Saiyaara.gif", category:"bollywood", video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
+{img:"The Diplomat.gif", category:"bollywood", video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
+{img:"Sikandar.gif", category:"bollywood", video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
+{img:"War 2.gif", category:"bollywood", video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
 
-  movie.addEventListener("click",()=>{
-    frame.src=movie.dataset.video;
+];
+
+const row = document.getElementById("movieRow");
+const hero = document.getElementById("heroSlider");
+const modal = document.getElementById("videoModal");
+const frame = document.getElementById("videoFrame");
+
+/* BUILD MOVIES */
+movieData.forEach((movie,index)=>{
+
+  const card = document.createElement("div");
+  card.className="movie";
+  card.dataset.category = movie.category;
+
+  card.innerHTML=`
+    <div class="poster-box">
+      <img src="${movie.img}">
+    </div>
+    <div class="expand-card">
+      <div class="expand-content">
+        <button class="play-btn">▶ Play</button>
+        <p>${movie.img.replace(/\.[^/.]+$/, "")}</p>
+      </div>
+    </div>
+  `;
+
+  card.querySelector(".play-btn").addEventListener("click",(e)=>{
+    e.stopPropagation();
+    frame.src = movie.video;
     modal.style.display="flex";
   });
+
+  row.appendChild(card);
+
+  /* HERO */
+  const slide=document.createElement("div");
+  slide.className="slide";
+  if(index===0) slide.classList.add("active");
+  slide.style.backgroundImage=`url('${movie.img}')`;
+  slide.innerHTML=`<div class="hero-overlay"></div>
+                   <div class="hero-content">
+                     <h1>${movie.img.replace(/\.[^/.]+$/, "")}</h1>
+                   </div>`;
+  hero.appendChild(slide);
 });
 
-function filterMovies(category,btn){
-  movies.forEach(movie=>{
-    movie.style.display=(category==="all"||movie.dataset.category===category)?"block":"none";
-  });
+/* FILTER FUNCTION */
+function filterMovies(category, btn){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
+
+  document.querySelectorAll(".movie").forEach(movie=>{
+    movie.style.display = (category==="all" || movie.dataset.category===category)
+      ? "block" : "none";
+  });
 }
+
+/* HERO AUTO */
+let slides=document.querySelectorAll(".slide");
+let current=0;
+setInterval(()=>{
+  slides[current].classList.remove("active");
+  current=(current+1)%slides.length;
+  slides[current].classList.add("active");
+},4000);
+
+/* INTRO */
+window.addEventListener("load",()=>{
+  document.getElementById("introSound").play();
+  setTimeout(()=>{document.getElementById("intro").style.display="none";},3000);
+});
 
 function closeModal(){
   modal.style.display="none";
   frame.src="";
 }
 
-/* INTRO AUTO HIDE */
-setTimeout(()=>{
-  document.getElementById("intro").style.display="none";
-},3500);
 </script>
 
 </body>
