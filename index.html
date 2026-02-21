@@ -109,6 +109,22 @@ body{
   width:23%;
   cursor:pointer;
   margin-bottom:30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.movie:hover{
+  transform: scale(1.1);
+  z-index: 5;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+}
+
+.poster-box img{
+  transition: transform 0.4s ease;
+}
+
+.movie:hover .poster-box img{
+  transform: scale(1.15);
 }
 
 .poster-box{
@@ -269,9 +285,12 @@ movies.forEach((movie,index)=>{
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>${title}</h1>
-      <button class="hero-btn" data-video="${video}">▶ Play</button>
-    </div>
-  `;
+     slide.innerHTML = `
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>${title}</h1>
+  </div>
+`;
 
   hero.appendChild(slide);
 });
@@ -279,15 +298,7 @@ movies.forEach((movie,index)=>{
 
 /* Attach Click To Hero Buttons */
 
-document.querySelectorAll(".hero-btn").forEach(btn=>{
-  btn.addEventListener("click",function(e){
-      e.stopPropagation();
-      const videoURL = this.getAttribute("data-video");
 
-      frame.src = videoURL;   // ✔ no extra parameters
-      modal.style.display = "flex";
-  });
-});
 /* HERO AUTO CHANGE 4 SEC */
 let slides=document.querySelectorAll(".slide");
 let current=0;
