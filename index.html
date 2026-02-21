@@ -79,20 +79,10 @@ body{
   z-index:1000;
 }
 
-/* CLOCK TOP LEFT */
-.clock{
-  position:absolute;
-  left:30px;
-  font-size:14px;
-  color:#ccc;
-  font-weight:500;
-}
-
-/* LOGO */
+/* LOGO LEFT */
 .logo{
   position:absolute;
   left:30px;
-  top:45px;
   font-size:26px;
   font-weight:bold;
   color:#e50914;
@@ -103,6 +93,14 @@ body{
 @keyframes logoGlow{
   from{text-shadow:0 0 5px #e50914;}
   to{text-shadow:0 0 20px #ff0000;}
+}
+
+/* CLOCK RIGHT */
+.clock{
+  position:absolute;
+  right:30px;
+  font-size:14px;
+  color:#ccc;
 }
 
 /* CENTER SEARCH */
@@ -150,16 +148,6 @@ body{
   position:absolute;
   inset:0;
   background:linear-gradient(to right, rgba(0,0,0,0.85), transparent);
-}
-
-.hero-content{
-  position:absolute;
-  bottom:50px;
-  left:60px;
-}
-
-.hero-content h1{
-  font-size:32px;
 }
 
 /* ================= SECTION ================= */
@@ -258,12 +246,13 @@ body{
 
 <!-- NAVBAR -->
 <div class="navbar">
-  <div class="clock" id="clock"></div>
   <div class="logo">MUJAHID FLIX</div>
 
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search movies...">
   </div>
+
+  <div class="clock" id="clock"></div>
 </div>
 
 <div class="hero" id="heroSlider"></div>
@@ -280,6 +269,12 @@ body{
 <div class="row" id="movieRow"></div>
 </div>
 
+<!-- MODAL -->
+<div class="modal" id="videoModal">
+<span class="close-btn" onclick="closeModal()">✖</span>
+<iframe id="videoFrame" src="" allowfullscreen></iframe>
+</div>
+
 <script>
 
 /* REMOVE INTRO */
@@ -287,7 +282,7 @@ setTimeout(()=>{
   document.getElementById("intro").classList.add("fade-out");
 },2500);
 
-/* DIGITAL CLOCK */
+/* CLOCK */
 function updateClock(){
   const now=new Date();
   const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -299,51 +294,30 @@ function updateClock(){
   const ampm=hours>=12?'pm':'am';
   hours=hours%12||12;
 
-  const formatted=
+  document.getElementById("clock").innerText=
     days[now.getDay()]+" "+
     now.getDate()+" "+
     months[now.getMonth()]+" "+
     now.getFullYear()+" "+
     hours+":"+minutes+":"+seconds+" "+ampm;
-
-  document.getElementById("clock").innerText=formatted;
 }
 setInterval(updateClock,1000);
 updateClock();
 
 /* MOVIE DATA */
 const movieData=[
-{title:"Apocalypse Of Ice", category:"hollywood"},
-{title:"65", category:"hollywood"},
-{title:"Dhurandhar", category:"bollywood"},
-{title:"Aap Jaisa Koi", category:"bollywood"},
-{title:"Baaghi 4", category:"bollywood"},
-{title:"Nikita Roy", category:"bollywood"},
-{title:"Deva", category:"bollywood"},
-{title:"Housefull 5", category:"bollywood"},
-{title:"Maalik", category:"bollywood"},
-{title:"Raid 2", category:"bollywood"},
-{title:"Jolly LLB 3", category:"bollywood"},
-{title:"Maargan", category:"bollywood"},
-{title:"Saiyaara", category:"bollywood"},
-{title:"The Diplomat", category:"bollywood"},
-{title:"Sikandar", category:"bollywood"},
-{title:"War 2", category:"bollywood"}
+{title:"Apocalypse Of Ice", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
+{title:"65", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
+{title:"Dhurandhar", category:"bollywood", video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
+{title:"Aap Jaisa Koi", category:"bollywood", video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
+{title:"Baaghi 4", category:"bollywood", video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"}
 ];
 
 const row=document.getElementById("movieRow");
-const hero=document.getElementById("heroSlider");
+const modal=document.getElementById("videoModal");
+const frame=document.getElementById("videoFrame");
 
-movieData.forEach((movie,index)=>{
-
-  if(index<5){
-    const slide=document.createElement("div");
-    slide.className="slide";
-    if(index===0) slide.classList.add("active");
-    slide.style.backgroundImage=`url('${movie.title}.jpg')`;
-    hero.appendChild(slide);
-  }
-
+movieData.forEach(movie=>{
   const card=document.createElement("div");
   card.className="movie";
   card.dataset.category=movie.category;
@@ -356,17 +330,13 @@ movieData.forEach((movie,index)=>{
     <div class="movie-title">${movie.title}</div>
   `;
 
+  card.addEventListener("click",()=>{
+    frame.src=movie.video;
+    modal.style.display="flex";
+  });
+
   row.appendChild(card);
 });
-
-/* HERO AUTO */
-let slides=document.querySelectorAll(".slide");
-let current=0;
-setInterval(()=>{
-  slides[current].classList.remove("active");
-  current=(current+1)%slides.length;
-  slides[current].classList.add("active");
-},4000);
 
 /* SEARCH */
 document.getElementById("searchInput").addEventListener("input",function(){
@@ -384,6 +354,10 @@ function filterMovies(category,btn){
   });
 }
 
+function closeModal(){
+  modal.style.display="none";
+  frame.src="";
+}
 </script>
 
 </body>
