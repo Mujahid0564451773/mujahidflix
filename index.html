@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>Mujahid Flix</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -11,20 +10,7 @@ body{
   background:#141414;
   font-family:Arial, sans-serif;
   color:white;
-  overflow-x:hidden;
 }
-
-/* INTRO */
-#intro{
-  position:fixed;
-  inset:0;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-#intro img{ width:280px; }
 
 /* NAVBAR */
 .navbar{
@@ -35,7 +21,7 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:rgba(0,0,0,0.95);
+  background:#000;
   z-index:1000;
 }
 
@@ -49,34 +35,37 @@ body{
 .search-container{
   display:flex;
   align-items:center;
+  background:black;
+  border:1px solid #555;
+  padding:5px 10px;
+  border-radius:4px;
 }
 
 .search-container input{
-  width:0;
-  opacity:0;
-  padding:6px 10px;
-  background:black;
-  border:1px solid white;
+  background:transparent;
+  border:none;
   color:white;
+  outline:none;
+  width:0;
   transition:0.3s ease;
+  font-size:14px;
 }
 
 .search-container.active input{
-  width:220px;
-  opacity:1;
-  margin-left:10px;
+  width:200px;
+  margin-left:8px;
 }
 
 .search-icon{
-  font-size:18px;
   cursor:pointer;
+  font-size:18px;
 }
 
 /* HERO */
 .hero{
   margin-top:80px;
   position:relative;
-  height:60vh;
+  height:55vh;
   overflow:hidden;
 }
 
@@ -99,12 +88,12 @@ body{
 
 .hero-content{
   position:absolute;
-  bottom:60px;
+  bottom:50px;
   left:60px;
 }
 
 .hero-content h1{
-  font-size:36px;
+  font-size:32px;
 }
 
 /* SECTION */
@@ -188,17 +177,12 @@ body{
 
 <body>
 
-<div id="intro">
-  <img src="netflix-intro.gif">
-  <audio id="introSound" src="netflix-sound.mp3"></audio>
-</div>
-
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
 
   <div class="search-container" id="searchContainer">
     <span class="search-icon" id="searchIcon">🔍</span>
-    <input type="text" id="searchInput" placeholder="Titles, people, genres">
+    <input type="text" id="searchInput" placeholder="Search movies...">
   </div>
 </div>
 
@@ -223,7 +207,6 @@ body{
 
 <script>
 
-/* MOVIE DATA */
 const movieData=[
 {title:"Apocalypse Of Ice", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
 {title:"65", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
@@ -248,7 +231,7 @@ const hero=document.getElementById("heroSlider");
 const modal=document.getElementById("videoModal");
 const frame=document.getElementById("videoFrame");
 
-/* HERO ONLY FIRST 5 (JPG ONLY) */
+/* HERO - FIRST 5 */
 movieData.slice(0,5).forEach((movie,index)=>{
   const slide=document.createElement("div");
   slide.className="slide";
@@ -266,22 +249,9 @@ movieData.forEach(movie=>{
   card.dataset.category=movie.category;
   card.dataset.title=movie.title.toLowerCase();
 
-  const staticImg=movie.title+".jpg";
-  const gifImg=movie.title+".gif";
-
   card.innerHTML=`<div class="poster-box">
-      <img src="${staticImg}" loading="lazy">
+      <img src="${movie.title}.jpg" loading="lazy">
   </div>`;
-
-  const img=card.querySelector("img");
-
-  card.addEventListener("mouseenter",()=>{
-    img.src=gifImg;
-  });
-
-  card.addEventListener("mouseleave",()=>{
-    img.src=staticImg;
-  });
 
   card.addEventListener("click",()=>{
     frame.src=movie.video;
@@ -290,15 +260,6 @@ movieData.forEach(movie=>{
 
   row.appendChild(card);
 });
-
-/* HERO AUTO */
-let slides=document.querySelectorAll(".slide");
-let current=0;
-setInterval(()=>{
-  slides[current].classList.remove("active");
-  current=(current+1)%slides.length;
-  slides[current].classList.add("active");
-},4000);
 
 /* SEARCH EXPAND */
 const searchContainer=document.getElementById("searchContainer");
@@ -324,18 +285,14 @@ function filterMovies(category,btn){
   });
 }
 
-/* INTRO ONLY ONCE */
-window.addEventListener("load",()=>{
-  if(!localStorage.getItem("introPlayed")){
-    document.getElementById("introSound").play();
-    setTimeout(()=>{
-      document.getElementById("intro").style.display="none";
-      localStorage.setItem("introPlayed","yes");
-    },2500);
-  }else{
-    document.getElementById("intro").style.display="none";
-  }
-});
+/* HERO AUTO */
+let slides=document.querySelectorAll(".slide");
+let current=0;
+setInterval(()=>{
+  slides[current].classList.remove("active");
+  current=(current+1)%slides.length;
+  slides[current].classList.add("active");
+},4000);
 
 function closeModal(){
   modal.style.display="none";
