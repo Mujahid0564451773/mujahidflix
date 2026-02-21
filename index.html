@@ -10,6 +10,44 @@ body{
   background:#141414;
   font-family:Arial, sans-serif;
   color:white;
+  overflow-x:hidden;
+}
+
+/* NETFLIX STYLE INTRO */
+#logoIntro{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:5000;
+}
+
+#logoIntro h1{
+  color:#e50914;
+  font-size:90px;
+  font-weight:bold;
+  letter-spacing:8px;
+  transform:scale(0.5);
+  animation: netflixAnim 2.5s ease forwards;
+}
+
+@keyframes netflixAnim{
+  0%{
+    transform:scale(0.5);
+    letter-spacing:20px;
+  }
+  40%{
+    transform:scale(1.2);
+    letter-spacing:5px;
+  }
+  70%{
+    transform:scale(0.9);
+  }
+  100%{
+    transform:scale(1);
+  }
 }
 
 /* NAVBAR */
@@ -17,27 +55,21 @@ body{
   position:fixed;
   top:0;
   width:100%;
-  padding:15px 60px;
+  padding:15px 0;
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
   align-items:center;
   background:#000;
   z-index:1000;
 }
 
-.logo{
-  color:#e50914;
-  font-size:26px;
-  font-weight:bold;
-}
-
-/* SEARCH BAR (ALWAYS VISIBLE ICON) */
+/* SEARCH CENTER */
 .search-container{
   display:flex;
   align-items:center;
   background:black;
   border:1px solid #444;
-  padding:5px 10px;
+  padding:6px 15px;
   border-radius:4px;
 }
 
@@ -46,17 +78,12 @@ body{
   border:none;
   color:white;
   outline:none;
-  width:180px;   /* ALWAYS VISIBLE */
+  width:250px;
   font-size:14px;
 }
 
 .search-container input::placeholder{
   color:#aaa;
-}
-
-.search-icon{
-  margin-right:8px;
-  font-size:16px;
 }
 
 /* HERO */
@@ -175,11 +202,13 @@ body{
 
 <body>
 
-<div class="navbar">
-  <div class="logo">MUJAHID FLIX</div>
+<!-- LOGO INTRO -->
+<div id="logoIntro">
+  <h1>MUJAHID FLIX</h1>
+</div>
 
+<div class="navbar">
   <div class="search-container">
-    <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" placeholder="Search movies...">
   </div>
 </div>
@@ -205,6 +234,11 @@ body{
 
 <script>
 
+/* REMOVE INTRO AFTER ANIMATION */
+setTimeout(()=>{
+  document.getElementById("logoIntro").style.display="none";
+},2500);
+
 const movieData=[
 {title:"Apocalypse Of Ice", category:"hollywood", video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
 {title:"65", category:"hollywood", video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
@@ -214,13 +248,6 @@ const movieData=[
 {title:"Nikita Roy", category:"bollywood", video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
 {title:"Deva", category:"bollywood", video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
 {title:"Housefull 5", category:"bollywood", video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
-{title:"Maalik", category:"bollywood", video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
-{title:"Raid 2", category:"bollywood", video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
-{title:"Jolly LLB 3", category:"bollywood", video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
-{title:"Maargan", category:"bollywood", video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
-{title:"Saiyaara", category:"bollywood", video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
-{title:"The Diplomat", category:"bollywood", video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
-{title:"Sikandar", category:"bollywood", video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
 {title:"War 2", category:"bollywood", video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
 ];
 
@@ -259,7 +286,7 @@ movieData.forEach(movie=>{
   row.appendChild(card);
 });
 
-/* SEARCH FILTER */
+/* SEARCH */
 document.getElementById("searchInput").addEventListener("input",function(){
   const val=this.value.toLowerCase();
   document.querySelectorAll(".movie").forEach(m=>{
@@ -267,7 +294,7 @@ document.getElementById("searchInput").addEventListener("input",function(){
   });
 });
 
-/* FILTER BUTTONS */
+/* FILTER */
 function filterMovies(category,btn){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
