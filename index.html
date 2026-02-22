@@ -15,7 +15,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ================= INTRO NETFLIX FLASH ================= */
+/* ================= INTRO ================= */
 
 #intro{
   position:fixed;
@@ -29,7 +29,7 @@ body{
 }
 
 .intro-text{
-  font-size:90px;
+  font-size:80px;
   font-weight:bold;
   color:#e50914;
   position:relative;
@@ -38,18 +38,16 @@ body{
 
 @keyframes introZoom{
   0%{opacity:0; transform:scale(0.6);}
-  40%{opacity:1; transform:scale(1.2);}
-  70%{transform:scale(0.95);}
+  50%{opacity:1; transform:scale(1.2);}
   100%{transform:scale(1);}
 }
 
-/* FLASH LIGHT SWEEP */
 .intro-text::after{
   content:"";
   position:absolute;
   top:0;
-  left:-150%;
-  width:50%;
+  left:-120%;
+  width:40%;
   height:100%;
   background:linear-gradient(120deg, transparent, rgba(255,255,255,0.7), transparent);
   transform:skewX(-25deg);
@@ -57,8 +55,8 @@ body{
 }
 
 @keyframes flash{
-  0%{left:-150%;}
-  100%{left:150%;}
+  from{left:-120%;}
+  to{left:150%;}
 }
 
 .fade-out{
@@ -78,14 +76,12 @@ body{
   background:#000;
   display:flex;
   align-items:center;
-  justify-content:center;
+  justify-content:space-between;
+  padding:0 30px;
   z-index:1000;
 }
 
-/* Animated Logo */
 .logo{
-  position:absolute;
-  left:30px;
   font-size:26px;
   font-weight:bold;
   color:#e50914;
@@ -93,7 +89,7 @@ body{
   overflow:hidden;
 }
 
-/* repeating flash */
+/* flash repeat */
 .logo::after{
   content:"";
   position:absolute;
@@ -112,17 +108,16 @@ body{
   100%{left:150%;}
 }
 
-.clock{
-  position:absolute;
-  right:30px;
-  font-size:14px;
-  color:#ccc;
+.center-nav{
+  display:flex;
+  align-items:center;
+  gap:20px;
 }
 
 .search-container{
   background:black;
   border:1px solid #444;
-  padding:8px 20px;
+  padding:6px 15px;
   border-radius:4px;
 }
 
@@ -131,16 +126,18 @@ body{
   border:none;
   color:white;
   outline:none;
-  width:280px;
-  font-size:15px;
+  width:200px;
+}
+
+.clock{
+  font-size:14px;
+  color:#ccc;
 }
 
 /* ================= SOCIAL ================= */
 
 .social-icons{
-  position:absolute;
-  top:90px;
-  width:100%;
+  margin-top:100px;
   display:flex;
   justify-content:center;
   gap:30px;
@@ -162,7 +159,7 @@ body{
 /* ================= HERO ================= */
 
 .hero{
-  margin-top:150px;
+  margin-top:20px;
   position:relative;
   height:55vh;
   overflow:hidden;
@@ -179,7 +176,7 @@ body{
 }
 .slide.active{opacity:1;}
 
-/* ================= SECTION ================= */
+/* ================= MOVIES ================= */
 
 .section{
   padding:40px 60px;
@@ -218,35 +215,26 @@ body{
   text-align:center;
   margin-top:8px;
   font-size:14px;
-  color:#ddd;
 }
 
 /* ================= MOBILE ================= */
 
-@media (max-width:768px){
+@media(max-width:768px){
 
 .intro-text{
-  font-size:38px;
+  font-size:36px;
   text-align:center;
-  padding:0 15px;
 }
 
 .navbar{
-  height:auto;
   flex-direction:column;
-  padding:10px 0;
+  height:auto;
+  padding:10px;
   gap:10px;
 }
 
-.logo{
-  position:relative;
-  left:0;
-}
-
-.clock{
-  position:relative;
-  right:0;
-  font-size:12px;
+.center-nav{
+  flex-direction:column;
 }
 
 .movie{
@@ -255,7 +243,6 @@ body{
 
 .hero{
   height:40vh;
-  margin-top:180px;
 }
 
 }
@@ -270,8 +257,10 @@ body{
 
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search movies...">
+  <div class="center-nav">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search movies...">
+    </div>
   </div>
   <div class="clock" id="clock"></div>
 </div>
@@ -285,32 +274,16 @@ body{
 <div class="hero" id="heroSlider"></div>
 
 <script>
-
-/* Remove Intro */
 setTimeout(()=>{
   document.getElementById("intro").classList.add("fade-out");
 },2500);
 
-/* Clock */
 function updateClock(){
   const now=new Date();
-  const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  let hours=now.getHours();
-  const minutes=String(now.getMinutes()).padStart(2,'0');
-  const seconds=String(now.getSeconds()).padStart(2,'0');
-  const ampm=hours>=12?'pm':'am';
-  hours=hours%12||12;
-  document.getElementById("clock").innerText=
-    days[now.getDay()]+" "+
-    now.getDate()+" "+
-    months[now.getMonth()]+" "+
-    now.getFullYear()+" "+
-    hours+":"+minutes+":"+seconds+" "+ampm;
+  document.getElementById("clock").innerText=now.toLocaleString();
 }
 setInterval(updateClock,1000);
 updateClock();
-
 </script>
 
 </body>
