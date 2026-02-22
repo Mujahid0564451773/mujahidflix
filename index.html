@@ -4,7 +4,6 @@
 <title>Mujahid Flix</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- FONT AWESOME -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -16,7 +15,8 @@ body{
   overflow-x:hidden;
 }
 
-/* INTRO */
+/* ================= INTRO NETFLIX FLASH ================= */
+
 #intro{
   position:fixed;
   inset:0;
@@ -25,26 +25,51 @@ body{
   justify-content:center;
   align-items:center;
   z-index:9999;
+  overflow:hidden;
 }
+
 .intro-text{
-  font-size:80px;
+  font-size:90px;
   font-weight:bold;
   color:#e50914;
-  animation:zoomIn 2.5s ease forwards;
+  position:relative;
+  animation:introZoom 2.5s ease forwards;
 }
-@keyframes zoomIn{
-  0%{opacity:0;transform:scale(0.6);}
-  50%{opacity:1;transform:scale(1.2);}
+
+@keyframes introZoom{
+  0%{opacity:0; transform:scale(0.6);}
+  40%{opacity:1; transform:scale(1.2);}
+  70%{transform:scale(0.95);}
   100%{transform:scale(1);}
 }
+
+/* FLASH LIGHT SWEEP */
+.intro-text::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-150%;
+  width:50%;
+  height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,0.7), transparent);
+  transform:skewX(-25deg);
+  animation:flash 1.5s ease forwards;
+}
+
+@keyframes flash{
+  0%{left:-150%;}
+  100%{left:150%;}
+}
+
 .fade-out{
   animation:fadeOut 1s ease forwards;
 }
 @keyframes fadeOut{
-  to{opacity:0;visibility:hidden;}
+  to{opacity:0; visibility:hidden;}
 }
 
-/* NAVBAR */
+/* ================= NAVBAR ================= */
+
 .navbar{
   position:fixed;
   top:0;
@@ -56,30 +81,51 @@ body{
   justify-content:center;
   z-index:1000;
 }
+
+/* Animated Logo */
 .logo{
   position:absolute;
   left:30px;
   font-size:26px;
   font-weight:bold;
   color:#e50914;
-  animation:glow 3s infinite alternate;
+  position:relative;
+  overflow:hidden;
 }
-@keyframes glow{
-  from{text-shadow:0 0 5px #e50914;}
-  to{text-shadow:0 0 20px red;}
+
+/* repeating flash */
+.logo::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:40%;
+  height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform:skewX(-25deg);
+  animation:logoFlash 3s infinite;
 }
+
+@keyframes logoFlash{
+  0%{left:-120%;}
+  60%{left:150%;}
+  100%{left:150%;}
+}
+
 .clock{
   position:absolute;
   right:30px;
   font-size:14px;
   color:#ccc;
 }
+
 .search-container{
   background:black;
   border:1px solid #444;
   padding:8px 20px;
   border-radius:4px;
 }
+
 .search-container input{
   background:transparent;
   border:none;
@@ -89,7 +135,8 @@ body{
   font-size:15px;
 }
 
-/* FLOATING SOCIAL ICONS */
+/* ================= SOCIAL ================= */
+
 .social-icons{
   position:absolute;
   top:90px;
@@ -98,33 +145,29 @@ body{
   justify-content:center;
   gap:30px;
 }
+
 .social-icons a{
   color:white;
   font-size:24px;
   animation:float 3s ease-in-out infinite;
   transition:0.3s;
 }
-.social-icons a:nth-child(2){animation-delay:0.5s;}
-.social-icons a:nth-child(3){animation-delay:1s;}
+
 @keyframes float{
   0%{transform:translateY(0);}
   50%{transform:translateY(-8px);}
   100%{transform:translateY(0);}
 }
-.social-icons a:hover{
-  transform:scale(1.3);
-}
-.fa-tiktok:hover{color:#25F4EE;}
-.fa-youtube:hover{color:#ff0000;}
-.fa-linkedin:hover{color:#0A66C2;}
 
-/* HERO */
+/* ================= HERO ================= */
+
 .hero{
   margin-top:150px;
   position:relative;
   height:55vh;
   overflow:hidden;
 }
+
 .slide{
   position:absolute;
   width:100%;
@@ -136,48 +179,41 @@ body{
 }
 .slide.active{opacity:1;}
 
-/* SECTION */
+/* ================= SECTION ================= */
+
 .section{
   padding:40px 60px;
 }
-.filters button{
-  background:#333;
-  color:white;
-  border:none;
-  padding:8px 16px;
-  margin-right:10px;
-  border-radius:4px;
-  cursor:pointer;
-  font-weight:bold;
-}
-.filters button.active,
-.filters button:hover{
-  background:#e50914;
-}
+
 .row{
   display:flex;
   gap:20px;
   flex-wrap:wrap;
 }
+
 .movie{
   width:23%;
   cursor:pointer;
 }
+
 .poster-box{
   width:100%;
   aspect-ratio:16/9;
   overflow:hidden;
   border-radius:6px;
 }
+
 .poster-box img{
   width:100%;
   height:100%;
   object-fit:cover;
   transition:0.3s;
 }
+
 .movie:hover img{
   transform:scale(1.05);
 }
+
 .movie-title{
   text-align:center;
   margin-top:8px;
@@ -185,91 +221,44 @@ body{
   color:#ddd;
 }
 
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.9);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:2000;
-}
-.modal iframe{
-  width:80%;
-  height:500px;
-}
-.close-btn{
-  position:absolute;
-  top:20px;
-  right:40px;
-  font-size:28px;
-  cursor:pointer;
-}
+/* ================= MOBILE ================= */
 
-/* ================= MOBILE RESPONSIVE FIX ================= */
+@media (max-width:768px){
 
-@media (max-width: 768px){
 .intro-text{
   font-size:38px;
   text-align:center;
   padding:0 15px;
 }
-  .navbar{
-    height:auto;
-    flex-direction:column;
-    padding:10px 0;
-    gap:10px;
-  }
-  
-  .logo{
-    position:relative;
-    left:0;
-    font-size:20px;
-  }
 
-  .clock{
-    position:relative;
-    right:0;
-    font-size:12px;
-  }
+.navbar{
+  height:auto;
+  flex-direction:column;
+  padding:10px 0;
+  gap:10px;
+}
 
-  .search-container input{
-    width:180px;
-    font-size:14px;
-  }
+.logo{
+  position:relative;
+  left:0;
+}
 
-  .social-icons{
-    position:relative;
-    top:0;
-    margin-top:10px;
-  }
+.clock{
+  position:relative;
+  right:0;
+  font-size:12px;
+}
 
-  .hero{
-    margin-top:180px;
-    height:40vh;
-  }
+.movie{
+  width:48%;
+}
 
-  .section{
-    padding:20px;
-  }
-
-  .row{
-    gap:15px;
-  }
-
-  .movie{
-    width:48%;
-  }
-
-  .filters button{
-    padding:6px 12px;
-    font-size:13px;
-    margin-bottom:8px;
-  }
+.hero{
+  height:40vh;
+  margin-top:180px;
+}
 
 }
-  
 </style>
 </head>
 
@@ -288,38 +277,21 @@ body{
 </div>
 
 <div class="social-icons">
-  <a href="https://tiktok.com/@icloudksa.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+  <a href="https://tiktok.com/@icloudksa" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
   <a href="https://www.youtube.com/@MujahidCloud" target="_blank"><i class="fa-brands fa-youtube"></i></a>
   <a href="https://www.linkedin.com/in/mujahid-hussain-17a68a66/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
 </div>
 
 <div class="hero" id="heroSlider"></div>
 
-<div class="section">
-<h2>Browse Movies</h2>
-
-<div class="filters">
-  <button class="active" onclick="filterMovies('all', this)">All</button>
-  <button onclick="filterMovies('hollywood', this)">Hollywood</button>
-  <button onclick="filterMovies('bollywood', this)">Bollywood</button>
-</div>
-
-<div class="row" id="movieRow"></div>
-</div>
-
-<div class="modal" id="videoModal">
-<span class="close-btn" onclick="closeModal()">✖</span>
-<iframe id="videoFrame" src="" allowfullscreen></iframe>
-</div>
-
 <script>
 
-/* REMOVE INTRO */
+/* Remove Intro */
 setTimeout(()=>{
   document.getElementById("intro").classList.add("fade-out");
 },2500);
 
-/* CLOCK */
+/* Clock */
 function updateClock(){
   const now=new Date();
   const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -339,92 +311,6 @@ function updateClock(){
 setInterval(updateClock,1000);
 updateClock();
 
-/* MOVIE DATA (FULL LIST) */
-const movieData=[
-{title:"Apocalypse Of Ice",category:"hollywood",video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
-{title:"65",category:"hollywood",video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
-{title:"Dhurandhar",category:"bollywood",video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
-{title:"Aap Jaisa Koi",category:"bollywood",video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
-{title:"Baaghi 4",category:"bollywood",video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
-{title:"Nikita Roy",category:"bollywood",video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
-{title:"Deva",category:"bollywood",video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
-{title:"Housefull 5",category:"bollywood",video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
-{title:"Maalik",category:"bollywood",video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
-{title:"Raid 2",category:"bollywood",video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
-{title:"Jolly LLB 3",category:"bollywood",video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
-{title:"Maargan",category:"bollywood",video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
-{title:"Saiyaara",category:"bollywood",video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
-{title:"The Diplomat",category:"bollywood",video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
-{title:"Sikandar",category:"bollywood",video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
-{title:"War 2",category:"bollywood",video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
-];
-
-const row=document.getElementById("movieRow");
-const hero=document.getElementById("heroSlider");
-const modal=document.getElementById("videoModal");
-const frame=document.getElementById("videoFrame");
-
-/* HERO (FIRST 5 ONLY) */
-movieData.slice(0,5).forEach((movie,index)=>{
-  const slide=document.createElement("div");
-  slide.className="slide";
-  if(index===0) slide.classList.add("active");
-  slide.style.backgroundImage=`url('${movie.title}.jpg')`;
-  hero.appendChild(slide);
-});
-
-/* BUILD ALL MOVIES */
-movieData.forEach(movie=>{
-  const card=document.createElement("div");
-  card.className="movie";
-  card.dataset.category=movie.category;
-  card.dataset.title=movie.title.toLowerCase();
-
-  card.innerHTML=`
-    <div class="poster-box">
-      <img src="${movie.title}.jpg" loading="lazy">
-    </div>
-    <div class="movie-title">${movie.title}</div>
-  `;
-
-  card.addEventListener("click",()=>{
-    frame.src=movie.video;
-    modal.style.display="flex";
-  });
-
-  row.appendChild(card);
-});
-
-/* HERO AUTO */
-let slides=document.querySelectorAll(".slide");
-let current=0;
-setInterval(()=>{
-  slides[current].classList.remove("active");
-  current=(current+1)%slides.length;
-  slides[current].classList.add("active");
-},4000);
-
-/* SEARCH */
-document.getElementById("searchInput").addEventListener("input",function(){
-  const val=this.value.toLowerCase();
-  document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display=m.dataset.title.includes(val)?"block":"none";
-  });
-});
-
-/* FILTER */
-function filterMovies(category,btn){
-  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display=(category==="all"||m.dataset.category===category)?"block":"none";
-  });
-}
-
-function closeModal(){
-  modal.style.display="none";
-  frame.src="";
-}
 </script>
 
 </body>
