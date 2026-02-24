@@ -419,25 +419,25 @@ const movieData=[
 
 const softwareData = [
   {
-    title: "Windows",
-    link: "https://drive.google.com/drive/folders/1ss1MAOR7u3XS3joUhIdV87NN6evqME4R?usp=drive_link",
-    image: "Windows.gif"
-  },
+  title: "Windows",
+  link: "https://drive.google.com/embeddedfolderview?id=1ss1MAOR7u3XS3joUhIdV87NN6evqME4R#list",
+  image: "Windows.gif"
+},
   {
-    title: "Mac",
-    link: "https://drive.google.com/drive/folders/1Zp2EAnZxRxhUKXywpgNiSXiwUplmOcIC?usp=drive_link",
-    image: "Mac.gif"
-  },
+  title: "Mac",
+  link: "https://drive.google.com/embeddedfolderview?id=1Zp2EAnZxRxhUKXywpgNiSXiwUplmOcIC#list",
+  image: "Mac.gif"
+},
   {
-    title: "Ubuntu",
-    link: "https://drive.google.com/drive/folders/17qMQrARhNWkcRQK3hFwdtp3MFDuEBo3u?usp=drive_link",
-    image: "Ubuntu.gif"
-  },
+  title: "Ubuntu",
+  link: "https://drive.google.com/embeddedfolderview?id=17qMQrARhNWkcRQK3hFwdtp3MFDuEBo3u#list",
+  image: "Ubuntu.gif"
+},
   {
-    title: "Android",
-    link: "https://drive.google.com/drive/folders/1Uru7p3QUT4Sc7oMesXxjCLvZI67ySXZu?usp=drive_link",
-    image: "Android.gif"
-  }
+  title: "Android",
+  link: "https://drive.google.com/embeddedfolderview?id=1Uru7p3QUT4Sc7oMesXxjCLvZI67ySXZu#list",
+  image: "Android.gif"
+}
 ];
   
 const row=document.getElementById("movieRow");
@@ -488,9 +488,10 @@ softwareData.forEach(software => {
     <div class="movie-title">${software.title}</div>
   `;
 
-  card.addEventListener("click", () => {
-    window.open(software.link, "_blank");
-  });
+ card.addEventListener("click", () => {
+  frame.src = software.link;
+  modal.style.display = "flex";
+});
 
  card.dataset.category = "software";
 card.dataset.title = software.title.toLowerCase();
