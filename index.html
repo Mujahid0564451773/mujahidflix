@@ -317,7 +317,6 @@ body{
 
   
 /* REMOVE INTRO */
-/* REMOVE INTRO */
 
 window.addEventListener("load", () => {
 
@@ -325,7 +324,11 @@ window.addEventListener("load", () => {
   introSound.volume = 1;
 
   introSound.currentTime = 0;
-  introSound.play().catch(()=>{});
+ introSound.play().then(()=>{}).catch(()=>{
+  document.addEventListener("click", () => {
+    introSound.play();
+  }, { once: true });
+});
 
   setTimeout(()=>{
     const intro = document.getElementById("intro");
