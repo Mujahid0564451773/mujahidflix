@@ -93,12 +93,7 @@ body{
 }
 
 /* Red Light Sweep */
-.fade-out{
-  animation:fadeOut 1s ease forwards;
-}
-@keyframes fadeOut{
-  to{opacity:0;visibility:hidden;}
-}
+
 
 /* NAVBAR */
 .navbar{
@@ -389,7 +384,14 @@ window.addEventListener("load", () => {
   
 /* REMOVE INTRO */
 setTimeout(()=>{
-  document.getElementById("intro").classList.add("fade-out");
+  const intro = document.getElementById("intro");
+  intro.style.opacity = "0";
+  intro.style.transition = "opacity 0.5s ease";
+  
+  setTimeout(()=>{
+    intro.remove();   // completely remove from DOM
+  },500);
+
 },2500);
 
 /* CLOCK */
