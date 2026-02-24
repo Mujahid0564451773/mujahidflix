@@ -278,7 +278,19 @@ body{
 
 <div id="intro">
   <img src="intro.png" class="intro-image" alt="Intro">
+  <button id="enterBtn" style="
+    position:absolute;
+    bottom:80px;
+    padding:12px 30px;
+    font-size:18px;
+    background:#e50914;
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:4px;
+  ">Tap To Enter</button>
 </div>
+
 
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
@@ -321,16 +333,13 @@ body{
 window.addEventListener("load", () => {
 
   const introSound = document.getElementById("introMusic");
-  introSound.volume = 1;
+  const enterBtn = document.getElementById("enterBtn");
 
-  introSound.currentTime = 0;
- introSound.play().then(()=>{}).catch(()=>{
-  document.addEventListener("click", () => {
+  enterBtn.addEventListener("click", () => {
+
+    introSound.currentTime = 0;
     introSound.play();
-  }, { once: true });
-});
 
-  setTimeout(()=>{
     const intro = document.getElementById("intro");
     intro.style.transition = "opacity 0.8s ease";
     intro.style.opacity = "0";
@@ -339,7 +348,7 @@ window.addEventListener("load", () => {
       intro.remove();
     },800);
 
-  },3000);
+  });
 
 });
 
