@@ -373,9 +373,20 @@ body{
 
   const introSound = new Audio("https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3");
 
-document.addEventListener("click", function playIntroSound(){
-  introSound.play();
-  document.removeEventListener("click", playIntroSound);
+const introSound = new Audio("https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3");
+introSound.volume = 1;
+
+window.addEventListener("load", () => {
+  const playPromise = introSound.play();
+
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      // Agar autoplay block ho jaye to first click pe play kare
+      document.addEventListener("click", () => {
+        introSound.play();
+      }, { once: true });
+    });
+  }
 });
   
 /* REMOVE INTRO */
