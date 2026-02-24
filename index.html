@@ -18,6 +18,8 @@ body{
 
 /* ===== NETFLIX STYLE DRAMATIC INTRO ===== */
 
+/* ===== REAL NETFLIX STYLE INTRO ===== */
+
 #intro{
   position:fixed;
   inset:0;
@@ -25,31 +27,69 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:9999;
   overflow:hidden;
+  z-index:9999;
+}
+
+/* Moving Red Bars */
+#intro::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(
+    90deg,
+    rgba(255,0,0,0.9) 0px,
+    rgba(255,0,0,0.9) 30px,
+    transparent 30px,
+    transparent 70px
+  );
+  animation:bars 1s ease-out forwards;
+}
+
+@keyframes bars{
+  0%{ transform:scaleX(0); opacity:0; }
+  40%{ opacity:1; }
+  100%{ transform:scaleX(1); opacity:0; }
 }
 
 .intro-text{
-  font-size:95px;
+  font-size:100px;
   font-weight:bold;
-  letter-spacing:12px;
+  letter-spacing:14px;
   color:#e50914;
   opacity:0;
-  animation:textPop 0.8s ease forwards 1.3s;
+  animation:logoReveal 0.6s ease forwards 1s;
 }
 
-@keyframes textPop{
+@keyframes logoReveal{
   from{
-    transform:scale(1.4);
+    transform:scale(1.6);
     opacity:0;
   }
   to{
     transform:scale(1);
     opacity:1;
     text-shadow:
-      0 0 15px red,
-      0 0 40px darkred;
+      0 0 20px red,
+      0 0 60px darkred;
   }
+}
+
+/* Impact Flash */
+.flash{
+  position:fixed;
+  inset:0;
+  background:white;
+  opacity:0;
+  pointer-events:none;
+  z-index:10000;
+  animation:flash 0.15s ease forwards 1.7s;
+}
+
+@keyframes flash{
+  0%{opacity:0;}
+  50%{opacity:1;}
+  100%{opacity:0;}
 }
 
 /* Red Light Sweep */
@@ -340,7 +380,7 @@ window.addEventListener("load",()=>{
 /* REMOVE INTRO */
 setTimeout(()=>{
   document.getElementById("intro").classList.add("fade-out");
-},4500);
+},2500);
 
 /* CLOCK */
 function updateClock(){
