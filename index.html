@@ -422,12 +422,24 @@ const movieData=[
 
 const softwareData = [
   {
-    title: "Photoshop 2024",
-    link: "YOUR_DRIVE_LINK_HERE"
+    title: "Windows",
+    link: "https://drive.google.com/drive/folders/1ss1MAOR7u3XS3joUhIdV87NN6evqME4R?usp=drive_link",
+    image: "windows.gif"
   },
   {
-    title: "MS Office 2021",
-    link: "YOUR_DRIVE_LINK_HERE"
+    title: "Mac",
+    link: "https://drive.google.com/drive/folders/1Zp2EAnZxRxhUKXywpgNiSXiwUplmOcIC?usp=drive_link",
+    image: "mac.gif"
+  },
+  {
+    title: "Ubuntu",
+    link: "https://drive.google.com/drive/folders/17qMQrARhNWkcRQK3hFwdtp3MFDuEBo3u?usp=drive_link",
+    image: "ubuntu.gif"
+  },
+  {
+    title: "Android",
+    link: "https://drive.google.com/drive/folders/1Uru7p3QUT4Sc7oMesXxjCLvZI67ySXZu?usp=drive_link",
+    image: "android.gif"
   }
 ];
   
@@ -476,7 +488,7 @@ softwareData.forEach(software => {
 
   card.innerHTML = `
     <div class="poster-box">
-      <img src="software.jpg">
+     <img src="${software.image}">
     </div>
     <div class="movie-title">${software.title}</div>
   `;
