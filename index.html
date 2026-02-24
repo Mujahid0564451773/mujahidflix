@@ -371,21 +371,24 @@ introSound.volume = 1;
 
   
 /* REMOVE INTRO */
-const intro = document.getElementById("intro");
+window.addEventListener("load", () => {
 
-intro.addEventListener("click", () => {
+  // Sound try karo
+  introSound.play().catch(()=>{});
 
-  introSound.play();
-
-  intro.style.opacity = "0";
-  intro.style.transition = "opacity 0.6s ease";
-
+  // 3 second baad fade
   setTimeout(()=>{
-    intro.remove();
-  },600);
+    const intro = document.getElementById("intro");
+    intro.style.transition = "opacity 0.8s ease";
+    intro.style.opacity = "0";
 
-}, { once: true });
+    setTimeout(()=>{
+      intro.remove();
+    },800);
 
+  },3000);
+
+});
 /* CLOCK */
 function updateClock(){
   const now=new Date();
