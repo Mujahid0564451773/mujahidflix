@@ -374,16 +374,20 @@ document.getElementById("intro").addEventListener("click", () => {
 }, { once: true });
   
 /* REMOVE INTRO */
-setTimeout(()=>{
-  const intro = document.getElementById("intro");
-  intro.style.opacity = "0";
-  intro.style.transition = "opacity 0.5s ease";
-  
-  setTimeout(()=>{
-    intro.remove();   // completely remove from DOM
-  },500);
+const intro = document.getElementById("intro");
 
-},2500);
+intro.addEventListener("click", () => {
+
+  introSound.play();
+
+  intro.style.opacity = "0";
+  intro.style.transition = "opacity 0.6s ease";
+
+  setTimeout(()=>{
+    intro.remove();
+  },600);
+
+}, { once: true });
 
 /* CLOCK */
 function updateClock(){
