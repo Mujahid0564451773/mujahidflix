@@ -315,18 +315,18 @@ body{
 
 <script>
 
-const introSound = new Audio("netflix-sound.mp3");;
-introSound.volume = 1;
-
   
 /* REMOVE INTRO */
+/* REMOVE INTRO */
+
 window.addEventListener("load", () => {
 
-  // Sound force play
-  introSound.currentTime = 0;
-  introSound.play();
+  const introSound = document.getElementById("introMusic");
+  introSound.volume = 1;
 
-  // 3 second baad intro remove
+  introSound.currentTime = 0;
+  introSound.play().catch(()=>{});
+
   setTimeout(()=>{
     const intro = document.getElementById("intro");
     intro.style.transition = "opacity 0.8s ease";
@@ -339,6 +339,8 @@ window.addEventListener("load", () => {
   },3000);
 
 });
+
+
 /* CLOCK */
 function updateClock(){
   const now=new Date();
@@ -447,5 +449,7 @@ function closeModal(){
 }
 </script>
 
+  <audio id="introMusic" src="netflix-sound.mp3" preload="auto"></audio>
 </body>
 </html>
+  
