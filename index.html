@@ -323,21 +323,18 @@ body{
 <div class="hero" id="heroSlider"></div>
 
 <div class="section">
-<h2>Browse Movies</h2>
+<h2 id="sectionTitle">Browse Movies</h2>
 
 <div class="filters">
   <button class="active" onclick="filterMovies('all', this)">All</button>
   <button onclick="filterMovies('hollywood', this)">Hollywood</button>
   <button onclick="filterMovies('bollywood', this)">Bollywood</button>
+  <button onclick="filterMovies('software', this)">Software</button>
 </div>
 
 <div class="row" id="movieRow"></div>
 </div>
 
-<div class="section">
-  <h2>Browse Software</h2>
-  <div class="row" id="softwareRow"></div>
-</div>
   
 <div class="modal" id="videoModal">
 <span class="close-btn" onclick="closeModal()">✖</span>
@@ -479,8 +476,6 @@ movieData.forEach(movie=>{
   row.appendChild(card);
 });
 
-const softwareRow = document.getElementById("softwareRow");
-
 softwareData.forEach(software => {
 
   const card = document.createElement("div");
@@ -497,7 +492,9 @@ softwareData.forEach(software => {
     window.open(software.link, "_blank");
   });
 
-  softwareRow.appendChild(card);
+ card.dataset.category = "software";
+card.dataset.title = software.title.toLowerCase();
+row.appendChild(card);
 
 });
   
@@ -522,6 +519,13 @@ document.getElementById("searchInput").addEventListener("input",function(){
 function filterMovies(category,btn){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
+  const title = document.getElementById("sectionTitle");
+
+if(category === "software"){
+  title.innerText = "Browse Software";
+} else {
+  title.innerText = "Browse Movies";
+}
   document.querySelectorAll(".movie").forEach(m=>{
     m.style.display=(category==="all"||m.dataset.category===category)?"block":"none";
   });
