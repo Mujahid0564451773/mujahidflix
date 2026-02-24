@@ -527,7 +527,12 @@ if(category === "software"){
   title.innerText = "Browse Movies";
 }
   document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display=(category==="all"||m.dataset.category===category)?"block":"none";
+   if(category === "all"){
+  m.style.display = (m.dataset.category !== "software") ? "block" : "none";
+}
+else{
+  m.style.display = (m.dataset.category === category) ? "block" : "none";
+}
   });
 }
 
