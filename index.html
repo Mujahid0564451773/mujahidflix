@@ -322,10 +322,11 @@ introSound.volume = 1;
 /* REMOVE INTRO */
 window.addEventListener("load", () => {
 
-  // Sound try karo
-  introSound.play().catch(()=>{});
+  // Sound force play
+  introSound.currentTime = 0;
+  introSound.play();
 
-  // 3 second baad fade
+  // 3 second baad intro remove
   setTimeout(()=>{
     const intro = document.getElementById("intro");
     intro.style.transition = "opacity 0.8s ease";
