@@ -334,6 +334,11 @@ body{
 <div class="row" id="movieRow"></div>
 </div>
 
+<div class="section">
+  <h2>Browse Software</h2>
+  <div class="row" id="softwareRow"></div>
+</div>
+  
 <div class="modal" id="videoModal">
 <span class="close-btn" onclick="closeModal()">✖</span>
 <iframe id="videoFrame" src="" allowfullscreen></iframe>
@@ -415,6 +420,17 @@ const movieData=[
 {title:"War 2",category:"bollywood",video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
 ];
 
+const softwareData = [
+  {
+    title: "Photoshop 2024",
+    link: "YOUR_DRIVE_LINK_HERE"
+  },
+  {
+    title: "MS Office 2021",
+    link: "YOUR_DRIVE_LINK_HERE"
+  }
+];
+  
 const row=document.getElementById("movieRow");
 const hero=document.getElementById("heroSlider");
 const modal=document.getElementById("videoModal");
@@ -451,6 +467,28 @@ movieData.forEach(movie=>{
   row.appendChild(card);
 });
 
+const softwareRow = document.getElementById("softwareRow");
+
+softwareData.forEach(software => {
+
+  const card = document.createElement("div");
+  card.className = "movie";
+
+  card.innerHTML = `
+    <div class="poster-box">
+      <img src="software.jpg">
+    </div>
+    <div class="movie-title">${software.title}</div>
+  `;
+
+  card.addEventListener("click", () => {
+    window.open(software.link, "_blank");
+  });
+
+  softwareRow.appendChild(card);
+
+});
+  
 /* HERO AUTO */
 let slides=document.querySelectorAll(".slide");
 let current=0;
