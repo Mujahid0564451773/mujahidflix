@@ -373,8 +373,9 @@ body{
 
   const introSound = new Audio("https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3");
 
-window.addEventListener("load",()=>{
+document.addEventListener("click", function playIntroSound(){
   introSound.play();
+  document.removeEventListener("click", playIntroSound);
 });
   
 /* REMOVE INTRO */
