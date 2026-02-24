@@ -32,76 +32,20 @@ body{
 }
 
 /* Moving Red Bars */
-#intro::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:repeating-linear-gradient(
-    90deg,
-    rgba(255,0,0,0.9) 0px,
-    rgba(255,0,0,0.9) 30px,
-    transparent 30px,
-    transparent 70px
-  );
-  animation:bars 1s ease-out forwards;
-}
+
 
 .intro-image{
-  width:700px;
+  width:600px;
   max-width:90%;
-  opacity:0;
-  animation:fadeIn 1.5s ease forwards;
-}
-
-@keyframes fadeIn{
-  from{
-    opacity:0;
-    transform:scale(1.1);
-  }
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-}
-  
-@keyframes bars{
-  0%{ transform:scaleX(0); opacity:0; }
-  40%{ opacity:1; }
-  100%{ transform:scaleX(1); opacity:0; }
 }
 
 
 
-@keyframes logoReveal{
-  from{
-    transform:scale(1.6);
-    opacity:0;
-  }
-  to{
-    transform:scale(1);
-    opacity:1;
-    text-shadow:
-      0 0 20px red,
-      0 0 60px darkred;
-  }
-}
 
 /* Impact Flash */
-.flash{
-  position:fixed;
-  inset:0;
-  background:white;
-  opacity:0;
-  pointer-events:none;
-  z-index:10000;
-  animation:flash 0.15s ease forwards 1.7s;
-}
 
-@keyframes flash{
-  0%{opacity:0;}
-  50%{opacity:1;}
-  100%{opacity:0;}
-}
+
+
 
 /* Red Light Sweep */
 
@@ -333,7 +277,6 @@ body{
 <body>
 
 <div id="intro">
-  <div class="flash"></div>
   <img src="intro.png" class="intro-image" alt="Intro">
 </div>
 
