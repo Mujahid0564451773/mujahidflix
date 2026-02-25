@@ -77,11 +77,9 @@ body{
 }
 .clock{
   font-size:13px;
-  color:#aaa;
+  color:#999;
   letter-spacing:1px;
   white-space:nowrap;
-  text-align:right;
-  margin-right:70px;
 }
 .search-container{
   background:black;
@@ -275,14 +273,14 @@ background:rgba(0,0,0,0.6);
 /* ================= MOBILE RESPONSIVE FIX ================= */
 
 @media (max-width: 768px){
-
+  
   .navbar{
   height:auto;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:15px 15px;
-  gap:8px;
+  padding:18px 15px 20px 15px;
+  gap:10px;
 }
   
  .logo{
@@ -290,16 +288,18 @@ background:rgba(0,0,0,0.6);
   text-align:center;
 }
 
- .clock{
+.clock{
   font-size:12px;
   text-align:center;
-  margin-top:5px;
+  margin-top:6px;
+  opacity:0.7;
+  letter-spacing:1px;
 }
 
-  .search-container input{
-    width:180px;
-    font-size:14px;
-  }
+  .search-container{
+  width:100%;
+  max-width:280px;
+}
 
   .social-icons{
     position:relative;
