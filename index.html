@@ -210,6 +210,7 @@ body{
   height:100%;
   object-fit:cover;
   transition: transform 0.4s ease;
+  border-radius:8px;
 }
 
 .movie-title{
@@ -275,7 +276,12 @@ background:rgba(0,0,0,0.6);
 @media (max-width: 768px){
   
   .navbar{
-  height:auto;
+  position:fixed;
+  top:0;
+  width:100%;
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.85);
+  border-bottom:1px solid rgba(255,255,255,0.08);
   flex-direction:column;
   align-items:center;
   justify-content:center;
@@ -292,8 +298,11 @@ background:rgba(0,0,0,0.6);
   font-size:12px;
   text-align:center;
   margin-top:6px;
-  opacity:0.7;
+  opacity:0.75;
   letter-spacing:1px;
+  background:rgba(255,255,255,0.05);
+  padding:4px 12px;
+  border-radius:20px;
 }
 
   .search-container{
@@ -308,7 +317,7 @@ background:rgba(0,0,0,0.6);
   }
 
  .hero{
-  margin-top:160px;
+  margin-top:170px;
 }
 
   .section{
@@ -323,6 +332,9 @@ background:rgba(0,0,0,0.6);
 
   .movie{
   width:100%;
+  border-radius:8px;
+  overflow:hidden;
+  background:#1c1c1c;
 }
 
   .filters button{
