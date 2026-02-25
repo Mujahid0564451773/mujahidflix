@@ -128,13 +128,13 @@ body{
 
 .slide-title{
   position:absolute;
-  bottom:40px;
-  left:60px;
-  font-size:40px;
+  bottom:-40px;
+  left:0;
+  width:100%;
+  text-align:center;
+  font-size:26px;
   font-weight:bold;
   color:white;
-  text-shadow:0 0 20px rgba(0,0,0,0.8);
-  letter-spacing:2px;
 }
   
 .hero{
@@ -152,6 +152,8 @@ body{
   background-position: center;
   opacity:0;
   transition:opacity 0.8s ease;
+  
+  position:relative;
 }
 .slide.active{opacity:1;}
 
@@ -481,7 +483,13 @@ movieData.forEach((movie,index)=>{
   const slide=document.createElement("div");
   slide.className="slide";
   if(index===0) slide.classList.add("active");
+
   slide.style.backgroundImage=`url('${movie.title}.jpg')`;
+
+  slide.innerHTML = `
+    <div class="slide-title">${movie.title}</div>
+  `;
+
   hero.appendChild(slide);
 });
 
