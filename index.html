@@ -68,7 +68,9 @@ body{
   font-size:26px;
   font-weight:bold;
   color:#e50914;
-  animation:glow 3s infinite alternate;
+  position:relative;
+  overflow:hidden;
+  display:inline-block;
 }
 @keyframes glow{
   from{text-shadow:0 0 5px #e50914;}
@@ -233,6 +235,33 @@ background:rgba(0,0,0,0.6);
   font-size:28px;
   cursor:pointer;
 }
+
+.logo::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.9) 50%,
+    transparent 100%
+  );
+  transform:skewX(-25deg);
+  animation:shine 2.5s linear infinite;
+}
+
+@keyframes shine{
+  0%{ left:-100%; }
+  100%{ left:100%; }
+}
+  
+  /* LOGO SHINE EFFECT YAHAN PASTE KARO 👇 */
+
+
+  
 /* ================= MOBILE RESPONSIVE FIX ================= */
 
 @media (max-width: 768px){
