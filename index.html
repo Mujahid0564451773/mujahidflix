@@ -45,10 +45,6 @@ body{
 /* Impact Flash */
 
 
-
-
-/* Red Light Sweep */
-
 /* Laptop & Desktop */
   
 /* NAVBAR */
@@ -81,7 +77,8 @@ body{
   color:#999;
   letter-spacing:1px;
   white-space:nowrap;
-  margin-left:-20px;
+  margin:0;
+  padding-right:10px;
 }
 .search-container{
   background:black;
@@ -611,10 +608,36 @@ setInterval(()=>{
 },4000);
 
 /* SEARCH */
-document.getElementById("searchInput").addEventListener("input",function(){
-  const val=this.value.toLowerCase();
-  document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display=m.dataset.title.includes(val)?"block":"none";
+const ytBox = document.getElementById("youtubeResults");
+const ytFrame = document.getElementById("youtubeFrame");
+
+document.getElementById("searchInput").addEventListener("input", function () {
+  const raw = this.value.trim();
+  const val = raw.toLowerCase();
+
+  // ✅ YouTube mode: "yt: something"
+  if (val.startsWith("yt:")) {
+    const q = raw.slice(3).trim(); // after yt:
+    if (q.length > 0) {
+      ytBox.style.display = "block";
+      // YouTube search embed (no API key needed)
+      ytFrame.src = "https://www.youtube.com/embed?listType=search&list=" + encodeURIComponent(q);
+    } else {
+      ytBox.style.display = "none";
+      ytFrame.src = "";
+    }
+
+    // movies hide while yt search
+    document.querySelectorAll(".movie").forEach(m => m.style.display = "none");
+    return;
+  }
+
+  // ✅ Normal mode: hide youtube and filter movies
+  ytBox.style.display = "none";
+  ytFrame.src = "";
+
+  document.querySelectorAll(".movie").forEach(m => {
+    m.style.display = m.dataset.title.includes(val) ? "block" : "none";
   });
 });
 
