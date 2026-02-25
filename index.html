@@ -274,11 +274,16 @@ background:rgba(0,0,0,0.6);
 /* ================= MOBILE RESPONSIVE FIX ================= */
 
 @media (max-width: 768px){
+
+body{
+  padding-top:140px;
+}
   
-  .navbar{
+ .navbar{
   position:fixed;
   top:0;
   width:100%;
+  height:auto; /* 👈 IMPORTANT */
   backdrop-filter:blur(10px);
   background:rgba(0,0,0,0.85);
   border-bottom:1px solid rgba(255,255,255,0.08);
