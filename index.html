@@ -127,14 +127,10 @@ body{
 /* HERO */
 
 .slide-title{
-  position:absolute;
-  bottom:-40px;
-  left:0;
-  width:100%;
-  text-align:center;
-  font-size:26px;
+  font-size:30px;
   font-weight:bold;
   color:white;
+  text-shadow:0 4px 20px rgba(0,0,0,0.9);
 }
   
 .hero{
@@ -152,8 +148,11 @@ body{
   background-position: center;
   opacity:0;
   transition:opacity 0.8s ease;
-  
-  position:relative;
+
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding-bottom:25px;
 }
 .slide.active{opacity:1;}
 
