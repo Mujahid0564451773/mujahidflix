@@ -464,8 +464,8 @@ const hero=document.getElementById("heroSlider");
 const modal=document.getElementById("videoModal");
 const frame=document.getElementById("videoFrame");
 
-/* HERO (FIRST 5 ONLY) */
-movieData.slice(0,5).forEach((movie,index)=>{
+/* HERO (All posters) */
+movieData.forEach((movie,index)=>{
   const slide=document.createElement("div");
   slide.className="slide";
   if(index===0) slide.classList.add("active");
