@@ -76,8 +76,12 @@ body{
   to{text-shadow:0 0 20px red;}
 }
 .clock{
-  font-size:14px;
-  color:#ccc;
+  font-size:13px;
+  color:#aaa;
+  letter-spacing:1px;
+  white-space:nowrap;
+  min-width:160px;
+  text-align:right;
 }
 .search-container{
   background:black;
@@ -404,20 +408,21 @@ window.addEventListener("load", () => {
 
 /* CLOCK */
 function updateClock(){
-  const now=new Date();
-  const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  let hours=now.getHours();
-  const minutes=String(now.getMinutes()).padStart(2,'0');
-  const seconds=String(now.getSeconds()).padStart(2,'0');
-  const ampm=hours>=12?'pm':'am';
-  hours=hours%12||12;
-  document.getElementById("clock").innerText=
-    days[now.getDay()]+" "+
-    now.getDate()+" "+
-    months[now.getMonth()]+" "+
-    now.getFullYear()+" "+
-    hours+":"+minutes+":"+seconds+" "+ampm;
+  const now = new Date();
+
+  const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2,'0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+
+  document.getElementById("clock").innerText =
+    days[now.getDay()] + " " +
+    now.getDate() + " " +
+    months[now.getMonth()] + " | " +
+    hours + ":" + minutes + " " + ampm;
 }
 setInterval(updateClock,1000);
 updateClock();
