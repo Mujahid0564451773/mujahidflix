@@ -654,10 +654,9 @@ document.getElementById("searchInput").addEventListener("input", function () {
 
     if(val.length > 0){
       ytBox.style.display = "block";
-      ytFrame.src =
-        "https://www.youtube.com/embed?listType=search&list=" +
-        encodeURIComponent(val) +
-        "&origin=" + encodeURIComponent(window.location.origin);
+     ytFrame.src =
+  "https://www.youtube.com/results?search_query=" +
+  encodeURIComponent(val);
     } else {
       ytBox.style.display = "none";
       ytFrame.src = "";
