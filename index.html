@@ -4,11 +4,10 @@
 <title>Mujahid Flix</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- FONT AWESOME -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-*{box-sizing:border-box;}
-
 body{
   margin:0;
   background:#141414;
@@ -18,77 +17,164 @@ body{
   padding-top:80px;
 }
 
+
+/* ===== REAL NETFLIX STYLE INTRO ===== */
+
+#intro{
+  position:fixed;
+  inset:0;
+  background:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  z-index:9999;
+}
+
+/* Moving Red Bars */
+
+
+.intro-image{
+  width:600px;
+  max-width:90%;
+}
+
+
+
+
+/* Impact Flash */
+
+
+/* Laptop & Desktop */
+  
 /* NAVBAR */
 .navbar{
   position:fixed;
   top:0;
-  left:0;
   width:100%;
   height:80px;
   background:#000;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 20px;
+  padding:0 25px;
   z-index:1000;
 }
-
 .logo{
-  font-size:22px;
+  font-size:26px;
   font-weight:bold;
   color:#e50914;
-  white-space:nowrap;
+  position:relative;
+  overflow:hidden;
+  display:inline-block;
 }
-
+@keyframes glow{
+  from{text-shadow:0 0 5px #e50914;}
+  to{text-shadow:0 0 20px red;}
+}
+.clock{
+  font-size:13px;
+  color:#999;
+  letter-spacing:1px;
+  white-space:nowrap;
+  margin:0;
+  padding-right:10px;
+}
 .search-container{
-  display:flex;
-  align-items:center;
+  position:relative;
   background:black;
   border:1px solid #444;
-  border-radius:6px;
-  overflow:hidden;
-  max-width:500px;
-  width:100%;
-  margin:0 20px;
+  padding:8px 40px 8px 20px;
+  border-radius:4px;
+}
+
+#ytToggle{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  color:#666;
+  font-size:18px;
+  transition:0.3s;
+}
+
+#ytToggle.active{
+  color:#ff0000;
 }
 
 .search-container input{
-  flex:1;
-  padding:10px;
   background:transparent;
   border:none;
   color:white;
   outline:none;
+  width:280px;
+  font-size:15px;
 }
 
-.search-switch button{
-  background:#222;
-  border:none;
-  color:#aaa;
-  padding:8px 14px;
-  cursor:pointer;
-  font-size:13px;
+/* FLOATING SOCIAL ICONS */
+.social-icons{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:30px;
 }
-
-.search-switch button.active{
-  background:#e50914;
+.social-icons a{
   color:white;
+  font-size:24px;
+  animation:float 3s ease-in-out infinite;
+  transition:0.3s;
+}
+.social-icons a:nth-child(2){animation-delay:0.5s;}
+.social-icons a:nth-child(3){animation-delay:1s;}
+@keyframes float{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+  100%{transform:translateY(0);}
+}
+.social-icons a:hover{
+  transform:scale(1.3);
+}
+.fa-tiktok:hover{color:#25F4EE;}
+.fa-youtube:hover{color:#ff0000;}
+.fa-linkedin:hover{color:#0A66C2;}
+
+/* HERO */
+
+.slide-title{
+  font-size:28px;
+  font-weight:bold;
+  color:white;
+  margin-top:15px;
+  text-align:center;
+}
+  
+.hero{
+  margin-top:40px;
+  position:relative;
+}
+.slide{
+  display:none;
+  text-align:center;
+}
+.slide.active{
+  display:block;
+}
+.slide.active{opacity:1;}
+
+/* SECTION */
+.section{
+  padding:40px 60px;
 }
 
-.clock{
-  font-size:13px;
-  color:#999;
-  white-space:nowrap;
+.section h2{
+  margin-bottom:25px;
 }
 
-/* MOVIES */
-.section{padding:40px 60px;}
-.row{display:flex;gap:20px;flex-wrap:wrap;}
-.movie{width:23%;cursor:pointer;}
-.poster-box{aspect-ratio:16/9;overflow:hidden;border-radius:6px;}
-.poster-box img{width:100%;height:100%;object-fit:cover;}
-.movie-title{text-align:center;margin-top:8px;font-size:14px;color:#ddd;}
-
+.filters{
+  margin-bottom:30px;
+}
+  
 .filters button{
   background:#333;
   color:white;
@@ -97,58 +183,225 @@ body{
   margin-right:10px;
   border-radius:4px;
   cursor:pointer;
+  font-weight:bold;
 }
-.filters button.active{background:#e50914;}
+.filters button.active,
+.filters button:hover{
+  background:#e50914;
+}
+.row{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+ .movie{
+  width:23%;
+  cursor:pointer;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+}
+
+  .movie:hover{
+  transform: scale(1.25) translateY(-15px);
+  z-index: 50;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+}
+
+.movie:hover img{
+  transform: scale(1.1);
+}
+  
+.poster-box{
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:6px;
+}
+
+.poster-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition: transform 0.4s ease;
+  border-radius:8px;
+}
+
+.movie-title{
+  text-align:center;
+  margin-top:8px;
+  font-size:14px;
+  color:#ddd;
+}
 
 /* MODAL */
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.7);
+background:rgba(0,0,0,0.6);
   display:none;
   justify-content:center;
   align-items:center;
+  z-index:2000;
 }
 .modal iframe{
-  width:90%;
-  height:85vh;
+  width:95%;
+  height:90vh;
   border:none;
+  background:white;
   border-radius:8px;
 }
 .close-btn{
   position:absolute;
   top:20px;
-  right:30px;
+  right:40px;
   font-size:28px;
   cursor:pointer;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-  body{padding-top:130px;}
-  .navbar{flex-direction:column;height:auto;padding:15px;gap:10px;}
-  .search-container{max-width:100%;}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
-  .movie{width:100%;}
+.logo::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.9) 50%,
+    transparent 100%
+  );
+  transform:skewX(-25deg);
+  animation:shine 2.5s linear infinite;
 }
+
+@keyframes shine{
+  0%{ left:-100%; }
+  100%{ left:100%; }
+}
+  
+  /* LOGO SHINE EFFECT YAHAN PASTE KARO 👇 */
+
+
+  
+/* ================= MOBILE RESPONSIVE FIX ================= */
+
+@media (max-width: 768px){
+
+body{
+  padding-top:140px;
+}
+  
+ .navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:auto; /* 👈 IMPORTANT */
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.85);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:18px 15px 20px 15px;
+  gap:10px;
+}
+  
+ .logo{
+  font-size:20px;
+  text-align:center;
+}
+
+.clock{
+  font-size:12px;
+  text-align:center;
+  margin-top:6px;
+  opacity:0.75;
+  letter-spacing:1px;
+  background:rgba(255,255,255,0.05);
+  padding:4px 12px;
+  border-radius:20px;
+}
+
+  .search-container{
+  width:100%;
+  max-width:280px;
+}
+
+.social-icons{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.hero{
+  margin-top:20px;
+}
+
+  .section{
+    padding:20px;
+  }
+
+ .row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+  .movie{
+  width:100%;
+  border-radius:8px;
+  overflow:hidden;
+  background:#1c1c1c;
+}
+
+  .filters button{
+    padding:6px 12px;
+    font-size:13px;
+    margin-bottom:8px;
+  }
+
+}
+  
 </style>
 </head>
 
 <body>
 
+<div id="intro">
+  <img src="intro.png" class="intro-image" alt="Intro">
+  <button id="enterBtn" style="
+    position:absolute;
+    bottom:80px;
+    padding:12px 30px;
+    font-size:18px;
+    background:#e50914;
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:4px;
+  ">Tap To Enter</button>
+</div>
+
+
 <div class="navbar">
-  <div class="logo">Mujahid Flix</div>
-
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search movies...">
-    <div class="search-switch">
-      <button id="movieBtn" class="active">Movies</button>
-      <button id="ytBtn2">YouTube</button>
-    </div>
-  </div>
-
+  <div class="logo">MUJAHID FLIX</div>
+ <div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search movies...">
+  <i id="ytToggle" class="fa-brands fa-youtube"></i>
+</div>
   <div class="clock" id="clock"></div>
 </div>
+
+<div class="social-icons">
+  <a href="https://tiktok.com/@icloudksa.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+  <a href="https://www.youtube.com/@MujahidCloud" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+  <a href="https://www.linkedin.com/in/mujahid-hussain-17a68a66/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+</div>
+
+<div class="hero" id="heroSlider"></div>
 
 <div class="section">
 
@@ -156,133 +409,340 @@ body{
   <h2>YouTube Results</h2>
   <div class="row" id="youtubeRow"></div>
 </div>
-
-<h2>Browse Movies</h2>
+  
+<h2 id="sectionTitle">Browse Movies</h2>
 
 <div class="filters">
   <button class="active" onclick="filterMovies('all', this)">All</button>
   <button onclick="filterMovies('hollywood', this)">Hollywood</button>
   <button onclick="filterMovies('bollywood', this)">Bollywood</button>
+  <button onclick="filterMovies('software', this)">Software</button>
 </div>
 
 <div class="row" id="movieRow"></div>
 </div>
 
+  
 <div class="modal" id="videoModal">
 <span class="close-btn" onclick="closeModal()">✖</span>
-<iframe id="videoFrame" allowfullscreen></iframe>
+<iframe id="videoFrame" src="" allowfullscreen></iframe>
 </div>
 
 <script>
+/* ========= INTRO REMOVE ========= */
+window.addEventListener("load", () => {
+  const introSound = document.getElementById("introMusic");
+  const enterBtn = document.getElementById("enterBtn");
 
-/* CLOCK */
-function updateClock(){
-  const now=new Date();
-  document.getElementById("clock").innerText=now.toLocaleString();
+  if (enterBtn) {
+    enterBtn.addEventListener("click", () => {
+      if (introSound) {
+        introSound.currentTime = 0;
+        introSound.play().catch(()=>{});
+      }
+
+      const intro = document.getElementById("intro");
+      if (intro) {
+        intro.style.transition = "opacity 0.8s ease";
+        intro.style.opacity = "0";
+        setTimeout(() => intro.remove(), 800);
+      }
+    });
+  }
+});
+
+/* ========= CLOCK ========= */
+function updateClock() {
+  const now = new Date();
+  const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2,'0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+
+  const el = document.getElementById("clock");
+  if (el) {
+    el.innerText =
+      days[now.getDay()] + " " +
+      now.getDate() + " " +
+      months[now.getMonth()] + " | " +
+      hours + ":" + minutes + " " + ampm;
+  }
 }
-setInterval(updateClock,1000);
+setInterval(updateClock, 1000);
 updateClock();
 
-/* DATA */
-const movieData=[
+/* ========= DATA ========= */
+const movieData = [
+  {title:"Apocalypse Of Ice",category:"hollywood",video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
 {title:"Black Adam",category:"hollywood",video:"https://drive.google.com/file/d/1YeVeiSnOZRsDVeULfL6dMdtY9wKrZhZ-/preview"},
-{title:"Extraction 2",category:"hollywood",video:"https://drive.google.com/file/d/1NasBTxb85g6aCF3CgG19J2C6jcH1H_HW/preview"},
-{title:"Bloody Daddy",category:"bollywood",video:"https://drive.google.com/file/d/1J9V45stfDO2wjDMfnkLIimCMNhTFCgSg/preview"}
+{title:"Blackhat",category:"hollywood",video:"https://drive.google.com/file/d/14hTxKyJ50-aXjvdmnT5KY82q3YaXO1Eq/preview"},
+{title:"Brain Freeze",category:"hollywood",video:"https://drive.google.com/file/d/1_9cKGtefpLtMU0SIItDy0uBGLk25Ov4p/preview"},
+{title:"Captain Phillips",category:"hollywood",video:"https://drive.google.com/file/d/1Cn_CSHSnlUBY5IQUOE0ut1oI1WO4wfQz/preview"},
+{title:"Carter",category:"hollywood",video:"https://drive.google.com/file/d/1WEGsgLmqcz1L020OJv1adTaHREl_grNx/preview"},
+{title:"65",category:"hollywood",video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
+{title:"Contagion 2011",category:"hollywood",video:"https://drive.google.com/file/d/1lOm1c-c2WUd7kJJb_RyRZO-DjIOOlOSC/preview"},
+{title:"Deadpool 2 2018",category:"hollywood",video:"https://drive.google.com/file/d/1elgwkKAy-L0fRpCroV0oxEKK1tt8RT3-/preview"},
+{title:"Escape Room 2019",category:"hollywood",video:"https://drive.google.com/file/d/1ClSrNRdyXOERHUWmfNi3hKiTrxbZ0OUU/preview"},
+{title:"Everest 2015",category:"hollywood",video:"https://drive.google.com/file/d/1EretqZBlabnJORzf9YHH9HeiMQDWUhsG/preview"},
+{title:"Extraction 2 2023",category:"hollywood",video:"https://drive.google.com/file/d/1NasBTxb85g6aCF3CgG19J2C6jcH1H_HW/preview"},
+{title:"FAST 9 The Fast Saga 2021",category:"hollywood",video:"https://drive.google.com/file/d/1x_FeirOlokz9eWvRpMrvTgclrr2ppBGG/preview"},
+{title:"Fast X 2023",category:"hollywood",video:"https://drive.google.com/file/d/1QxnySurIsQbh0SvpebtkC6-brI7CvIbK/preview"},
+{title:"Final Destination 1",category:"hollywood",video:"https://drive.google.com/file/d/1E3uidvUgBEno95ikw1xcpgEZog96IKVM/preview"},
+{title:"Final Destination 2",category:"hollywood",video:"https://drive.google.com/file/d/1CVaXGc6olmnfC68rZL90bM4LZl1OgpP2/preview"},
+{title:"Final Destination 3",category:"hollywood",video:"https://drive.google.com/file/d/14lT5qq1tPDE0fKth9uaVGqbK2qW90cY-/preview"},
+{title:"Final Destination 4",category:"hollywood",video:"https://drive.google.com/file/d/1lvu2mV-mJlxbIvV9dV7YpFitArYSNMmn/preview"},
+{title:"Final Destination 5",category:"hollywood",video:"https://drive.google.com/file/d/12f5pVbUvydUKBdvIByqXKIeviuKpId2C/preview"},
+
+{title:"Bloody Daddy 2023",category:"bollywood",video:"https://drive.google.com/file/d/1J9V45stfDO2wjDMfnkLIimCMNhTFCgSg/preview"},
+{title:"Batti Gul Meter Chalu 2018",category:"bollywood",video:"https://drive.google.com/file/d/16ngcrO_APhN9gGiJIjmo9nU2xMEudaFl/preview"},
+{title:"Badnaam Gali 2019",category:"bollywood",video:"https://drive.google.com/file/d/15UuIzSMOXGOkVahouL0XYk2JtAfZtSi2/preview"},
+{title:"Bachchhan Paandey 2022",category:"bollywood",video:"https://drive.google.com/file/d/1l3FY58CIcuC88Rut25SsW-06Wm4CNJKF/preview"},
+{title:"Babli Bouncer 2022",category:"bollywood",video:"https://drive.google.com/file/d/1CSKzf1_cA59e0Uc_RSHbnnGePFdDWC0f/preview"},
+{title:"An Action Hero 2022",category:"bollywood",video:"https://drive.google.com/file/d/1RXP-oiZrI75ZdK39X2ohIOsBwFL1ho03/preview"},
+{title:"Airlift 2016",category:"bollywood",video:"https://drive.google.com/file/d/1t44Ro5RnKPqt8g6AFeg3i4SBIrp_ApkU/preview"},
+{title:"14 Phere 2021",category:"bollywood",video:"https://drive.google.com/file/d/1HGWwiKAh6tpJ9ECL4L-rVG2oYRQ1ylcI/preview"},
+{title:"Dhurandhar",category:"bollywood",video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
+{title:"Aap Jaisa Koi",category:"bollywood",video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
+{title:"Baaghi 3 2020",category:"bollywood",video:"https://drive.google.com/file/d/1TSolQVPdNB-sngeQPL5g0ruTOpUeN8vg/preview"},
+{title:"Baaghi 4 2025",category:"bollywood",video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
+{title:"Nikita Roy",category:"bollywood",video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
+{title:"Deva",category:"bollywood",video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
+{title:"Housefull 5",category:"bollywood",video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
+{title:"Maalik",category:"bollywood",video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
+{title:"Raid 2",category:"bollywood",video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
+{title:"Jolly LLB 3",category:"bollywood",video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
+{title:"Maargan",category:"bollywood",video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
+{title:"Saiyaara",category:"bollywood",video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
+{title:"The Diplomat",category:"bollywood",video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
+{title:"Sikandar",category:"bollywood",video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
+{title:"War 2",category:"bollywood",video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
 ];
 
-const row=document.getElementById("movieRow");
-const modal=document.getElementById("videoModal");
-const frame=document.getElementById("videoFrame");
+const softwareData = [
+  { title:"Windows", link:"https://drive.google.com/embeddedfolderview?id=1ss1MAOR7u3XS3joUhIdV87NN6evqME4R#list", image:"Windows.gif" },
+  { title:"Mac", link:"https://drive.google.com/embeddedfolderview?id=1Zp2EAnZxRxhUKXywpgNiSXiwUplmOcIC#list", image:"Mac.gif" },
+  { title:"Ubuntu", link:"https://drive.google.com/embeddedfolderview?id=17qMQrARhNWkcRQK3hFwdtp3MFDuEBo3u#list", image:"Ubuntu.gif" },
+  { title:"Android", link:"https://drive.google.com/embeddedfolderview?id=1Uru7p3QUT4Sc7oMesXxjCLvZI67ySXZu#list", image:"Android.gif" }
+];
 
-movieData.forEach(m=>{
-  const card=document.createElement("div");
-  card.className="movie";
-  card.dataset.category=m.category;
-  card.dataset.title=m.title.toLowerCase();
-  card.innerHTML=`
-    <div class="poster-box">
-      <img src="${m.title}.jpg">
-    </div>
-    <div class="movie-title">${m.title}</div>
-  `;
-  card.onclick=()=>{
-    frame.src=m.video;
-    modal.style.display="flex";
-  };
-  row.appendChild(card);
-});
+/* ========= ELEMENTS ========= */
+const row = document.getElementById("movieRow");
+const hero = document.getElementById("heroSlider");
+const modal = document.getElementById("videoModal");
+const frame = document.getElementById("videoFrame");
 
-function closeModal(){
-  modal.style.display="none";
-  frame.src="";
-}
+const ytBtn = document.getElementById("ytToggle");
+const ytBox = document.getElementById("youtubeResults");
+const ytRow = document.getElementById("youtubeRow");
+const searchInput = document.getElementById("searchInput");
 
-function filterMovies(cat,btn){
-  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display=(cat==="all"||m.dataset.category===cat)?"block":"none";
-  });
-}
-
-/* YOUTUBE SEARCH */
-let youtubeMode=false;
-const API_KEY="YOUR_API_KEY_HERE";
-
-const movieBtn=document.getElementById("movieBtn");
-const ytBtn2=document.getElementById("ytBtn2");
-const searchInput=document.getElementById("searchInput");
-const ytBox=document.getElementById("youtubeResults");
-const ytRow=document.getElementById("youtubeRow");
-
-movieBtn.onclick=()=>{
-  youtubeMode=false;
-  movieBtn.classList.add("active");
-  ytBtn2.classList.remove("active");
-  ytBox.style.display="none";
-};
-
-ytBtn2.onclick=()=>{
-  youtubeMode=true;
-  ytBtn2.classList.add("active");
-  movieBtn.classList.remove("active");
-};
-
-searchInput.addEventListener("input",async()=>{
-  const val=searchInput.value.trim();
-  if(!youtubeMode){
-    document.querySelectorAll(".movie").forEach(m=>{
-      m.style.display=m.dataset.title.includes(val.toLowerCase())?"block":"none";
-    });
-    return;
-  }
-  if(val.length<2)return;
-
-  ytRow.innerHTML="";
-  ytBox.style.display="block";
-
-  const res=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=6&q=${val}&key=${API_KEY}`);
-  const data=await res.json();
-
-  data.items?.forEach(item=>{
-    const id=item.id.videoId;
-    const card=document.createElement("div");
-    card.className="movie";
-    card.innerHTML=`
-      <div class="poster-box">
-        <img src="${item.snippet.thumbnails.medium.url}">
-      </div>
-      <div class="movie-title">${item.snippet.title}</div>
+/* ========= HERO SLIDER ========= */
+if (hero) {
+  movieData.forEach((movie, index) => {
+    const slide = document.createElement("div");
+    slide.className = "slide" + (index === 0 ? " active" : "");
+    slide.innerHTML = `
+      <img src="${movie.title}.jpg" style="width:100%; max-height:55vh; object-fit:contain;">
+      <div class="slide-title">${movie.title}</div>
     `;
-    card.onclick=()=>{
-      frame.src="https://www.youtube.com/embed/"+id;
-      modal.style.display="flex";
-    };
-    ytRow.appendChild(card);
+    hero.appendChild(slide);
   });
-});
 
+  let slides = document.querySelectorAll(".slide");
+  let current = 0;
+  if (slides.length > 0) {
+    setInterval(() => {
+      slides[current].classList.remove("active");
+      current = (current + 1) % slides.length;
+      slides[current].classList.add("active");
+    }, 4000);
+  }
+}
+
+/* ========= BUILD MOVIE + SOFTWARE CARDS ========= */
+function addCard({title, category, imageSrc, clickSrc, isSoftware=false}) {
+  const card = document.createElement("div");
+  card.className = "movie";
+  card.dataset.category = category;
+  card.dataset.title = title.toLowerCase();
+
+  card.innerHTML = `
+    <div class="poster-box">
+      <img src="${imageSrc}" loading="lazy">
+    </div>
+    <div class="movie-title">${title}</div>
+  `;
+
+  card.addEventListener("click", () => {
+    if (!frame || !modal) return;
+    frame.src = clickSrc;
+    modal.style.display = "flex";
+  });
+
+  row.appendChild(card);
+}
+
+if (row) {
+  movieData.forEach(m => addCard({
+    title: m.title,
+    category: m.category,
+    imageSrc: `${m.title}.jpg`,
+    clickSrc: m.video
+  }));
+
+  softwareData.forEach(s => addCard({
+    title: s.title,
+    category: "software",
+    imageSrc: s.image,
+    clickSrc: s.link,
+    isSoftware: true
+  }));
+}
+
+/* ========= MODAL CLOSE ========= */
+window.closeModal = function () {
+  if (modal) modal.style.display = "none";
+  if (frame) frame.src = "";
+};
+
+/* ========= FILTER ========= */
+window.filterMovies = function(category, btn){
+  document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+
+  const titleEl = document.getElementById("sectionTitle");
+  if (titleEl) titleEl.innerText = (category === "software") ? "Browse Software" : "Browse Movies";
+
+  document.querySelectorAll("#movieRow .movie").forEach(m => {
+    if (category === "all") {
+      m.style.display = (m.dataset.category !== "software") ? "block" : "none";
+    } else {
+      m.style.display = (m.dataset.category === category) ? "block" : "none";
+    }
+  });
+
+  // youtube results hide on filter
+  if (ytBox) ytBox.style.display = "none";
+  if (ytRow) ytRow.innerHTML = "";
+};
+
+filterMovies("all", document.querySelector(".filters button"));
+
+/* ========= YOUTUBE API SEARCH (CARDS) ========= */
+let youtubeMode = false;
+
+// ✅ apni YouTube API key yahan paste karo:
+const API_KEY = "AIzaSyAuql0B2NuP1KvfFz6iPAAql6xQaSX5WdY";
+
+function setYoutubeMode(on){
+  youtubeMode = on;
+
+  if (!searchInput) return;
+  if (ytBtn) ytBtn.classList.toggle("active", youtubeMode);
+
+  if (youtubeMode) {
+    searchInput.placeholder = "Search YouTube...";
+    // movies hide
+    document.querySelectorAll("#movieRow .movie").forEach(m => m.style.display = "none");
+  } else {
+    searchInput.placeholder = "Search movies...";
+    if (ytBox) ytBox.style.display = "none";
+    if (ytRow) ytRow.innerHTML = "";
+    // show default filter again
+    filterMovies("all", document.querySelector(".filters button"));
+  }
+}
+
+if (ytBtn) {
+  ytBtn.addEventListener("click", () => setYoutubeMode(!youtubeMode));
+}
+
+let ytTimer = null;
+
+async function searchYouTube(q){
+  if (!ytBox || !ytRow) return;
+
+  ytRow.innerHTML = "";
+  ytBox.style.display = "block";
+
+  try {
+    const url =
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=12&safeSearch=none&q=${encodeURIComponent(q)}&key=${API_KEY}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.error) {
+      ytRow.innerHTML = `<div style="padding:15px;color:#ffb3b3;">YouTube API Error: ${data.error.message}</div>`;
+      return;
+    }
+
+    if (!data.items || data.items.length === 0) {
+      ytRow.innerHTML = `<div style="padding:15px;color:#bbb;">No results found.</div>`;
+      return;
+    }
+
+    data.items.forEach(item => {
+      const videoId = item.id?.videoId;
+      if (!videoId) return;
+
+      const title = item.snippet?.title || "Untitled";
+      const thumb = item.snippet?.thumbnails?.medium?.url || "";
+
+      const card = document.createElement("div");
+      card.className = "movie";
+      card.innerHTML = `
+        <div class="poster-box"><img src="${thumb}" loading="lazy"></div>
+        <div class="movie-title">${title}</div>
+      `;
+
+      card.addEventListener("click", () => {
+        if (!frame || !modal) return;
+        frame.src = "https://www.youtube.com/embed/" + videoId;
+        modal.style.display = "flex";
+      });
+
+      ytRow.appendChild(card);
+    });
+
+  } catch (e) {
+    ytRow.innerHTML = `<div style="padding:15px;color:#ffb3b3;">Network error. Check internet / API key.</div>`;
+  }
+}
+
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    const val = searchInput.value.trim();
+
+    if (!youtubeMode) {
+      // normal local search
+      if (ytBox) ytBox.style.display = "none";
+      if (ytRow) ytRow.innerHTML = "";
+
+      document.querySelectorAll("#movieRow .movie").forEach(m => {
+        m.style.display = m.dataset.title.includes(val.toLowerCase()) ? "block" : "none";
+      });
+      return;
+    }
+
+    // youtube mode
+    if (val.length < 2) {
+      if (ytBox) ytBox.style.display = "none";
+      if (ytRow) ytRow.innerHTML = "";
+      return;
+    }
+
+    clearTimeout(ytTimer);
+    ytTimer = setTimeout(() => searchYouTube(val), 350);
+  });
+}
 </script>
 
+
+  <audio id="introMusic" src="netflix-sound.mp3" preload="auto"></audio>
 </body>
 </html>
+  
