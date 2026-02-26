@@ -8,45 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-
-.search-container{
-  display:flex;
-  align-items:center;
-  background:black;
-  border:1px solid #444;
-  border-radius:6px;
-  overflow:hidden;
-  margin:0 auto;
-}
-
-.search-container input{
-  flex:1;
-  padding:10px;
-  background:transparent;
-  border:none;
-  color:white;
-  outline:none;
-}
-
-.search-switch{
-  display:flex;
-}
-
-.search-switch button{
-  background:#222;
-  border:none;
-  color:#aaa;
-  padding:8px 14px;
-  cursor:pointer;
-  font-size:13px;
-  transition:0.3s;
-}
-
-.search-switch button.active{
-  background:#e50914;
-  color:white;
-}
-  
 body{
   margin:0;
   background:#141414;
@@ -95,25 +56,61 @@ body{
   background:#000;
   display:flex;
   align-items:center;
-  padding:0 40px;
+  justify-content:space-between;
+  padding:0 25px;
   z-index:1000;
 }
-
 .logo{
-  flex:1;
+  font-size:26px;
+  font-weight:bold;
+  color:#e50914;
+  position:relative;
+  overflow:hidden;
+  display:inline-block;
 }
-
-.search-container{
-  flex:2;
-  max-width:600px;
-  margin:0 auto;
+@keyframes glow{
+  from{text-shadow:0 0 5px #e50914;}
+  to{text-shadow:0 0 20px red;}
 }
-
 .clock{
-  flex:1;
-  text-align:right;
+  font-size:13px;
+  color:#999;
+  letter-spacing:1px;
+  white-space:nowrap;
+  margin:0;
+  padding-right:10px;
+}
+.search-container{
+  position:relative;
+  background:black;
+  border:1px solid #444;
+  padding:8px 40px 8px 20px;
+  border-radius:4px;
 }
 
+#ytToggle{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  color:#666;
+  font-size:18px;
+  transition:0.3s;
+}
+
+#ytToggle.active{
+  color:#ff0000;
+}
+
+.search-container input{
+  background:transparent;
+  border:none;
+  color:white;
+  outline:none;
+  width:280px;
+  font-size:15px;
+}
 
 /* FLOATING SOCIAL ICONS */
 .social-icons{
@@ -327,18 +324,9 @@ body{
   border-radius:20px;
 }
 
- .search-container{
+  .search-container{
   width:100%;
-  max-width:100%;
-}
-
-.search-container input{
-  font-size:14px;
-}
-
-.search-switch button{
-  padding:6px 10px;
-  font-size:12px;
+  max-width:280px;
 }
 
 .social-icons{
@@ -399,20 +387,12 @@ body{
 
 
 <div class="navbar">
-
-  <div class="logo">Mujahid Flix</div>
-
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search Movies...">
-    
-    <div class="search-switch">
-      <button id="movieBtn" class="active">Movies</button>
-      <button id="ytBtn2">YouTube</button>
-    </div>
-  </div>
-
+  <div class="logo">MUJAHID FLIX</div>
+ <div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search movies...">
+  <i id="ytToggle" class="fa-brands fa-youtube"></i>
+</div>
   <div class="clock" id="clock"></div>
-
 </div>
 
 <div class="social-icons">
@@ -554,20 +534,7 @@ const hero = document.getElementById("heroSlider");
 const modal = document.getElementById("videoModal");
 const frame = document.getElementById("videoFrame");
 
-const movieBtn = document.getElementById("movieBtn");
-const ytBtn2 = document.getElementById("ytBtn2");
-
-movieBtn.addEventListener("click", ()=>{
-  movieBtn.classList.add("active");
-  ytBtn2.classList.remove("active");
-  setYoutubeMode(false);
-});
-
-ytBtn2.addEventListener("click", ()=>{
-  ytBtn2.classList.add("active");
-  movieBtn.classList.remove("active");
-  setYoutubeMode(true);
-});
+const ytBtn = document.getElementById("ytToggle");
 const ytBox = document.getElementById("youtubeResults");
 const ytRow = document.getElementById("youtubeRow");
 const searchInput = document.getElementById("searchInput");
@@ -674,6 +641,7 @@ function setYoutubeMode(on){
   youtubeMode = on;
 
   if (!searchInput) return;
+  if (ytBtn) ytBtn.classList.toggle("active", youtubeMode);
 
   if (youtubeMode) {
     searchInput.placeholder = "Search YouTube...";
@@ -686,6 +654,10 @@ function setYoutubeMode(on){
     // show default filter again
     filterMovies("all", document.querySelector(".filters button"));
   }
+}
+
+if (ytBtn) {
+  ytBtn.addEventListener("click", () => setYoutubeMode(!youtubeMode));
 }
 
 let ytTimer = null;
