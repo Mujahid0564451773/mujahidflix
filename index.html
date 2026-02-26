@@ -405,13 +405,9 @@ body{
 
 <div class="section">
 
-<div id="youtubeResults" style="display:none; margin-top:30px;">
+<div id="youtubeResults" style="display:none;">
   <h2>YouTube Results</h2>
-  <iframe id="youtubeFrame"
-          width="100%"
-          height="500"
-          style="border:none; border-radius:8px;">
-  </iframe>
+  <div class="row" id="youtubeRow"></div>
 </div>
   
 <h2 id="sectionTitle">Browse Movies</h2>
@@ -433,37 +429,31 @@ body{
 </div>
 
 <script>
-
-  
-/* REMOVE INTRO */
-
+/* ========= INTRO REMOVE ========= */
 window.addEventListener("load", () => {
-
   const introSound = document.getElementById("introMusic");
   const enterBtn = document.getElementById("enterBtn");
 
-  enterBtn.addEventListener("click", () => {
+  if (enterBtn) {
+    enterBtn.addEventListener("click", () => {
+      if (introSound) {
+        introSound.currentTime = 0;
+        introSound.play().catch(()=>{});
+      }
 
-    introSound.currentTime = 0;
-    introSound.play();
-
-    const intro = document.getElementById("intro");
-    intro.style.transition = "opacity 0.8s ease";
-    intro.style.opacity = "0";
-
-    setTimeout(()=>{
-      intro.remove();
-    },800);
-
-  });
-
+      const intro = document.getElementById("intro");
+      if (intro) {
+        intro.style.transition = "opacity 0.8s ease";
+        intro.style.opacity = "0";
+        setTimeout(() => intro.remove(), 800);
+      }
+    });
+  }
 });
 
-
-/* CLOCK */
-function updateClock(){
+/* ========= CLOCK ========= */
+function updateClock() {
   const now = new Date();
-
   const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
@@ -472,237 +462,257 @@ function updateClock(){
   const ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12 || 12;
 
-  document.getElementById("clock").innerText =
-    days[now.getDay()] + " " +
-    now.getDate() + " " +
-    months[now.getMonth()] + " | " +
-    hours + ":" + minutes + " " + ampm;
+  const el = document.getElementById("clock");
+  if (el) {
+    el.innerText =
+      days[now.getDay()] + " " +
+      now.getDate() + " " +
+      months[now.getMonth()] + " | " +
+      hours + ":" + minutes + " " + ampm;
+  }
 }
-setInterval(updateClock,1000);
+setInterval(updateClock, 1000);
 updateClock();
 
-/* MOVIE DATA (FULL LIST) */
-const movieData=[
-{title:"Apocalypse Of Ice",category:"hollywood",video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
-{title:"Black Adam",category:"hollywood",video:"https://drive.google.com/file/d/1YeVeiSnOZRsDVeULfL6dMdtY9wKrZhZ-/preview"},
-{title:"Blackhat",category:"hollywood",video:"https://drive.google.com/file/d/14hTxKyJ50-aXjvdmnT5KY82q3YaXO1Eq/preview"},
-{title:"Brain Freeze",category:"hollywood",video:"https://drive.google.com/file/d/1_9cKGtefpLtMU0SIItDy0uBGLk25Ov4p/preview"},
-{title:"Captain Phillips",category:"hollywood",video:"https://drive.google.com/file/d/1Cn_CSHSnlUBY5IQUOE0ut1oI1WO4wfQz/preview"},
-{title:"Carter",category:"hollywood",video:"https://drive.google.com/file/d/1WEGsgLmqcz1L020OJv1adTaHREl_grNx/preview"},
-{title:"Apocalypse Of Ice",category:"hollywood",video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
-{title:"65",category:"hollywood",video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
-{title:"Contagion 2011",category:"hollywood",video:"https://drive.google.com/file/d/1lOm1c-c2WUd7kJJb_RyRZO-DjIOOlOSC/preview"},
-{title:"Deadpool 2 2018",category:"hollywood",video:"https://drive.google.com/file/d/1elgwkKAy-L0fRpCroV0oxEKK1tt8RT3-/preview"},
-{title:"Escape Room 2019",category:"hollywood",video:"https://drive.google.com/file/d/1ClSrNRdyXOERHUWmfNi3hKiTrxbZ0OUU/preview"},
-{title:"Everest 2015",category:"hollywood",video:"https://drive.google.com/file/d/1EretqZBlabnJORzf9YHH9HeiMQDWUhsG/preview"},
-{title:"Extraction 2 2023",category:"hollywood",video:"https://drive.google.com/file/d/1NasBTxb85g6aCF3CgG19J2C6jcH1H_HW/preview"},
-{title:"FAST 9 The Fast Saga 2021",category:"hollywood",video:"https://drive.google.com/file/d/1x_FeirOlokz9eWvRpMrvTgclrr2ppBGG/preview"},
-{title:"Fast X 2023",category:"hollywood",video:"https://drive.google.com/file/d/1QxnySurIsQbh0SvpebtkC6-brI7CvIbK/preview"},
-{title:"Final Destination 1",category:"hollywood",video:"https://drive.google.com/file/d/1E3uidvUgBEno95ikw1xcpgEZog96IKVM/preview"},
-{title:"Final Destination 2",category:"hollywood",video:"https://drive.google.com/file/d/1CVaXGc6olmnfC68rZL90bM4LZl1OgpP2/preview"},
-{title:"Final Destination 3",category:"hollywood",video:"https://drive.google.com/file/d/14lT5qq1tPDE0fKth9uaVGqbK2qW90cY-/preview"},
-{title:"Final Destination 4",category:"hollywood",video:"https://drive.google.com/file/d/1lvu2mV-mJlxbIvV9dV7YpFitArYSNMmn/preview"},
-{title:"Final Destination 5",category:"hollywood",video:"https://drive.google.com/file/d/12f5pVbUvydUKBdvIByqXKIeviuKpId2C/preview"},
-
-{title:"Bloody Daddy 2023",category:"bollywood",video:"https://drive.google.com/file/d/1J9V45stfDO2wjDMfnkLIimCMNhTFCgSg/preview"},
-{title:"Batti Gul Meter Chalu 2018",category:"bollywood",video:"https://drive.google.com/file/d/16ngcrO_APhN9gGiJIjmo9nU2xMEudaFl/preview"},
-{title:"Badnaam Gali 2019",category:"bollywood",video:"https://drive.google.com/file/d/15UuIzSMOXGOkVahouL0XYk2JtAfZtSi2/preview"},
-{title:"Bachchhan Paandey 2022",category:"bollywood",video:"https://drive.google.com/file/d/1l3FY58CIcuC88Rut25SsW-06Wm4CNJKF/preview"},
-{title:"Babli Bouncer 2022",category:"bollywood",video:"https://drive.google.com/file/d/1CSKzf1_cA59e0Uc_RSHbnnGePFdDWC0f/preview"},
-{title:"An Action Hero 2022",category:"bollywood",video:"https://drive.google.com/file/d/1RXP-oiZrI75ZdK39X2ohIOsBwFL1ho03/preview"},
-{title:"Airlift 2016",category:"bollywood",video:"https://drive.google.com/file/d/1t44Ro5RnKPqt8g6AFeg3i4SBIrp_ApkU/preview"},
-{title:"14 Phere 2021",category:"bollywood",video:"https://drive.google.com/file/d/1HGWwiKAh6tpJ9ECL4L-rVG2oYRQ1ylcI/preview"},
-{title:"Dhurandhar",category:"bollywood",video:"https://drive.google.com/file/d/1vJZ8uIYgTuqXTeG2lsUHdiS8pZOonXFb/preview"},
-{title:"Aap Jaisa Koi",category:"bollywood",video:"https://drive.google.com/file/d/1xSQ4EO0FtrrcvANBfjDGTEylMqcY74tP/preview"},
-{title:"Baaghi 3 2020",category:"bollywood",video:"https://drive.google.com/file/d/1TSolQVPdNB-sngeQPL5g0ruTOpUeN8vg/preview"},
-{title:"Baaghi 4 2025",category:"bollywood",video:"https://drive.google.com/file/d/1pmeMzsRNxkLu9fyA1HdeGRL3J6ZIdfS-/preview"},
-{title:"Nikita Roy",category:"bollywood",video:"https://drive.google.com/file/d/13oje33bv87AJOiCmdryfcOH7Ry3tH4dO/preview"},
-{title:"Deva",category:"bollywood",video:"https://drive.google.com/file/d/1QYstOwiqBF9cbXspZ2k4b9CKlACxC0YZ/preview"},
-{title:"Housefull 5",category:"bollywood",video:"https://drive.google.com/file/d/1PS2JCPr6EfFATS-sUy9m-Y3RZJ3bmJlG/preview"},
-{title:"Maalik",category:"bollywood",video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview"},
-{title:"Raid 2",category:"bollywood",video:"https://drive.google.com/file/d/1H3xSLeeSzgUHbEso0VDobf99fmYDgf5z/preview"},
-{title:"Jolly LLB 3",category:"bollywood",video:"https://drive.google.com/file/d/1CcIieM8YagtZz3tR-ULP33oneCgKX5-d/preview"},
-{title:"Maargan",category:"bollywood",video:"https://drive.google.com/file/d/1wg6Hq8MLvba3nGH3EdclpfN7UrB2bAGR/preview"},
-{title:"Saiyaara",category:"bollywood",video:"https://drive.google.com/file/d/1X8xjEp2QQOqWu0O6F3MzBGmyHHgvmeBk/preview"},
-{title:"The Diplomat",category:"bollywood",video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview"},
-{title:"Sikandar",category:"bollywood",video:"https://drive.google.com/file/d/1e8cBh_iT0yhANLHq_WU_bmXA-H2svU8c/preview"},
-{title:"War 2",category:"bollywood",video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
+/* ========= DATA ========= */
+const movieData = [
+  {title:"Apocalypse Of Ice",category:"hollywood",video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
+  {title:"Black Adam",category:"hollywood",video:"https://drive.google.com/file/d/1YeVeiSnOZRsDVeULfL6dMdtY9wKrZhZ-/preview"},
+  {title:"Blackhat",category:"hollywood",video:"https://drive.google.com/file/d/14hTxKyJ50-aXjvdmnT5KY82q3YaXO1Eq/preview"},
+  {title:"Brain Freeze",category:"hollywood",video:"https://drive.google.com/file/d/1_9cKGtefpLtMU0SIItDy0uBGLk25Ov4p/preview"},
+  {title:"Captain Phillips",category:"hollywood",video:"https://drive.google.com/file/d/1Cn_CSHSnlUBY5IQUOE0ut1oI1WO4wfQz/preview"},
+  {title:"Carter",category:"hollywood",video:"https://drive.google.com/file/d/1WEGsgLmqcz1L020OJv1adTaHREl_grNx/preview"},
+  {title:"65",category:"hollywood",video:"https://drive.google.com/file/d/1hQgxWMKLdvOH6ngaZvR7TcFpH9-hGVp2/preview"},
+  {title:"Contagion 2011",category:"hollywood",video:"https://drive.google.com/file/d/1lOm1c-c2WUd7kJJb_RyRZO-DjIOOlOSC/preview"},
+  {title:"Deadpool 2 2018",category:"hollywood",video:"https://drive.google.com/file/d/1elgwkKAy-L0fRpCroV0oxEKK1tt8RT3-/preview"},
+  {title:"Escape Room 2019",category:"hollywood",video:"https://drive.google.com/file/d/1ClSrNRdyXOERHUWmfNi3hKiTrxbZ0OUU/preview"},
+  {title:"Everest 2015",category:"hollywood",video:"https://drive.google.com/file/d/1EretqZBlabnJORzf9YHH9HeiMQDWUhsG/preview"},
+  {title:"Extraction 2 2023",category:"hollywood",video:"https://drive.google.com/file/d/1NasBTxb85g6aCF3CgG19J2C6jcH1H_HW/preview"},
+  {title:"FAST 9 The Fast Saga 2021",category:"hollywood",video:"https://drive.google.com/file/d/1x_FeirOlokz9eWvRpMrvTgclrr2ppBGG/preview"},
+  {title:"Fast X 2023",category:"hollywood",video:"https://drive.google.com/file/d/1QxnySurIsQbh0SvpebtkC6-brI7CvIbK/preview"},
+  {title:"Final Destination 1",category:"hollywood",video:"https://drive.google.com/file/d/1E3uidvUgBEno95ikw1xcpgEZog96IKVM/preview"}
 ];
 
 const softwareData = [
-  {
-  title: "Windows",
-  link: "https://drive.google.com/embeddedfolderview?id=1ss1MAOR7u3XS3joUhIdV87NN6evqME4R#list",
-  image: "Windows.gif"
-},
-  {
-  title: "Mac",
-  link: "https://drive.google.com/embeddedfolderview?id=1Zp2EAnZxRxhUKXywpgNiSXiwUplmOcIC#list",
-  image: "Mac.gif"
-},
-  {
-  title: "Ubuntu",
-  link: "https://drive.google.com/embeddedfolderview?id=17qMQrARhNWkcRQK3hFwdtp3MFDuEBo3u#list",
-  image: "Ubuntu.gif"
-},
-  {
-  title: "Android",
-  link: "https://drive.google.com/embeddedfolderview?id=1Uru7p3QUT4Sc7oMesXxjCLvZI67ySXZu#list",
-  image: "Android.gif"
-}
+  { title:"Windows", link:"https://drive.google.com/embeddedfolderview?id=1ss1MAOR7u3XS3joUhIdV87NN6evqME4R#list", image:"Windows.gif" },
+  { title:"Mac", link:"https://drive.google.com/embeddedfolderview?id=1Zp2EAnZxRxhUKXywpgNiSXiwUplmOcIC#list", image:"Mac.gif" },
+  { title:"Ubuntu", link:"https://drive.google.com/embeddedfolderview?id=17qMQrARhNWkcRQK3hFwdtp3MFDuEBo3u#list", image:"Ubuntu.gif" },
+  { title:"Android", link:"https://drive.google.com/embeddedfolderview?id=1Uru7p3QUT4Sc7oMesXxjCLvZI67ySXZu#list", image:"Android.gif" }
 ];
-  
-const row=document.getElementById("movieRow");
-const hero=document.getElementById("heroSlider");
-const modal=document.getElementById("videoModal");
-const frame=document.getElementById("videoFrame");
 
-/* HERO (All posters) */
-movieData.forEach((movie,index)=>{
-  const slide=document.createElement("div");
-  slide.className="slide";
-  if(index===0) slide.classList.add("active");
+/* ========= ELEMENTS ========= */
+const row = document.getElementById("movieRow");
+const hero = document.getElementById("heroSlider");
+const modal = document.getElementById("videoModal");
+const frame = document.getElementById("videoFrame");
 
-  slide.innerHTML = `
-    <img src="${movie.title}.jpg" style="width:100%; max-height:55vh; object-fit:contain;">
-    <div class="slide-title">${movie.title}</div>
-  `;
+const ytBtn = document.getElementById("ytToggle");
+const ytBox = document.getElementById("youtubeResults");
+const ytRow = document.getElementById("youtubeRow");
+const searchInput = document.getElementById("searchInput");
 
-  hero.appendChild(slide);
-});
-
-/* BUILD ALL MOVIES */
-movieData.forEach(movie=>{
-  const card=document.createElement("div");
-  card.className="movie";
-  card.dataset.category=movie.category;
-  card.dataset.title=movie.title.toLowerCase();
-
-  card.innerHTML=`
-    <div class="poster-box">
-      <img src="${movie.title}.jpg" loading="lazy">
-    </div>
-    <div class="movie-title">${movie.title}</div>
-  `;
-
-  card.addEventListener("click",()=>{
-    frame.src=movie.video;
-    modal.style.display="flex";
+/* ========= HERO SLIDER ========= */
+if (hero) {
+  movieData.forEach((movie, index) => {
+    const slide = document.createElement("div");
+    slide.className = "slide" + (index === 0 ? " active" : "");
+    slide.innerHTML = `
+      <img src="${movie.title}.jpg" style="width:100%; max-height:55vh; object-fit:contain;">
+      <div class="slide-title">${movie.title}</div>
+    `;
+    hero.appendChild(slide);
   });
 
-  row.appendChild(card);
-});
+  let slides = document.querySelectorAll(".slide");
+  let current = 0;
+  if (slides.length > 0) {
+    setInterval(() => {
+      slides[current].classList.remove("active");
+      current = (current + 1) % slides.length;
+      slides[current].classList.add("active");
+    }, 4000);
+  }
+}
 
-softwareData.forEach(software => {
-
+/* ========= BUILD MOVIE + SOFTWARE CARDS ========= */
+function addCard({title, category, imageSrc, clickSrc, isSoftware=false}) {
   const card = document.createElement("div");
   card.className = "movie";
+  card.dataset.category = category;
+  card.dataset.title = title.toLowerCase();
 
   card.innerHTML = `
     <div class="poster-box">
-     <img src="${software.image}">
+      <img src="${imageSrc}" loading="lazy">
     </div>
-    <div class="movie-title">${software.title}</div>
+    <div class="movie-title">${title}</div>
   `;
 
- card.addEventListener("click", () => {
-  frame.src = software.link;
-  modal.style.display = "flex";
-});
+  card.addEventListener("click", () => {
+    if (!frame || !modal) return;
+    frame.src = clickSrc;
+    modal.style.display = "flex";
+  });
 
- card.dataset.category = "software";
-card.dataset.title = software.title.toLowerCase();
-row.appendChild(card);
+  row.appendChild(card);
+}
 
-});
-  
-/* HERO AUTO */
-let slides=document.querySelectorAll(".slide");
-let current=0;
-setInterval(()=>{
-  slides[current].classList.remove("active");
-  current=(current+1)%slides.length;
-  slides[current].classList.add("active");
-},4000);
+if (row) {
+  movieData.forEach(m => addCard({
+    title: m.title,
+    category: m.category,
+    imageSrc: `${m.title}.jpg`,
+    clickSrc: m.video
+  }));
 
-/* SEARCH */
+  softwareData.forEach(s => addCard({
+    title: s.title,
+    category: "software",
+    imageSrc: s.image,
+    clickSrc: s.link,
+    isSoftware: true
+  }));
+}
 
-let youtubeMode = false;
-const ytBtn = document.getElementById("ytToggle");
-const ytBox = document.getElementById("youtubeResults");
-const ytFrame = document.getElementById("youtubeFrame");
+/* ========= MODAL CLOSE ========= */
+window.closeModal = function () {
+  if (modal) modal.style.display = "none";
+  if (frame) frame.src = "";
+};
 
-ytBtn.addEventListener("click", function(){
-  youtubeMode = !youtubeMode;
+/* ========= FILTER ========= */
+window.filterMovies = function(category, btn){
+  document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
 
-  if(youtubeMode){
-    ytBtn.classList.add("active");
-    document.getElementById("searchInput").placeholder = "Search YouTube...";
-  } else {
-    ytBtn.classList.remove("active");
-    document.getElementById("searchInput").placeholder = "Search movies...";
-    ytBox.style.display = "none";
-    ytFrame.src = "";
-  }
-});
+  const titleEl = document.getElementById("sectionTitle");
+  if (titleEl) titleEl.innerText = (category === "software") ? "Browse Software" : "Browse Movies";
 
-document.getElementById("searchInput").addEventListener("input", function () {
-
-  const val = this.value.toLowerCase().trim();
-
-  if(youtubeMode){
-
-    if(val.length > 0){
-      ytBox.style.display = "block";
-     ytFrame.src =
-  "https://www.youtube.com/results?search_query=" +
-  encodeURIComponent(val);
+  document.querySelectorAll("#movieRow .movie").forEach(m => {
+    if (category === "all") {
+      m.style.display = (m.dataset.category !== "software") ? "block" : "none";
     } else {
-      ytBox.style.display = "none";
-      ytFrame.src = "";
+      m.style.display = (m.dataset.category === category) ? "block" : "none";
     }
-
-    document.querySelectorAll(".movie").forEach(m => m.style.display = "none");
-    return;
-  }
-
-  ytBox.style.display = "none";
-  ytFrame.src = "";
-
-  document.querySelectorAll(".movie").forEach(m=>{
-    m.style.display = m.dataset.title.includes(val) ? "block" : "none";
   });
 
-});
-/* FILTER */
-function filterMovies(category,btn){
-  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  const title = document.getElementById("sectionTitle");
-
-if(category === "software"){
-  title.innerText = "Browse Software";
-} else {
-  title.innerText = "Browse Movies";
-}
-  document.querySelectorAll(".movie").forEach(m=>{
-   if(category === "all"){
-  m.style.display = (m.dataset.category !== "software") ? "block" : "none";
-}
-else{
-  m.style.display = (m.dataset.category === category) ? "block" : "none";
-}
-  });
-}
-
-function closeModal(){
-  modal.style.display="none";
-  frame.src="";
-}
+  // youtube results hide on filter
+  if (ytBox) ytBox.style.display = "none";
+  if (ytRow) ytRow.innerHTML = "";
+};
 
 filterMovies("all", document.querySelector(".filters button"));
-  
+
+/* ========= YOUTUBE API SEARCH (CARDS) ========= */
+let youtubeMode = false;
+
+// ✅ apni YouTube API key yahan paste karo:
+const API_KEY = "AIzaSyAuql0B2NuP1KvfFz6iPAAql6xQaSX5WdY";
+
+function setYoutubeMode(on){
+  youtubeMode = on;
+
+  if (!searchInput) return;
+  if (ytBtn) ytBtn.classList.toggle("active", youtubeMode);
+
+  if (youtubeMode) {
+    searchInput.placeholder = "Search YouTube...";
+    // movies hide
+    document.querySelectorAll("#movieRow .movie").forEach(m => m.style.display = "none");
+  } else {
+    searchInput.placeholder = "Search movies...";
+    if (ytBox) ytBox.style.display = "none";
+    if (ytRow) ytRow.innerHTML = "";
+    // show default filter again
+    filterMovies("all", document.querySelector(".filters button"));
+  }
+}
+
+if (ytBtn) {
+  ytBtn.addEventListener("click", () => setYoutubeMode(!youtubeMode));
+}
+
+let ytTimer = null;
+
+async function searchYouTube(q){
+  if (!ytBox || !ytRow) return;
+
+  ytRow.innerHTML = "";
+  ytBox.style.display = "block";
+
+  try {
+    const url =
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=12&safeSearch=none&q=${encodeURIComponent(q)}&key=${API_KEY}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.error) {
+      ytRow.innerHTML = `<div style="padding:15px;color:#ffb3b3;">YouTube API Error: ${data.error.message}</div>`;
+      return;
+    }
+
+    if (!data.items || data.items.length === 0) {
+      ytRow.innerHTML = `<div style="padding:15px;color:#bbb;">No results found.</div>`;
+      return;
+    }
+
+    data.items.forEach(item => {
+      const videoId = item.id?.videoId;
+      if (!videoId) return;
+
+      const title = item.snippet?.title || "Untitled";
+      const thumb = item.snippet?.thumbnails?.medium?.url || "";
+
+      const card = document.createElement("div");
+      card.className = "movie";
+      card.innerHTML = `
+        <div class="poster-box"><img src="${thumb}" loading="lazy"></div>
+        <div class="movie-title">${title}</div>
+      `;
+
+      card.addEventListener("click", () => {
+        if (!frame || !modal) return;
+        frame.src = "https://www.youtube.com/embed/" + videoId;
+        modal.style.display = "flex";
+      });
+
+      ytRow.appendChild(card);
+    });
+
+  } catch (e) {
+    ytRow.innerHTML = `<div style="padding:15px;color:#ffb3b3;">Network error. Check internet / API key.</div>`;
+  }
+}
+
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    const val = searchInput.value.trim();
+
+    if (!youtubeMode) {
+      // normal local search
+      if (ytBox) ytBox.style.display = "none";
+      if (ytRow) ytRow.innerHTML = "";
+
+      document.querySelectorAll("#movieRow .movie").forEach(m => {
+        m.style.display = m.dataset.title.includes(val.toLowerCase()) ? "block" : "none";
+      });
+      return;
+    }
+
+    // youtube mode
+    if (val.length < 2) {
+      if (ytBox) ytBox.style.display = "none";
+      if (ytRow) ytRow.innerHTML = "";
+      return;
+    }
+
+    clearTimeout(ytTimer);
+    ytTimer = setTimeout(() => searchYouTube(val), 350);
+  });
+}
 </script>
+
 
   <audio id="introMusic" src="netflix-sound.mp3" preload="auto"></audio>
 </body>
