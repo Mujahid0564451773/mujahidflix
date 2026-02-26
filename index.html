@@ -81,11 +81,28 @@ body{
   padding-right:10px;
 }
 .search-container{
+  position:relative;
   background:black;
   border:1px solid #444;
-  padding:8px 20px;
+  padding:8px 40px 8px 20px;
   border-radius:4px;
 }
+
+#ytToggle{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  color:#666;
+  font-size:18px;
+  transition:0.3s;
+}
+
+#ytToggle.active{
+  color:#ff0000;
+}
+
 .search-container input{
   background:transparent;
   border:none;
@@ -371,9 +388,10 @@ body{
 
 <div class="navbar">
   <div class="logo">MUJAHID FLIX</div>
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search movies...">
-  </div>
+ <div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search movies...">
+  <i id="ytToggle" class="fa-brands fa-youtube"></i>
+</div>
   <div class="clock" id="clock"></div>
 </div>
 
@@ -608,20 +626,55 @@ setInterval(()=>{
 },4000);
 
 /* SEARCH */
+
+let youtubeMode = false;
+const ytBtn = document.getElementById("ytToggle");
 const ytBox = document.getElementById("youtubeResults");
 const ytFrame = document.getElementById("youtubeFrame");
+ytBtn.addEventListener("click", function(){
+  youtubeMode = !youtubeMode;
+
+  if(youtubeMode){
+    ytBtn.classList.add("active");
+    document.getElementById("searchInput").placeholder = "Search YouTube...";
+  } else {
+    ytBtn.classList.remove("active");
+    document.getElementById("searchInput").placeholder = "Search movies...";
+    ytBox.style.display = "none";
+    ytFrame.src = "";
+  }
+});
+  
 
 document.getElementById("searchInput").addEventListener("input", function () {
-  const raw = this.value.trim();
-  const val = raw.toLowerCase();
 
-  // ✅ YouTube mode: "yt: something"
-  if (val.startsWith("yt:")) {
-    const q = raw.slice(3).trim(); // after yt:
-    if (q.length > 0) {
+  const val = this.value.toLowerCase().trim();
+
+  if(youtubeMode){
+
+    if(val.length > 0){
       ytBox.style.display = "block";
-      // YouTube search embed (no API key needed)
-      ytFrame.src = "https://www.youtube.com/embed?listType=search&list=" + encodeURIComponent(q);
+      ytFrame.src =
+       "https://www.youtube.com/embed?listType=search&list=" +
+        encodeURIComponent(val) +
+        "&origin=" + encodeURIComponent(window.location.origin);
+    } else {
+      ytBox.style.display = "none";
+      ytFrame.src = "";
+    }
+
+    document.querySelectorAll(".movie").forEach(m => m.style.display = "none");
+    return;
+  }
+
+  ytBox.style.display = "none";
+  ytFrame.src = "";
+
+  document.querySelectorAll(".movie").forEach(m=>{
+    m.style.display = m.dataset.title.includes(val) ? "block" : "none";
+  });
+  });
+
     } else {
       ytBox.style.display = "none";
       ytFrame.src = "";
