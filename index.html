@@ -631,6 +631,7 @@ let youtubeMode = false;
 const ytBtn = document.getElementById("ytToggle");
 const ytBox = document.getElementById("youtubeResults");
 const ytFrame = document.getElementById("youtubeFrame");
+
 ytBtn.addEventListener("click", function(){
   youtubeMode = !youtubeMode;
 
@@ -644,7 +645,6 @@ ytBtn.addEventListener("click", function(){
     ytFrame.src = "";
   }
 });
-  
 
 document.getElementById("searchInput").addEventListener("input", function () {
 
@@ -655,7 +655,7 @@ document.getElementById("searchInput").addEventListener("input", function () {
     if(val.length > 0){
       ytBox.style.display = "block";
       ytFrame.src =
-       "https://www.youtube.com/embed?listType=search&list=" +
+        "https://www.youtube.com/embed?listType=search&list=" +
         encodeURIComponent(val) +
         "&origin=" + encodeURIComponent(window.location.origin);
     } else {
@@ -673,27 +673,8 @@ document.getElementById("searchInput").addEventListener("input", function () {
   document.querySelectorAll(".movie").forEach(m=>{
     m.style.display = m.dataset.title.includes(val) ? "block" : "none";
   });
-  });
 
-    } else {
-      ytBox.style.display = "none";
-      ytFrame.src = "";
-    }
-
-    // movies hide while yt search
-    document.querySelectorAll(".movie").forEach(m => m.style.display = "none");
-    return;
-  }
-
-  // ✅ Normal mode: hide youtube and filter movies
-  ytBox.style.display = "none";
-  ytFrame.src = "";
-
-  document.querySelectorAll(".movie").forEach(m => {
-    m.style.display = m.dataset.title.includes(val) ? "block" : "none";
-  });
 });
-
 /* FILTER */
 function filterMovies(category,btn){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
