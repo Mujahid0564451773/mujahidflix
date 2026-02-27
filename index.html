@@ -88,35 +88,51 @@ body{
   border-radius:4px;
 }
 
-.yt-btn{
-  position:absolute;
-  right:6px;
-  top:50%;
-  transform:translateY(-50%);
+.search-container{
+  position:relative;
+  background:black;
+  border:1px solid #444;
+  padding:8px 8px 8px 15px;
+  border-radius:6px;
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:10px;
+}
+
+.search-container input{
+  flex:1;
+  background:transparent;
+  border:none;
+  color:white;
+  outline:none;
+  font-size:15px;
+  min-width:120px;
+}
+
+.mode-toggle{
+  display:flex;
   background:#1c1c1c;
-  border:1px solid #333;
-  color:#aaa;
-  padding:6px 12px;
   border-radius:6px;
+  overflow:hidden;
+  border:1px solid #333;
+}
+
+.mode-toggle button{
+  background:transparent;
+  border:none;
+  color:#aaa;
+  padding:6px 14px;
   cursor:pointer;
   font-size:13px;
   transition:0.3s;
 }
 
-.yt-btn i{
-  font-size:14px;
-}
-
-.yt-btn.active{
-  background:#ff0000;
-  border-color:#ff0000;
+.mode-toggle button.active{
+  background:#e50914;
   color:white;
 }
 
-.yt-btn:hover{
+.mode-toggle button:hover{
   background:#2a2a2a;
 }
 .search-container input{
@@ -406,10 +422,10 @@ body{
   <div class="logo">MUJAHID FLIX</div>
  <div class="search-container">
   <input type="text" id="searchInput" placeholder="Search movies...">
- <button id="ytToggle" class="yt-btn">
-  <i class="fa-brands fa-youtube"></i>
-  <span>YT</span>
-</button>
+<div class="mode-toggle">
+  <button id="movieMode" class="active">Movies</button>
+  <button id="ytMode">YouTube</button>
+</div>
 </div>
   <div class="clock" id="clock"></div>
 </div>
@@ -553,7 +569,8 @@ const hero = document.getElementById("heroSlider");
 const modal = document.getElementById("videoModal");
 const frame = document.getElementById("videoFrame");
 
-const ytBtn = document.getElementById("ytToggle");
+const movieModeBtn = document.getElementById("movieMode");
+const ytModeBtn = document.getElementById("ytMode");
 const ytBox = document.getElementById("youtubeResults");
 const ytRow = document.getElementById("youtubeRow");
 const searchInput = document.getElementById("searchInput");
@@ -656,24 +673,8 @@ let youtubeMode = false;
 // ✅ apni YouTube API key yahan paste karo:
 const API_KEY = "AIzaSyAuql0B2NuP1KvfFz6iPAAql6xQaSX5WdY";
 
-function setYoutubeMode(on){
-  youtubeMode = on;
-
-  if (!searchInput) return;
-  if (ytBtn) ytBtn.classList.toggle("active", youtubeMode);
-
-  if (youtubeMode) {
-    searchInput.placeholder = "Search YouTube...";
-    // movies hide
-    document.querySelectorAll("#movieRow .movie").forEach(m => m.style.display = "none");
-  } else {
-    searchInput.placeholder = "Search movies...";
-    if (ytBox) ytBox.style.display = "none";
-    if (ytRow) ytRow.innerHTML = "";
-    // show default filter again
-    filterMovies("all", document.querySelector(".filters button"));
-  }
-}
+movieModeBtn.addEventListener("click", () => setYoutubeMode(false));
+ytModeBtn.addEventListener("click", () => setYoutubeMode(true));
 
 if (ytBtn) {
   ytBtn.addEventListener("click", () => setYoutubeMode(!youtubeMode));
