@@ -549,6 +549,18 @@ const movieData = [
 {title:"War 2",category:"bollywood",video:"https://drive.google.com/file/d/1JVVFQpWqlObPBLFbXbB8vEbn5aYzrG_P/preview"}
 ];
 
+const seriesData = [
+  {
+    title: "Money Heist",
+    category: "hollywood",
+    episodes: [
+      { name: "Episode 1", video: "EP1_LINK" },
+      { name: "Episode 2", video: "EP2_LINK" },
+      { name: "Episode 3", video: "EP3_LINK" }
+    ]
+  }
+];
+  
 const softwareData = [
   { title:"Windows", link:"https://drive.google.com/embeddedfolderview?id=1ss1MAOR7u3XS3joUhIdV87NN6evqME4R#list", image:"Windows.gif" },
   { title:"Mac", link:"https://drive.google.com/embeddedfolderview?id=1Zp2EAnZxRxhUKXywpgNiSXiwUplmOcIC#list", image:"Mac.gif" },
@@ -614,6 +626,28 @@ function addCard({title, category, imageSrc, clickSrc, isSoftware=false}) {
   row.appendChild(card);
 }
 
+  function addSeriesCard(series){
+
+  const card = document.createElement("div");
+  card.className = "movie";
+  card.dataset.category = series.category;
+  card.dataset.title = series.title.toLowerCase();
+
+  card.innerHTML = `
+    <div class="poster-box">
+      <img src="${series.title}.jpg" loading="lazy">
+    </div>
+    <div class="movie-title">${series.title}</div>
+  `;
+
+  // Yahan difference hai 👇
+  card.addEventListener("click", () => {
+    showEpisodeDropdown(series);
+  });
+
+  row.appendChild(card);
+}
+  
 if (row) {
   movieData.forEach(m => addCard({
     title: m.title,
@@ -622,6 +656,10 @@ if (row) {
     clickSrc: m.video
   }));
 
+  seriesData.forEach(s => {
+    addSeriesCard(s);
+  });
+  
   softwareData.forEach(s => addCard({
     title: s.title,
     category: "software",
@@ -765,9 +803,58 @@ if (searchInput) {
     ytTimer = setTimeout(() => searchYouTube(val), 350);
   });
 }
+
+  function showEpisodeDropdown(series){
+
+  const dropdown = document.createElement("div");
+  dropdown.style.position = "fixed";
+  dropdown.style.inset = "0";
+  dropdown.style.background = "rgba(0,0,0,0.9)";
+  dropdown.style.display = "flex";
+  dropdown.style.justifyContent = "center";
+  dropdown.style.alignItems = "center";
+  dropdown.style.zIndex = "3000";
+
+  const box = document.createElement("div");
+  box.style.background = "#111";
+  box.style.padding = "20px";
+  box.style.width = "90%";
+  box.style.maxWidth = "400px";
+  box.style.borderRadius = "8px";
+
+  box.innerHTML = `<h3>${series.title}</h3>`;
+
+  series.episodes.forEach(ep=>{
+    const epBtn = document.createElement("div");
+    epBtn.innerText = ep.name;
+    epBtn.style.padding = "10px";
+    epBtn.style.marginBottom = "8px";
+    epBtn.style.background = "#1c1c1c";
+    epBtn.style.cursor = "pointer";
+
+    epBtn.onclick = function(){
+      frame.src = ep.video;
+      modal.style.display = "flex";
+      dropdown.remove();
+    };
+
+    box.appendChild(epBtn);
+  });
+
+  dropdown.appendChild(box);
+
+  dropdown.onclick = function(e){
+    if(e.target === dropdown){
+      dropdown.remove();
+    }
+  };
+
+  document.body.appendChild(dropdown);
+}
+  
 </script>
 
-
+  
   <audio id="introMusic" src="netflix-sound.mp3" preload="auto"></audio>
 </body>
 </html>
