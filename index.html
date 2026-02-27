@@ -551,9 +551,13 @@ const movieData = [
 
 const seriesData = [
   {
-    title: "Squid Game (Series)",
+    title: "Squid Game",
     category: "hollywood",
-    episodes: [
+    seasons: [
+
+      {
+        season: "Squid Game (Series)",
+        episodes: [
       { name: "Episode 1", video: "https://drive.google.com/file/d/1rDABfynCQobDBhar-t9uklFPBpl6a8oB/preview" },
       { name: "Episode 2", video: "https://drive.google.com/file/d/1VVeMvkjOlAwVASX3BGsWhWkZ8alnGVg0/preview" },
       { name: "Episode 3", video: "https://drive.google.com/file/d/1zXrpkzStg11c7E_ZN4Rql9zKVLw2fHiH/preview" },
@@ -563,6 +567,19 @@ const seriesData = [
       { name: "Episode 7", video: "https://drive.google.com/file/d/11OoUnzEv1wLV5cyQC99yFtldLzCku0fU/preview" },
       { name: "Episode 8", video: "https://drive.google.com/file/d/17G9iHxljqxm4w1p0MkGo5veXzW1Zn4be/preview" },
       { name: "Episode 9", video: "https://drive.google.com/file/d/1kiLHAgHBCB_lA9eeAs1swcPcpFJQOBjS/preview" }
+          // baqi ep yahan
+        ]
+      },
+
+      {
+        season: "Season 2",
+        episodes: [
+          { name: "Episode 1", video: "S2_EP1_LINK" },
+          { name: "Episode 2", video: "S2_EP2_LINK" },
+          { name: "Episode 3", video: "S2_EP3_LINK" }
+          // baqi ep yahan
+        ]
+      }
 
     ]
   }
@@ -811,12 +828,12 @@ if (searchInput) {
   });
 }
 
-  function showEpisodeDropdown(series){
+ function showEpisodeDropdown(series){
 
   const dropdown = document.createElement("div");
   dropdown.style.position = "fixed";
   dropdown.style.inset = "0";
-  dropdown.style.background = "rgba(0,0,0,0.9)";
+  dropdown.style.background = "rgba(0,0,0,0.95)";
   dropdown.style.display = "flex";
   dropdown.style.justifyContent = "center";
   dropdown.style.alignItems = "center";
@@ -826,26 +843,40 @@ if (searchInput) {
   box.style.background = "#111";
   box.style.padding = "20px";
   box.style.width = "90%";
-  box.style.maxWidth = "400px";
+  box.style.maxWidth = "500px";
+  box.style.maxHeight = "80vh";
+  box.style.overflowY = "auto";
   box.style.borderRadius = "8px";
 
-  box.innerHTML = `<h3>${series.title}</h3>`;
+  box.innerHTML = `<h2 style="margin-bottom:20px;">${series.title}</h2>`;
 
-  series.episodes.forEach(ep=>{
-    const epBtn = document.createElement("div");
-    epBtn.innerText = ep.name;
-    epBtn.style.padding = "10px";
-    epBtn.style.marginBottom = "8px";
-    epBtn.style.background = "#1c1c1c";
-    epBtn.style.cursor = "pointer";
+  series.seasons.forEach(season => {
 
-    epBtn.onclick = function(){
-      frame.src = ep.video;
-      modal.style.display = "flex";
-      dropdown.remove();
-    };
+    const seasonTitle = document.createElement("h3");
+    seasonTitle.innerText = season.season;
+    seasonTitle.style.marginTop = "15px";
+    seasonTitle.style.marginBottom = "10px";
+    box.appendChild(seasonTitle);
 
-    box.appendChild(epBtn);
+    season.episodes.forEach(ep => {
+
+      const epBtn = document.createElement("div");
+      epBtn.innerText = ep.name;
+      epBtn.style.padding = "10px";
+      epBtn.style.marginBottom = "8px";
+      epBtn.style.background = "#1c1c1c";
+      epBtn.style.cursor = "pointer";
+
+      epBtn.onclick = function(){
+        frame.src = ep.video;
+        modal.style.display = "flex";
+        dropdown.remove();
+      };
+
+      box.appendChild(epBtn);
+
+    });
+
   });
 
   dropdown.appendChild(box);
