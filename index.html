@@ -135,14 +135,7 @@ body{
 .mode-toggle button:hover{
   background:#2a2a2a;
 }
-.search-container input{
-  background:transparent;
-  border:none;
-  color:white;
-  outline:none;
-  width:280px;
-  font-size:15px;
-}
+
 
 /* FLOATING SOCIAL ICONS */
 .social-icons{
@@ -670,15 +663,28 @@ filterMovies("all", document.querySelector(".filters button"));
 /* ========= YOUTUBE API SEARCH (CARDS) ========= */
 let youtubeMode = false;
 
-// ✅ apni YouTube API key yahan paste karo:
 const API_KEY = "AIzaSyAuql0B2NuP1KvfFz6iPAAql6xQaSX5WdY";
+
+function setYoutubeMode(on){
+  youtubeMode = on;
+
+  movieModeBtn.classList.toggle("active", !youtubeMode);
+  ytModeBtn.classList.toggle("active", youtubeMode);
+
+  if (youtubeMode) {
+    searchInput.placeholder = "Search YouTube...";
+    document.querySelectorAll("#movieRow .movie").forEach(m => m.style.display = "none");
+  } else {
+    searchInput.placeholder = "Search movies...";
+    if (ytBox) ytBox.style.display = "none";
+    if (ytRow) ytRow.innerHTML = "";
+    filterMovies("all", document.querySelector(".filters button"));
+  }
+}  
 
 movieModeBtn.addEventListener("click", () => setYoutubeMode(false));
 ytModeBtn.addEventListener("click", () => setYoutubeMode(true));
 
-if (ytBtn) {
-  ytBtn.addEventListener("click", () => setYoutubeMode(!youtubeMode));
-}
 
 let ytTimer = null;
 
