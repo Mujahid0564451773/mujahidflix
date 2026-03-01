@@ -397,6 +397,157 @@ body{
   }
 
 }
+
+  /* ================= FUTURISTIC UI UPGRADE ================= */
+
+/* Smooth global transitions */
+*{
+  transition: all 0.35s ease;
+}
+
+/* Animated futuristic background */
+body{
+  background: radial-gradient(circle at 20% 20%, #1a1a2e 0%, #0f0f1a 40%, #000 100%);
+  background-attachment: fixed;
+}
+
+/* Subtle moving glow effect */
+body::before{
+  content:"";
+  position:fixed;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle, rgba(229,9,20,0.15), transparent 70%);
+  top:-200px;
+  left:-200px;
+  animation:moveGlow 10s linear infinite alternate;
+  z-index:-1;
+}
+
+@keyframes moveGlow{
+  0%{ transform:translate(0,0); }
+  100%{ transform:translate(200px,150px); }
+}
+
+/* NAVBAR Glass Neon */
+.navbar{
+  backdrop-filter: blur(20px);
+  background: rgba(15,15,25,0.7);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 5px 30px rgba(229,9,20,0.15);
+}
+
+/* Logo Neon Glow */
+.logo{
+  animation: glowPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse{
+  from{ text-shadow:0 0 5px #e50914; }
+  to{ text-shadow:0 0 25px #ff1e2d; }
+}
+
+/* Search futuristic */
+.search-container{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 0 20px rgba(229,9,20,0.15);
+}
+
+/* Mode buttons neon hover */
+.mode-toggle button:hover{
+  background:rgba(229,9,20,0.2);
+  color:white;
+}
+
+/* Section titles futuristic */
+.section h2{
+  font-size:26px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  background: linear-gradient(90deg,#e50914,#ff4b2b);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* Movie Card Glass Effect */
+.movie{
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(8px);
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* Card Hover Premium */
+.movie:hover{
+  transform: scale(1.18) translateY(-12px);
+  box-shadow:0 20px 60px rgba(229,9,20,0.35);
+}
+
+/* Poster smoother */
+.poster-box{
+  border-radius:12px;
+  overflow:hidden;
+}
+
+/* Title glow */
+.movie-title{
+  font-size:14px;
+  letter-spacing:1px;
+  color:#ddd;
+}
+
+/* Modal futuristic */
+.modal{
+  backdrop-filter: blur(12px);
+  background:rgba(0,0,0,0.8);
+}
+
+/* Close button glow */
+.close-btn{
+  color:white;
+  text-shadow:0 0 10px red;
+}
+
+/* Filters futuristic */
+.filters button{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+.filters button.active,
+.filters button:hover{
+  background:linear-gradient(90deg,#e50914,#ff4b2b);
+  box-shadow:0 0 15px rgba(229,9,20,0.6);
+}
+
+/* HERO futuristic fade */
+.slide img{
+  border-radius:12px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* Social Icons Neon */
+.social-icons a{
+  text-shadow:0 0 10px rgba(255,255,255,0.4);
+}
+
+.social-icons a:hover{
+  transform:scale(1.4);
+  text-shadow:0 0 20px #e50914;
+}
+
+/* Scrollbar futuristic */
+::-webkit-scrollbar{
+  width:8px;
+}
+::-webkit-scrollbar-track{
+  background:#111;
+}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(#e50914,#ff4b2b);
+  border-radius:10px;
+}
   
 </style>
 </head>
