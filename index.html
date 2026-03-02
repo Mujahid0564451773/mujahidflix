@@ -1150,14 +1150,20 @@ card.addEventListener("touchstart", (e) => {
 
   if (!trailer) return;
 
-  // agar pehle se trailer chal raha hai to movie open kare
-  if (posterBox.querySelector("iframe")) {
+  const existingIframe = posterBox.querySelector("iframe");
+
+  // Agar trailer already chal raha hai → movie open karo
+  if (existingIframe) {
+    existingIframe.remove(); // pehle trailer remove karo
     frame.src = clickSrc;
     modal.style.display = "flex";
     return;
   }
 
-  e.preventDefault(); // movie open hone se rokega
+  e.preventDefault();
+
+  // Pehle kisi aur card ka trailer band karo
+  document.querySelectorAll(".trailer-frame").forEach(f => f.remove());
 
   let videoId = trailer.includes("watch?v=")
     ? trailer.split("watch?v=")[1]
@@ -1166,9 +1172,10 @@ card.addEventListener("touchstart", (e) => {
   videoId = videoId.split("&")[0];
 
   const iframe = document.createElement("iframe");
-  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0`;
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1`;
   iframe.className = "trailer-frame";
   iframe.allow = "autoplay";
+
   posterBox.appendChild(iframe);
 });
   
