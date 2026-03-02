@@ -1123,7 +1123,7 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
 
   // Desktop hover trailer
   card.addEventListener("mouseenter", () => {
-   if (!trailer || window.innerWidth < 768) return;
+   if (!trailer) return;
 
 // YouTube ID automatically nikal lo
 let videoId = trailer.includes("watch?v=")
@@ -1144,6 +1144,33 @@ posterBox.appendChild(iframe);
     if (iframe) iframe.remove();
   });
 
+// Mobile tap trailer
+card.addEventListener("touchstart", (e) => {
+
+  if (!trailer) return;
+
+  // agar pehle se trailer chal raha hai to movie open kare
+  if (posterBox.querySelector("iframe")) {
+    frame.src = clickSrc;
+    modal.style.display = "flex";
+    return;
+  }
+
+  e.preventDefault(); // movie open hone se rokega
+
+  let videoId = trailer.includes("watch?v=")
+    ? trailer.split("watch?v=")[1]
+    : trailer.split("/embed/")[1];
+
+  videoId = videoId.split("&")[0];
+
+  const iframe = document.createElement("iframe");
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0`;
+  iframe.className = "trailer-frame";
+  iframe.allow = "autoplay";
+  posterBox.appendChild(iframe);
+});
+  
   // Click = full movie
   card.addEventListener("click", () => {
     frame.src = clickSrc;
