@@ -934,7 +934,7 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
     if (!trailer || window.innerWidth < 768) return;
 
     const iframe = document.createElement("iframe");
-    iframe.src = trailer + "?autoplay=1&mute=1&controls=0";
+    iframe.src = trailer + "?autoplay=1&controls=0";
     iframe.className = "trailer-frame";
     iframe.allow = "autoplay";
     posterBox.appendChild(iframe);
