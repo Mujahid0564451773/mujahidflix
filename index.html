@@ -1124,7 +1124,8 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
   // Desktop hover trailer
   card.addEventListener("mouseenter", () => {
    if (!trailer) return;
-
+   if (posterBox.querySelector("iframe")) return;
+    
 // YouTube ID automatically nikal lo
 let videoId = trailer.includes("watch?v=")
   ? trailer.split("watch?v=")[1]
@@ -1133,7 +1134,7 @@ let videoId = trailer.includes("watch?v=")
 videoId = videoId.split("&")[0]; // extra parameters hata do
 
 const iframe = document.createElement("iframe");
-iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
+iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0`;
 iframe.className = "trailer-frame";
 iframe.allow = "autoplay";
 posterBox.appendChild(iframe);
