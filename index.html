@@ -314,7 +314,7 @@ background:rgba(0,0,0,0.6);
   100%{ left:100%; }
 }
   
-  /* LOGO SHINE EFFECT YAHAN PASTE KARO 👇 */
+
 
 
   
@@ -330,7 +330,7 @@ body{
   position:fixed;
   top:0;
   width:100%;
-  height:auto; /* 👈 IMPORTANT */
+  height:auto;
   backdrop-filter:blur(10px);
   background:rgba(0,0,0,0.85);
   border-bottom:1px solid rgba(255,255,255,0.08);
@@ -685,7 +685,7 @@ const movieData = [
 {title:"Wrong Turn 6 2021",category:"hollywood",video:"https://drive.google.com/file/d/17VH9P0a1hnKMcQiJVheBvbljIO48-Cxk/preview"},
 
 {title:"Apocalypse Of Ice",category:"hollywood",video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
-{title:"Black Adam",category:"hollywood",video:"https://drive.google.com/file/d/1YeVeiSnOZRsDVeULfL6dMdtY9wKrZhZ-/preview",trailer:"https://www.youtube.com/embed/X0tOpBuYasI"},
+{title:"Black Adam",category:"hollywood",video:"https://drive.google.com/file/d/1YeVeiSnOZRsDVeULfL6dMdtY9wKrZhZ-/preview",trailer:"https://www.youtube.com/watch?v=X0tOpBuYasI"},
 {title:"Blackhat",category:"hollywood",video:"https://drive.google.com/file/d/14hTxKyJ50-aXjvdmnT5KY82q3YaXO1Eq/preview"},
 {title:"Brain Freeze",category:"hollywood",video:"https://drive.google.com/file/d/1_9cKGtefpLtMU0SIItDy0uBGLk25Ov4p/preview"},
 {title:"Captain Phillips",category:"hollywood",video:"https://drive.google.com/file/d/1Cn_CSHSnlUBY5IQUOE0ut1oI1WO4wfQz/preview"},
@@ -931,10 +931,20 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
 
   // Desktop hover trailer
   card.addEventListener("mouseenter", () => {
-    if (!trailer || window.innerWidth < 768) return;
+   if (!trailer || window.innerWidth < 768) return;
 
-    const iframe = document.createElement("iframe");
-    iframe.src = trailer + "?autoplay=1&controls=0";
+// YouTube ID automatically nikal lo
+let videoId = trailer.includes("watch?v=")
+  ? trailer.split("watch?v=")[1]
+  : trailer.split("/embed/")[1];
+
+videoId = videoId.split("&")[0]; // extra parameters hata do
+
+const iframe = document.createElement("iframe");
+iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
+iframe.className = "trailer-frame";
+iframe.allow = "autoplay";
+posterBox.appendChild(iframe);
     iframe.className = "trailer-frame";
     iframe.allow = "autoplay";
     posterBox.appendChild(iframe);
