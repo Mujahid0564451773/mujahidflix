@@ -548,6 +548,19 @@ body::before{
   background:linear-gradient(#e50914,#ff4b2b);
   border-radius:10px;
 }
+
+  .trailer-frame{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+  z-index:5;
+}
+
+.movie .poster-box{
+  position:relative;
+}
   
 </style>
 </head>
@@ -671,7 +684,7 @@ const movieData = [
 {title:"Wrong Turn 6 2021",category:"hollywood",video:"https://drive.google.com/file/d/17VH9P0a1hnKMcQiJVheBvbljIO48-Cxk/preview"},
 
 {title:"Apocalypse Of Ice",category:"hollywood",video:"https://drive.google.com/file/d/133iiqLNA7ESrpssa5eK0cT1gc4Ft1lYV/preview"},
-{title:"Black Adam",category:"hollywood",video:"https://drive.google.com/file/d/1YeVeiSnOZRsDVeULfL6dMdtY9wKrZhZ-/preview"},
+{title:"Black Adam",category:"hollywood",video:"https://drive.google.com/file/d/1YeVeiSnOZRsDVeULfL6dMdtY9wKrZhZ-/preview"trailer:"https://www.youtube.com/embed/X0tOpBuYasI},
 {title:"Blackhat",category:"hollywood",video:"https://drive.google.com/file/d/14hTxKyJ50-aXjvdmnT5KY82q3YaXO1Eq/preview"},
 {title:"Brain Freeze",category:"hollywood",video:"https://drive.google.com/file/d/1_9cKGtefpLtMU0SIItDy0uBGLk25Ov4p/preview"},
 {title:"Captain Phillips",category:"hollywood",video:"https://drive.google.com/file/d/1Cn_CSHSnlUBY5IQUOE0ut1oI1WO4wfQz/preview"},
@@ -899,7 +912,8 @@ if (hero) {
 }
 
 /* ========= BUILD MOVIE + SOFTWARE CARDS ========= */
-function addCard({title, category, imageSrc, clickSrc, isSoftware=false}) {
+function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
+
   const card = document.createElement("div");
   card.className = "movie";
   card.dataset.category = category;
@@ -912,8 +926,26 @@ function addCard({title, category, imageSrc, clickSrc, isSoftware=false}) {
     <div class="movie-title">${title}</div>
   `;
 
+  const posterBox = card.querySelector(".poster-box");
+
+  // Desktop hover trailer
+  card.addEventListener("mouseenter", () => {
+    if (!trailer || window.innerWidth < 768) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.src = trailer + "?autoplay=1&mute=1&controls=0";
+    iframe.className = "trailer-frame";
+    iframe.allow = "autoplay";
+    posterBox.appendChild(iframe);
+  });
+
+  card.addEventListener("mouseleave", () => {
+    const iframe = posterBox.querySelector("iframe");
+    if (iframe) iframe.remove();
+  });
+
+  // Click = full movie
   card.addEventListener("click", () => {
-    if (!frame || !modal) return;
     frame.src = clickSrc;
     modal.style.display = "flex";
   });
@@ -944,12 +976,13 @@ function addCard({title, category, imageSrc, clickSrc, isSoftware=false}) {
 }
   
 if (row) {
-  movieData.forEach(m => addCard({
-    title: m.title,
-    category: m.category,
-    imageSrc: `${m.title}.jpg`,
-    clickSrc: m.video
-  }));
+movieData.forEach(m => addCard({
+  title: m.title,
+  category: m.category,
+  imageSrc: `${m.title}.jpg`,
+  clickSrc: m.video,
+  trailer: m.trailer || null
+}));
 
   seriesData.forEach(s => {
     addSeriesCard(s);
