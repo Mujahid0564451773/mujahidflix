@@ -568,35 +568,6 @@ body::before{
 
 <body>
 
-<div id="loginBox" style="
-position:fixed;
-inset:0;
-background:#000;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:99999;
-flex-direction:column;
-gap:15px;
-">
-
-<h2 style="color:white;">Mujahid Flix Login</h2>
-
-<input id="username" placeholder="Username" style="padding:10px;">
-<input id="password" type="password" placeholder="Password" style="padding:10px;">
-
-<button onclick="login()" style="
-padding:10px 25px;
-background:#e50914;
-color:white;
-border:none;
-cursor:pointer;
-">Login</button>
-
-<p id="errorMsg" style="color:red;"></p>
-
-</div>
-  
 <div id="intro">
   <img src="intro.png" class="intro-image" alt="Intro">
   <button id="enterBtn" style="
@@ -658,39 +629,7 @@ cursor:pointer;
 <iframe id="videoFrame" src="" allowfullscreen></iframe>
 </div>
 
-  <script>
-
-const users = [
-  { username: "ali", password: "1234" },
-  { username: "ahmed", password: "5678" },
-  { username: "hassan", password: "9999" }
-];
-
-function login(){
-  const u = document.getElementById("username").value.trim().toLowerCase();
-  const p = document.getElementById("password").value.trim();
-
-  const validUser = users.find(user => 
-    user.username.toLowerCase() === u && user.password === p
-  );
-
-  if(validUser){
-    document.getElementById("loginBox").style.display = "none";
-
-    const intro = document.getElementById("intro");
-    if(intro){
-      intro.remove();
-    }
-
-  } else {
-    document.getElementById("errorMsg").innerText = "Invalid Username or Password";
-  }
-}
-
-</script>
-
 <script>
-
 /* ========= INTRO REMOVE ========= */
 window.addEventListener("load", () => {
   const introSound = document.getElementById("introMusic");
@@ -733,11 +672,8 @@ function updateClock() {
       hours + ":" + minutes + " " + ampm;
   }
 }
-
 setInterval(updateClock, 1000);
 updateClock();
-
-
 
 /* ========= DATA ========= */
 const movieData = [
@@ -866,13 +802,7 @@ trailer:"https://www.youtube.com/embed/axsLBHzvW6Y"},
 category:"hollywood",
 video:"https://drive.google.com/file/d/12f5pVbUvydUKBdvIByqXKIeviuKpId2C/preview",
 trailer:"https://www.youtube.com/embed/vIwNSiPgGgs"},
-
-{title:"Thamma 2025",
-category:"bollywood",
-video:"https://drive.google.com/file/d/1zly_VCAunSXAg78mvXJyH2mcg0jXr-wD/preview",
-trailer:"https://www.youtube.com/embed/Mod_oXpftJA"},
-
-  
+ 
 {title:"Bloody Daddy 2023",
 category:"bollywood",
 video:"https://drive.google.com/file/d/1J9V45stfDO2wjDMfnkLIimCMNhTFCgSg/preview",
@@ -952,7 +882,7 @@ trailer:"https://www.youtube.com/embed/xGQuT1wm2qk"},
 {title:"Maalik",
   category:"bollywood",
   video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview",
-trailer:"https://www.youtube.com/embed/0itY1Fhvnnk?start=43"},
+trailer:"https://www.youtube.com/embed/0itY1Fhvnnk&t=43s"},
   
 {title:"Raid 2",
   category:"bollywood",
@@ -977,7 +907,7 @@ trailer:"https://www.youtube.com/embed/9r-tT5IN0vg"},
 {title:"The Diplomat",
   category:"bollywood",
   video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview",
-trailer:"https://www.youtube.com/embed/CnEOLuCojY0?start=31"},
+trailer:"https://www.youtube.com/embed/CnEOLuCojY0&t=31s"},
   
 {title:"Sikandar",
   category:"bollywood",
@@ -1204,7 +1134,7 @@ let videoId = trailer.includes("watch?v=")
 videoId = videoId.split("&")[0]; // extra parameters hata do
 
 const iframe = document.createElement("iframe");
-iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
+iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&&controls=0`;
 iframe.className = "trailer-frame";
 iframe.allow = "autoplay";
 posterBox.appendChild(iframe);
