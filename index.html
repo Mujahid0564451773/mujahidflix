@@ -660,26 +660,27 @@ cursor:pointer;
 
 
 <script>
-
-const users = [
-  { username: "ali", password: "1234" },
-  { username: "ahmed", password: "5678" },
-  { username: "hassan", password: "9999" }
-];
-
 function login(){
-  const u = document.getElementById("username").value;
-  const p = document.getElementById("password").value;
+  const u = document.getElementById("username").value.trim();
+  const p = document.getElementById("password").value.trim();
 
-  const validUser = users.find(user => user.username === u && user.password === p);
+  const validUser = users.find(user => 
+    user.username === u && user.password === p
+  );
 
   if(validUser){
     document.getElementById("loginBox").style.display = "none";
+
+    // 🔥 Intro bhi remove kar do
+    const intro = document.getElementById("intro");
+    if(intro){
+      intro.remove();
+    }
+
   } else {
     document.getElementById("errorMsg").innerText = "Invalid Username or Password";
   }
 }
-
 </script>
   
 /* ========= INTRO REMOVE ========= */
