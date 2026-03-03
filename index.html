@@ -658,20 +658,25 @@ cursor:pointer;
 <iframe id="videoFrame" src="" allowfullscreen></iframe>
 </div>
 
+  <script>
 
-<script>
+const users = [
+  { username: "ali", password: "1234" },
+  { username: "ahmed", password: "5678" },
+  { username: "hassan", password: "9999" }
+];
+
 function login(){
-  const u = document.getElementById("username").value.trim();
+  const u = document.getElementById("username").value.trim().toLowerCase();
   const p = document.getElementById("password").value.trim();
 
   const validUser = users.find(user => 
-    user.username === u && user.password === p
+    user.username.toLowerCase() === u && user.password === p
   );
 
   if(validUser){
     document.getElementById("loginBox").style.display = "none";
 
-    // 🔥 Intro bhi remove kar do
     const intro = document.getElementById("intro");
     if(intro){
       intro.remove();
@@ -681,8 +686,11 @@ function login(){
     document.getElementById("errorMsg").innerText = "Invalid Username or Password";
   }
 }
+
 </script>
-  
+
+<script>
+
 /* ========= INTRO REMOVE ========= */
 window.addEventListener("load", () => {
   const introSound = document.getElementById("introMusic");
@@ -724,6 +732,13 @@ function updateClock() {
       months[now.getMonth()] + " | " +
       hours + ":" + minutes + " " + ampm;
   }
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+</script>
+  
 }
 setInterval(updateClock, 1000);
 updateClock();
@@ -858,7 +873,7 @@ trailer:"https://www.youtube.com/embed/vIwNSiPgGgs"},
 
 {title:"Thamma 2025",
 category:"bollywood",
-video:"https://drive.google.com/file/d/1zly_VCAunSXAg78mvXJyH2mcg0jXr-wD//preview",
+video:"https://drive.google.com/file/d/1zly_VCAunSXAg78mvXJyH2mcg0jXr-wD/preview",
 trailer:"https://www.youtube.com/embed/Mod_oXpftJA"},
 
   
@@ -1193,7 +1208,7 @@ let videoId = trailer.includes("watch?v=")
 videoId = videoId.split("&")[0]; // extra parameters hata do
 
 const iframe = document.createElement("iframe");
-iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&&controls=0`;
+iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
 iframe.className = "trailer-frame";
 iframe.allow = "autoplay";
 posterBox.appendChild(iframe);
