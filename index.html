@@ -8,14 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body{
-  margin:0;
-    background: radial-gradient(circle at top, #1f1f1f 0%, #111 60%, #000 100%);
-  font-family:Arial, sans-serif;
-  color:white;
-  overflow-x:hidden;
-  padding-top:80px;
-}
 
 
 /* ===== REAL NETFLIX STYLE INTRO ===== */
@@ -902,7 +894,7 @@ trailer:"https://www.youtube.com/embed/xGQuT1wm2qk"},
 {title:"Maalik",
   category:"bollywood",
   video:"https://drive.google.com/file/d/1jVJU7H3VVyUzHAASJqy04US5PV8giE7W/preview",
-trailer:"https://www.youtube.com/embed/0itY1Fhvnnk&t=43s"},
+trailer:"https://www.youtube.com/embed/0itY1Fhvnnk"},
   
 {title:"Raid 2",
   category:"bollywood",
@@ -927,7 +919,7 @@ trailer:"https://www.youtube.com/embed/9r-tT5IN0vg"},
 {title:"The Diplomat",
   category:"bollywood",
   video:"https://drive.google.com/file/d/1wioq1K51AQAp0RbKn0PVv6czO8adwyxe/preview",
-trailer:"https://www.youtube.com/embed/CnEOLuCojY0&t=31s"},
+trailer:"https://www.youtube.com/embed/CnEOLuCojY0"},
   
 {title:"Sikandar",
   category:"bollywood",
@@ -979,7 +971,6 @@ const seriesData = [
     ]
   },
 
-  ....
   {
     title: "Vikings (Series)",
     category: "hollywood",
@@ -1207,7 +1198,7 @@ let videoId = trailer.includes("watch?v=")
 videoId = videoId.split("&")[0]; // extra parameters hata do
 
 const iframe = document.createElement("iframe");
-iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&&controls=0`;
+iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
 iframe.className = "trailer-frame";
 iframe.allow = "autoplay";
 posterBox.appendChild(iframe);
