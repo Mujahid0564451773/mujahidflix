@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Mujahid Flix</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- FONT AWESOME -->
@@ -317,7 +318,9 @@ background:rgba(0,0,0,0.6);
 body{
   padding-top:140px;
 }
-  
+  body{
+  font-family: 'Poppins', sans-serif;
+}
  .navbar{
   position:fixed;
   top:0;
@@ -333,9 +336,10 @@ body{
   gap:10px;
 }
   
- .logo{
-  font-size:20px;
-  text-align:center;
+.logo{
+  font-family: 'Poppins', sans-serif;
+  font-weight:700;
+  letter-spacing:2px;
 }
 
 .clock{
@@ -393,12 +397,15 @@ body{
   /* ================= FUTURISTIC UI UPGRADE ================= */
 
 /* Smooth global transitions */
-*{
-  transition: all 0.35s ease;
+.movie,
+.poster-box img,
+.filters button{
+  transition:0.35s ease;
 }
 
 /* Animated futuristic background */
 body{
+  font-family:'Poppins',sans-serif;
   background: radial-gradient(circle at 20% 20%, #1a1a2e 0%, #0f0f1a 40%, #000 100%);
   background-attachment: fixed;
 }
