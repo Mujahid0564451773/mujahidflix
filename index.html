@@ -2,9 +2,6 @@
 <html>
 <head>
 <title>Mujahid Flix</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- FONT AWESOME -->
@@ -245,7 +242,6 @@
   aspect-ratio:16/9;
   overflow:hidden;
   border-radius:6px;
-  background:#111;
 }
 
 .poster-box img{
@@ -254,7 +250,6 @@
   object-fit:cover;
   transition: transform 0.4s ease;
   border-radius:8px;
-  content-visibility:auto;
 }
 
 .movie-title{
@@ -322,9 +317,7 @@ background:rgba(0,0,0,0.6);
 body{
   padding-top:140px;
 }
-  body{
-  font-family: 'Poppins', sans-serif;
-}
+  
  .navbar{
   position:fixed;
   top:0;
@@ -340,10 +333,9 @@ body{
   gap:10px;
 }
   
-.logo{
-  font-family: 'Poppins', sans-serif;
-  font-weight:700;
-  letter-spacing:2px;
+ .logo{
+  font-size:20px;
+  text-align:center;
 }
 
 .clock{
@@ -401,21 +393,18 @@ body{
   /* ================= FUTURISTIC UI UPGRADE ================= */
 
 /* Smooth global transitions */
-.movie,
-.poster-box img,
-.filters button{
-  transition:0.35s ease;
+*{
+  transition: all 0.35s ease;
 }
 
 /* Animated futuristic background */
 body{
-  font-family:'Poppins',sans-serif;
   background: radial-gradient(circle at 20% 20%, #1a1a2e 0%, #0f0f1a 40%, #000 100%);
   background-attachment: fixed;
 }
 
-/* Subtle moving glow effect disabled
-  body::before{
+/* Subtle moving glow effect */
+body::before{
   content:"";
   position:fixed;
   width:600px;
@@ -426,8 +415,7 @@ body{
   animation:moveGlow 10s linear infinite alternate;
   z-index:-1;
 }
-*/
- 
+
 @keyframes moveGlow{
   0%{ transform:translate(0,0); }
   100%{ transform:translate(200px,150px); }
@@ -573,7 +561,7 @@ body{
 <body>
 
 <div id="intro">
- <img src="intro.png" loading="lazy" class="intro-image" alt="Intro">
+  <img src="intro.png" class="intro-image" alt="Intro">
   <button id="enterBtn" style="
     position:absolute;
     bottom:80px;
@@ -635,14 +623,25 @@ body{
 
 <script>
 /* ========= INTRO REMOVE ========= */
-document.addEventListener("DOMContentLoaded", function(){
-
+window.addEventListener("load", () => {
+  const introSound = document.getElementById("introMusic");
   const enterBtn = document.getElementById("enterBtn");
 
-  enterBtn.addEventListener("click", function(){
-    document.getElementById("intro").style.display = "none";
-  });
+  if (enterBtn) {
+    enterBtn.addEventListener("click", () => {
+      if (introSound) {
+        introSound.currentTime = 0;
+        introSound.play().catch(()=>{});
+      }
 
+      const intro = document.getElementById("intro");
+      if (intro) {
+        intro.style.transition = "opacity 0.8s ease";
+        intro.style.opacity = "0";
+        setTimeout(() => intro.remove(), 800);
+      }
+    });
+  }
 });
 
 /* ========= CLOCK ========= */
@@ -825,12 +824,7 @@ trailer:"https://www.youtube.com/embed/FUK2kdPsBws"},
 category:"hollywood",
 video:"https://drive.google.com/file/d/1QxnySurIsQbh0SvpebtkC6-brI7CvIbK/preview",
 trailer:"https://www.youtube.com/embed/aOb15GVFZxU"},
-
-{title:"Heart of Stone 2023",
-category:"hollywood",
-video:"https://drive.google.com/file/d/1PyPpCka7pHDPvjh0mI33V_Sp88PTbgUt/preview",
-trailer:"https://www.youtube.com/embed/XuDwndGaCFo"},
-  
+ 
 {title:"Final Destination 1",
 category:"hollywood",
 video:"https://drive.google.com/file/d/1E3uidvUgBEno95ikw1xcpgEZog96IKVM/preview",
@@ -1224,11 +1218,11 @@ const searchInput = document.getElementById("searchInput");
 
 /* ========= HERO SLIDER ========= */
 if (hero) {
-  movieData.slice(0,5).forEach((movie, index) => {
+  movieData.forEach((movie, index) => {
     const slide = document.createElement("div");
     slide.className = "slide" + (index === 0 ? " active" : "");
     slide.innerHTML = `
-      <img src="${movie.title}.jpg" loading="lazy" decoding="async" style="width:100%; max-height:55vh; object-fit:contain;">
+      <img src="${movie.title}.jpg" style="width:100%; max-height:55vh; object-fit:contain;">
       <div class="slide-title">${movie.title}</div>
     `;
     hero.appendChild(slide);
@@ -1255,7 +1249,7 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
 
   card.innerHTML = `
     <div class="poster-box">
-    <img src="${imageSrc}" loading="lazy" decoding="async" onerror="this.src='poster.jpg'">
+      <img src="${imageSrc}" loading="lazy">
     </div>
     <div class="movie-title">${title}</div>
   `;
@@ -1263,7 +1257,6 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
   const posterBox = card.querySelector(".poster-box");
 
   // Desktop hover trailer
-  /* Desktop hover trailer disabled
   card.addEventListener("mouseenter", () => {
    if (!trailer) return;
    if (posterBox.querySelector("iframe")) return;
@@ -1286,9 +1279,9 @@ posterBox.appendChild(iframe);
     const iframe = posterBox.querySelector("iframe");
     if (iframe) iframe.remove();
   });
-*/
+
 // Mobile tap trailer
- 
+
   
   // Click = full movie
   card.addEventListener("click", () => {
@@ -1322,7 +1315,7 @@ posterBox.appendChild(iframe);
 }
   
 if (row) {
-movieData.slice(0,20).forEach(m => addCard({
+movieData.forEach(m => addCard({
   title: m.title,
   category: m.category,
   imageSrc: `${m.title}.jpg`,
