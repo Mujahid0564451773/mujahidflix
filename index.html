@@ -243,6 +243,7 @@
   aspect-ratio:16/9;
   overflow:hidden;
   border-radius:6px;
+  background:#111;
 }
 
 .poster-box img{
@@ -1247,7 +1248,7 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
 
   card.innerHTML = `
     <div class="poster-box">
-     <img src="${imageSrc}" loading="lazy" decoding="async">
+    <img src="${imageSrc}" loading="lazy" decoding="async" onerror="this.src='poster.jpg'">
     </div>
     <div class="movie-title">${title}</div>
   `;
@@ -1313,7 +1314,7 @@ posterBox.appendChild(iframe);
 }
   
 if (row) {
-movieData.slice(0,20).forEach(m => addCard({
+movieData.forEach(m => addCard({
   title: m.title,
   category: m.category,
   imageSrc: `${m.title}.jpg`,
