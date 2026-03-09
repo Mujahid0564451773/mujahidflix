@@ -635,11 +635,15 @@ body{
 
 <script>
 /* ========= INTRO REMOVE ========= */
-const enterBtn = document.getElementById("enterBtn");
+document.addEventListener("DOMContentLoaded", function(){
 
-enterBtn.onclick = function(){
-  document.getElementById("intro").style.display = "none";
-};
+  const enterBtn = document.getElementById("enterBtn");
+
+  enterBtn.addEventListener("click", function(){
+    document.getElementById("intro").style.display = "none";
+  });
+
+});
 
 /* ========= CLOCK ========= */
 function updateClock() {
