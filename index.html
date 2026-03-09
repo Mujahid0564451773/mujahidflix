@@ -1257,6 +1257,7 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
   const posterBox = card.querySelector(".poster-box");
 
   // Desktop hover trailer
+  /*
   card.addEventListener("mouseenter", () => {
    if (!trailer) return;
    if (posterBox.querySelector("iframe")) return;
