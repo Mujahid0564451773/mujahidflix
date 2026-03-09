@@ -623,26 +623,11 @@ body::before{
 
 <script>
 /* ========= INTRO REMOVE ========= */
-document.addEventListener("DOMContentLoaded", () => {
-  const introSound = document.getElementById("introMusic");
-  const enterBtn = document.getElementById("enterBtn");
+const enterBtn = document.getElementById("enterBtn");
 
-  if (enterBtn) {
-    enterBtn.addEventListener("click", () => {
-      if (introSound) {
-        introSound.currentTime = 0;
-        introSound.play().catch(()=>{});
-      }
-
-      const intro = document.getElementById("intro");
-      if (intro) {
-        intro.style.transition = "opacity 0.8s ease";
-        intro.style.opacity = "0";
-        setTimeout(() => intro.remove(), 800);
-      }
-    });
-  }
-});
+enterBtn.onclick = function(){
+  document.getElementById("intro").style.display = "none";
+};
 
 /* ========= CLOCK ========= */
 function updateClock() {
