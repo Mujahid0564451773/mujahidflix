@@ -251,6 +251,7 @@
   object-fit:cover;
   transition: transform 0.4s ease;
   border-radius:8px;
+  content-visibility:auto;
 }
 
 .movie-title{
@@ -1246,7 +1247,7 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
 
   card.innerHTML = `
     <div class="poster-box">
-      <img src="${imageSrc}" loading="lazy">
+     <img src="${imageSrc}" loading="lazy" decoding="async">
     </div>
     <div class="movie-title">${title}</div>
   `;
@@ -1312,7 +1313,7 @@ posterBox.appendChild(iframe);
 }
   
 if (row) {
-movieData.forEach(m => addCard({
+movieData.slice(0,20).forEach(m => addCard({
   title: m.title,
   category: m.category,
   imageSrc: `${m.title}.jpg`,
