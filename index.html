@@ -1221,7 +1221,7 @@ if (hero) {
     const slide = document.createElement("div");
     slide.className = "slide" + (index === 0 ? " active" : "");
     slide.innerHTML = `
-      <img src="${movie.title}.jpg" style="width:100%; max-height:55vh; object-fit:contain;">
+      <img src="${movie.title}.jpg" loading="lazy" decoding="async" style="width:100%; max-height:55vh; object-fit:contain;">
       <div class="slide-title">${movie.title}</div>
     `;
     hero.appendChild(slide);
