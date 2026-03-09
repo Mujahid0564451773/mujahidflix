@@ -414,8 +414,7 @@ body{
   background-attachment: fixed;
 }
 
-/* Subtle moving glow effect */
-/*
+/* Subtle moving glow effect disabled
   body::before{
   content:"";
   position:fixed;
@@ -427,7 +426,8 @@ body{
   animation:moveGlow 10s linear infinite alternate;
   z-index:-1;
 }
-
+*/
+ 
 @keyframes moveGlow{
   0%{ transform:translate(0,0); }
   100%{ transform:translate(200px,150px); }
@@ -1259,7 +1259,7 @@ function addCard({title, category, imageSrc, clickSrc, trailer=null}) {
   const posterBox = card.querySelector(".poster-box");
 
   // Desktop hover trailer
-  /*
+  /* Desktop hover trailer disabled
   card.addEventListener("mouseenter", () => {
    if (!trailer) return;
    if (posterBox.querySelector("iframe")) return;
@@ -1282,9 +1282,9 @@ posterBox.appendChild(iframe);
     const iframe = posterBox.querySelector("iframe");
     if (iframe) iframe.remove();
   });
-
+*/
 // Mobile tap trailer
-
+ 
   
   // Click = full movie
   card.addEventListener("click", () => {
@@ -1318,7 +1318,7 @@ posterBox.appendChild(iframe);
 }
   
 if (row) {
-movieData.forEach(m => addCard({
+movieData.slice(0,20).forEach(m => addCard({
   title: m.title,
   category: m.category,
   imageSrc: `${m.title}.jpg`,
