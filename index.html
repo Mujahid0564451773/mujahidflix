@@ -1588,15 +1588,13 @@ box.appendChild(seasonTitle);
   document.body.appendChild(dropdown);
 }
 
-  window.addEventListener("load", () => {
-  const audio = document.getElementById("introMusic");
-});
+
   const nextBtn = document.getElementById("nextEpisode");
 
 setInterval(()=>{
 
 if(!currentSeries) return;
-
+if(!nextBtn) return;
 nextBtn.style.display="block";
 
 },20000); // 20 sec baad show
@@ -1621,14 +1619,19 @@ currentSeason = season;
 currentEpisode = episode;
 
 };    
-    
+    window.addEventListener("load", () => {
+
+  const audio = document.getElementById("introMusic");
+
   if(audio){
     audio.volume = 1;
     audio.play().catch(() => {
-      console.log("Autoplay blocked by browser");
+      console.log("Autoplay blocked");
     });
   }
+
 });
+
   
 </script>
 
