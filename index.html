@@ -1588,7 +1588,7 @@ box.appendChild(seasonTitle);
 }
 
 
-  const nextBtn = document.getElementById("nextEpisode");
+  let nextBtn;
 
 setInterval(()=>{
 
@@ -1619,6 +1619,7 @@ currentEpisode = episode;
 
 };    
     window.addEventListener("load", () => {
+  nextBtn = document.getElementById("nextEpisode");
 
   const audio = document.getElementById("introMusic");
 
