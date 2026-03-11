@@ -609,6 +609,8 @@ let currentSeries;
 let currentSeason;
 let currentEpisode;
   
+let nextBtn;
+  
 /* ========= CLOCK ========= */
 function updateClock() {
   const now = new Date();
@@ -1375,8 +1377,14 @@ movieData.forEach(m => addCard({
 
 /* ========= MODAL CLOSE ========= */
 window.closeModal = function () {
+
+  if(nextBtn){
+    nextBtn.style.display = "none";
+  }
+
   if (modal) modal.style.display = "none";
   if (frame) frame.src = "";
+
 };
 
 /* ========= FILTER ========= */
@@ -1557,7 +1565,7 @@ box.appendChild(seasonTitle);
       epBtn.style.background = "#1c1c1c";
       epBtn.style.cursor = "pointer";
 
-    epBtn.onclick = function(){
+   epBtn.onclick = function(){
 
   currentSeries = series;
   currentSeason = sIndex;
@@ -1565,9 +1573,8 @@ box.appendChild(seasonTitle);
 
   frame.src = ep.video;
   modal.style.display = "flex";
-  setTimeout(()=>{
-    nextBtn.style.display = "block";
-  },20000); // 20 sec baad next button
+
+  startNextCountdown(); // NEW
 
   dropdown.remove();
 
@@ -1590,10 +1597,63 @@ box.appendChild(seasonTitle);
   document.body.appendChild(dropdown);
 }
 
+    window.addEventListener("load", () => {
+  nextBtn = document.getElementById("nextEpisode");
 
-  let nextBtn;
+ if(nextBtn){
+    nextBtn.onclick = function(){
 
-nextBtn.onclick=function(){
+      let season = currentSeason;
+      let episode = currentEpisode + 1;
+
+      const seasons = currentSeries.seasons;
+
+      if(episode >= seasons[season].episodes.length){
+        season++;
+        episode = 0;
+      }
+
+      if(!seasons[season]) return;
+
+      frame.src = seasons[season].episodes[episode].video;
+
+      nextBtn.style.display = "none";
+
+      currentSeason = season;
+      currentEpisode = episode;
+
+    };
+  }
+
+  const audio = document.getElementById("introMusic");
+      
+  if(audio){
+    audio.volume = 1;
+    audio.play().catch(() => {
+      console.log("Autoplay blocked");
+    });
+  }
+
+});
+
+  function startNextCountdown(){
+
+let box = document.getElementById("nextEpisode");
+let count = document.getElementById("count");
+
+let seconds = 10;
+
+box.style.display="block";
+count.innerText = seconds;
+
+let timer = setInterval(()=>{
+
+seconds--;
+count.innerText = seconds;
+
+if(seconds <= 0){
+
+clearInterval(timer);
 
 let season = currentSeason;
 let episode = currentEpisode + 1;
@@ -1608,45 +1668,40 @@ episode = 0;
 if(!seasons[season]) return;
 
 frame.src = seasons[season].episodes[episode].video;
-nextBtn.style.display="none";
+
 currentSeason = season;
 currentEpisode = episode;
 
-};    
-    window.addEventListener("load", () => {
-  nextBtn = document.getElementById("nextEpisode");
+seconds = 10;
+count.innerText = seconds;
 
-  const audio = document.getElementById("introMusic");
+}
 
-  if(audio){
-    audio.volume = 1;
-    audio.play().catch(() => {
-      console.log("Autoplay blocked");
-    });
-  }
+},1000);
 
-});
-
+}
   
 </script>
 
   
   <audio id="introMusic" src="netflix-sound.mp3" preload="auto"></audio>
 
-<button id="nextEpisode" style="
+<div id="nextEpisode" style="
 position:fixed;
 bottom:30px;
 right:30px;
-padding:12px 20px;
+padding:14px 22px;
 background:#e50914;
 color:white;
-border:none;
-border-radius:6px;
+border-radius:8px;
 display:none;
 z-index:5000;
+font-weight:bold;
 ">
-▶ Next Episode
-</button>
+
+Next Episode in <span id="count">10</span>
+
+</div>
 
   
 </body>
