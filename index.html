@@ -603,6 +603,10 @@ body::before{
 <iframe id="videoFrame" src="" allowfullscreen></iframe>
 </div>
 
+let currentSeries;
+let currentSeason;
+let currentEpisode;
+  
 <script>
 
 
@@ -1527,7 +1531,7 @@ if (searchInput) {
 
   box.innerHTML = `<h2 style="margin-bottom:20px;">${series.title}</h2>`;
 
-  series.seasons.forEach(season => {
+  series.seasons.forEach((season, sIndex) => {
 
     const seasonTitle = document.createElement("div");
 seasonTitle.innerText = season.season;
@@ -1545,7 +1549,7 @@ seasonTitle.style.background = "rgba(229,9,20,0.1)";
 seasonTitle.style.padding = "6px 10px";   
     
 box.appendChild(seasonTitle);
-    season.episodes.forEach(ep => {
+   season.episodes.forEach((ep, eIndex) => {
 
       const epBtn = document.createElement("div");
       epBtn.innerText = ep.name;
@@ -1554,11 +1558,18 @@ box.appendChild(seasonTitle);
       epBtn.style.background = "#1c1c1c";
       epBtn.style.cursor = "pointer";
 
-      epBtn.onclick = function(){
-        frame.src = ep.video;
-        modal.style.display = "flex";
-        dropdown.remove();
-      };
+    epBtn.onclick = function(){
+
+  currentSeries = series;
+  currentSeason = sIndex;
+  currentEpisode = eIndex;
+
+  frame.src = ep.video;
+  modal.style.display = "flex";
+
+  dropdown.remove();
+
+};
 
       box.appendChild(epBtn);
 
@@ -1579,6 +1590,38 @@ box.appendChild(seasonTitle);
 
   window.addEventListener("load", () => {
   const audio = document.getElementById("introMusic");
+});
+  const nextBtn = document.getElementById("nextEpisode");
+
+setInterval(()=>{
+
+if(!currentSeries) return;
+
+nextBtn.style.display="block";
+
+},20000); // 20 sec baad show
+
+nextBtn.onclick=function(){
+
+let season = currentSeason;
+let episode = currentEpisode + 1;
+
+const seasons = currentSeries.seasons;
+
+if(episode >= seasons[season].episodes.length){
+season++;
+episode = 0;
+}
+
+if(!seasons[season]) return;
+
+frame.src = seasons[season].episodes[episode].video;
+nextBtn.style.display="none";
+currentSeason = season;
+currentEpisode = episode;
+
+};    
+    
   if(audio){
     audio.volume = 1;
     audio.play().catch(() => {
@@ -1591,6 +1634,23 @@ box.appendChild(seasonTitle);
 
   
   <audio id="introMusic" src="netflix-sound.mp3" preload="auto"></audio>
+
+<button id="nextEpisode" style="
+position:fixed;
+bottom:30px;
+right:30px;
+padding:12px 20px;
+background:#e50914;
+color:white;
+border:none;
+border-radius:6px;
+display:none;
+z-index:5000;
+">
+▶ Next Episode
+</button>
+
+  
 </body>
 </html>
   
