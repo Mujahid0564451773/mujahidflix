@@ -1224,7 +1224,7 @@ const searchInput = document.getElementById("searchInput");
 
 /* ========= HERO SLIDER ========= */
 if (hero) {
-  movieData.forEach((movie, index) => {
+  movieData.slice(0,6).forEach((movie, index) => {
     const slide = document.createElement("div");
     slide.className = "slide" + (index === 0 ? " active" : "");
    slide.innerHTML = `
