@@ -130,6 +130,8 @@
   display:flex;
   justify-content:center;
   gap:30px;
+  position:relative;
+  z-index:10;
 }
 .social-icons a{
   color:white;
@@ -162,7 +164,7 @@
 }
   
 .hero{
-  margin-top:40px;
+  margin-top:120px;
   position:relative;
 }
 .slide{
@@ -1228,7 +1230,7 @@ if (hero) {
     const slide = document.createElement("div");
     slide.className = "slide" + (index === 0 ? " active" : "");
    slide.innerHTML = `
-<img src="${movie.title}.jpg" loading="lazy" style="width:100%; max-height:55vh; object-fit:cover;">
+<img src="${movie.title}.jpg" loading="lazy" style="width:100%; max-height:55vh; object-fit:contain;">
 <div class="slide-title">${movie.title}</div>
 `;
     hero.appendChild(slide);
