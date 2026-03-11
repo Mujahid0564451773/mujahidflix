@@ -988,11 +988,8 @@ const seriesData = [
           { name: "Episode 7", video: "https://drive.google.com/file/d/11OoUnzEv1wLV5cyQC99yFtldLzCku0fU/preview" },
           { name: "Episode 8", video: "https://drive.google.com/file/d/17G9iHxljqxm4w1p0MkGo5veXzW1Zn4be/preview" },
           { name: "Episode 9", video: "https://drive.google.com/file/d/1kiLHAgHBCB_lA9eeAs1swcPcpFJQOBjS/preview" }
-        ]
-      }
-      ]
-      },
-
+          ]
+          },
       {
         season: "Season 2",
         episodes: [
@@ -1003,9 +1000,7 @@ const seriesData = [
           { name: "Episode 5", video: "https://drive.google.com/file/d/1d4996l0LclevA-qlczADUDUp_jrq14KC/preview" },
           { name: "Episode 6", video: "https://drive.google.com/file/d/1iNaZjuXtvd0pYIpEQe0wMGRwueYSqQLF/preview" },
           { name: "Episode 7", video: "https://drive.google.com/file/d/1rUEDpntJreuQuM_c9ZueX7boohI7lIs_/preview" }
-        ]
       }
-
     ]
   },
 
@@ -1061,6 +1056,7 @@ const seriesData = [
 {
     title: "Murshid 2024 (Series)",
     category: "bollywood",
+    trailer:"https://www.youtube.com/embed/q1zwNndRD0o",
     seasons: [
 
       {
@@ -1303,7 +1299,7 @@ posterBox.appendChild(iframe);
   row.appendChild(card);
 }
 
-  function addSeriesCard(series){
+ function addSeriesCard(series){
 
   const card = document.createElement("div");
   card.className = "movie";
@@ -1317,7 +1313,33 @@ posterBox.appendChild(iframe);
     <div class="movie-title">${series.title}</div>
   `;
 
-  // Yahan difference hai 👇
+  const posterBox = card.querySelector(".poster-box");
+
+  // TRAILER HOVER
+  card.addEventListener("mouseenter", () => {
+
+    if(!series.trailer) return;
+    if(posterBox.querySelector("iframe")) return;
+
+   let videoId = series.trailer.includes("watch?v=")
+  ? series.trailer.split("watch?v=")[1]
+  : series.trailer.split("/embed/")[1];
+
+videoId = videoId.split("&")[0];
+
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
+    iframe.className = "trailer-frame";
+    iframe.allow = "autoplay";
+
+    posterBox.appendChild(iframe);
+  });
+
+  card.addEventListener("mouseleave", () => {
+    const iframe = posterBox.querySelector("iframe");
+    if (iframe) iframe.remove();
+  });
+
   card.addEventListener("click", () => {
     showEpisodeDropdown(series);
   });
