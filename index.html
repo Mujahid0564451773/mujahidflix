@@ -227,12 +227,6 @@
   opacity:1;
 }
 
-  .movie:hover{
-  transform: scale(1.25) translateY(-15px);
-  z-index: 50;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.7);
-}
-
 .movie:hover img{
   transform: scale(1.1);
 }
@@ -1079,7 +1073,7 @@ const seriesData = [
     {
     title: "Under The Dome (Series)",
     category: "hollywood",
-    trailer:"https://www.youtube.com/embedf_Y5YeYrqUk",
+    trailer:"https://www.youtube.com/embed/_Y5YeYrqUk",
     seasons: [
 
       {
@@ -1126,18 +1120,18 @@ const seriesData = [
       {
         season: "Season 2",
         episodes: [
-          { name: "Episode 2", video: "https://drive.google.com/file/d/1I8IEWUdVrgeO_vgX4kmIJKZbG4pBcg-f/preview" },
-          { name: "Episode 3", video: "https://drive.google.com/file/d/1V9HxrO4kfm_T2pbsDMZTPtHloI-szK6p/preview" },
-          { name: "Episode 4", video: "https://drive.google.com/file/d/1nY1MmLf8uJu_tu4Rxj5thzl0aPF6Ct5F/preview" },
-          { name: "Episode 5", video: "https://drive.google.com/file/d/1EqHhEZTIig7Ve9KHA-QMugNIM76ytc4h/preview" },
-          { name: "Episode 6", video: "https://drive.google.com/file/d/1wbWA4HilcbwQN41621-v68kXZFzIhkpM/preview" },
-          { name: "Episode 7", video: "https://drive.google.com/file/d/1ajEkWoGrThDrTG-3MgTgAP4TyGzp-RRP/preview" },
-          { name: "Episode 8", video: "https://drive.google.com/file/d/1Y2VaanMk1pKLYWrH_armR55VowjPUev3/preview" },
-          { name: "Episode 9", video: "https://drive.google.com/file/d/1vrgxwG1MIkRcTp5h4oUc5Rm0ZrbqX8uh/preview" },
-          { name: "Episode 10", video: "https://drive.google.com/file/d/1tYExOyUZ-OHIXgp5k6crsCpkqLfXWo95/preview" },
-          { name: "Episode 11", video: "https://drive.google.com/file/d/1wl2bmT-oYZSC1wgPMu-wPZFPPjGHCqHo/preview" },
-          { name: "Episode 12", video: "https://drive.google.com/file/d/1DeVLsbYp6GHnTkt2iRzj4ZJo0dbAHs0q/preview" },
-          { name: "Episode 13", video: "https://drive.google.com/file/d/19pc12f7VvWcXoAZeFkt7UgRAVfveqTM_/preview" }
+          { name: "Episode 1", video: "https://drive.google.com/file/d/1I8IEWUdVrgeO_vgX4kmIJKZbG4pBcg-f/preview" },
+          { name: "Episode 2", video: "https://drive.google.com/file/d/1V9HxrO4kfm_T2pbsDMZTPtHloI-szK6p/preview" },
+          { name: "Episode 3", video: "https://drive.google.com/file/d/1nY1MmLf8uJu_tu4Rxj5thzl0aPF6Ct5F/preview" },
+          { name: "Episode 4", video: "https://drive.google.com/file/d/1EqHhEZTIig7Ve9KHA-QMugNIM76ytc4h/preview" },
+          { name: "Episode 5", video: "https://drive.google.com/file/d/1wbWA4HilcbwQN41621-v68kXZFzIhkpM/preview" },
+          { name: "Episode 6", video: "https://drive.google.com/file/d/1ajEkWoGrThDrTG-3MgTgAP4TyGzp-RRP/preview" },
+          { name: "Episode 7", video: "https://drive.google.com/file/d/1Y2VaanMk1pKLYWrH_armR55VowjPUev3/preview" },
+          { name: "Episode 8", video: "https://drive.google.com/file/d/1vrgxwG1MIkRcTp5h4oUc5Rm0ZrbqX8uh/preview" },
+          { name: "Episode 9", video: "https://drive.google.com/file/d/1tYExOyUZ-OHIXgp5k6crsCpkqLfXWo95/preview" },
+          { name: "Episode 10", video: "https://drive.google.com/file/d/1wl2bmT-oYZSC1wgPMu-wPZFPPjGHCqHo/preview" },
+          { name: "Episode 11", video: "https://drive.google.com/file/d/1DeVLsbYp6GHnTkt2iRzj4ZJo0dbAHs0q/preview" },
+          { name: "Episode 12", video: "https://drive.google.com/file/d/19pc12f7VvWcXoAZeFkt7UgRAVfveqTM_/preview" }
         ]
       },
       {
@@ -1232,10 +1226,10 @@ if (hero) {
   movieData.forEach((movie, index) => {
     const slide = document.createElement("div");
     slide.className = "slide" + (index === 0 ? " active" : "");
-    slide.innerHTML = `
-      <img src="${movie.title}.jpg" style="width:100%; max-height:55vh; object-fit:contain;">
-      <div class="slide-title">${movie.title}</div>
-    `;
+   slide.innerHTML = `
+<img src="${movie.title}.jpg" loading="lazy" style="width:100%; max-height:55vh; object-fit:cover;">
+<div class="slide-title">${movie.title}</div>
+`;
     hero.appendChild(slide);
   });
 
