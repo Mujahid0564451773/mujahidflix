@@ -1565,6 +1565,9 @@ box.appendChild(seasonTitle);
 
   frame.src = ep.video;
   modal.style.display = "flex";
+  setTimeout(()=>{
+    nextBtn.style.display = "block";
+  },20000); // 20 sec baad next button
 
   dropdown.remove();
 
@@ -1589,14 +1592,6 @@ box.appendChild(seasonTitle);
 
 
   let nextBtn;
-
-setInterval(()=>{
-
-if(!currentSeries) return;
-if(!nextBtn) return;
-nextBtn.style.display="block";
-
-},20000); // 20 sec baad show
 
 nextBtn.onclick=function(){
 
