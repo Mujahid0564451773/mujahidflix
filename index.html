@@ -1573,9 +1573,7 @@ box.appendChild(seasonTitle);
 
   frame.src = ep.video;
   modal.style.display = "flex";
-
-  startNextCountdown(); // NEW
-
+startEpisodeWatcher();   // NEW
   dropdown.remove();
 
 };
@@ -1641,7 +1639,7 @@ box.appendChild(seasonTitle);
 let box = nextBtn;
 let count = document.getElementById("count");
 
-let seconds = 10;
+let seconds = 120;   // 2 minute
 
 box.style.display="block";
 count.innerText = seconds;
@@ -1672,15 +1670,38 @@ frame.src = seasons[season].episodes[episode].video;
 currentSeason = season;
 currentEpisode = episode;
 
-seconds = 10;
-count.innerText = seconds;
-
 }
 
 },1000);
 
 }
-  
+  function startEpisodeWatcher(){
+
+let player = frame;
+
+let check = setInterval(()=>{
+
+try{
+
+let video = player.contentWindow.document.querySelector("video");
+
+if(!video) return;
+
+let remaining = video.duration - video.currentTime;
+
+if(remaining <= 120){
+
+clearInterval(check);
+
+startNextCountdown();
+
+}
+
+}catch(e){}
+
+},5000);
+
+}
 </script>
 
   
@@ -1699,7 +1720,7 @@ z-index:5000;
 font-weight:bold;
 ">
 
-Next Episode in <span id="count">10</span>
+Next Episode in <span id="count">120</span>
 
 </div>
 
