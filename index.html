@@ -1677,23 +1677,11 @@ currentEpisode = episode;
 }
   function startEpisodeWatcher(){
 
-let player = frame;
-
-let check = setInterval(()=>{
-
-try{
-
-let video = player.contentWindow.document.querySelector("video");
-
-if(!video) return;
-
-let remaining = video.duration - video.currentTime;
-
-if(remaining <= 120){
-
-clearInterval(check);
+setTimeout(()=>{
 
 startNextCountdown();
+
+},600000); // 10 minutes baad countdown start
 
 }
 
