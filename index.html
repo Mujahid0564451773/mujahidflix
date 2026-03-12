@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
 <head>
 <title>Mujahid Flix</title>
@@ -610,6 +610,8 @@ let currentSeason;
 let currentEpisode;
   
 let nextBtn;
+
+ let watchProgress = JSON.parse(localStorage.getItem("watchProgress") || "{}"); 
   
 /* ========= CLOCK ========= */
 function updateClock() {
@@ -1346,6 +1348,7 @@ videoId = videoId.split("&")[0];
     if (iframe) iframe.remove();
   });
 
+   
   card.addEventListener("click", () => {
     showEpisodeDropdown(series);
   });
@@ -1517,7 +1520,21 @@ if (searchInput) {
 }
 
  function showEpisodeDropdown(series){
+let saved = watchProgress[series.title];
 
+if(saved){
+
+currentSeries = series;
+currentSeason = saved.season;
+currentEpisode = saved.episode;
+
+frame.src = series.seasons[saved.season].episodes[saved.episode].video;
+modal.style.display = "flex";
+startEpisodeWatcher();
+showSkipIntro();
+return;
+
+}
   const dropdown = document.createElement("div");
   dropdown.style.position = "fixed";
   dropdown.style.inset = "0";
@@ -1573,11 +1590,19 @@ box.appendChild(seasonTitle);
 
   frame.src = ep.video;
   modal.style.display = "flex";
-startEpisodeWatcher();   // NEW
-  dropdown.remove();
-
+     watchProgress[series.title] = {
+season: sIndex,
+episode: eIndex
 };
 
+localStorage.setItem("watchProgress", JSON.stringify(watchProgress));
+startEpisodeWatcher();   // NEW
+  dropdown.remove();
+showSkipIntro();
+};
+
+     // save episode
+     
       box.appendChild(epBtn);
 
     });
@@ -1619,8 +1644,14 @@ startEpisodeWatcher();   // NEW
 
       currentSeason = season;
       currentEpisode = episode;
+      watchProgress[currentSeries.title] = {
+      season: currentSeason,
+      episode: currentEpisode
+};
 
-    };
+localStorage.setItem("watchProgress", JSON.stringify(watchProgress));
+};
+   
   }
 
   const audio = document.getElementById("introMusic");
@@ -1669,6 +1700,13 @@ frame.src = seasons[season].episodes[episode].video;
 
 currentSeason = season;
 currentEpisode = episode;
+  
+watchProgress[currentSeries.title] = {
+season: season,
+episode: episode
+};
+
+localStorage.setItem("watchProgress", JSON.stringify(watchProgress)); 
 
 }
 
@@ -1685,6 +1723,37 @@ startNextCountdown();
 
 }
 
+const skipIntro = document.getElementById("skipIntro") || null;
+
+function showSkipIntro(){
+if(!skipIntro) return;
+skipIntro.style.display="block";
+
+setTimeout(()=>{
+skipIntro.style.display="none";
+},20000);
+
+}
+  
+if(skipIntro){
+skipIntro.onclick = function(){
+
+let player = frame;
+
+try{
+
+let video = player.contentWindow.document.querySelector("video");
+
+if(video){
+video.currentTime = 90;
+}
+
+}catch(e){}
+
+skipIntro.style.display="none";
+}
+}
+  
 </script>
 
   
@@ -1707,6 +1776,21 @@ Next Episode in <span id="count">120</span>
 
 </div>
 
+  <div id="skipIntro" style="
+position:fixed;
+bottom:90px;
+right:30px;
+background:black;
+color:white;
+padding:10px 18px;
+border:1px solid #e50914;
+border-radius:6px;
+display:none;
+z-index:5000;
+cursor:pointer;
+">
+Skip Intro
+</div>
   
 </body>
 </html>
