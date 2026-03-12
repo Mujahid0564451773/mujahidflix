@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <title>Mujahid Flix</title>
@@ -602,16 +602,10 @@ body::before{
 <span class="close-btn" onclick="closeModal()">✖</span>
 <iframe id="videoFrame" src="" allowfullscreen></iframe>
 </div>
-  
+
 <script>
 
-let currentSeries;
-let currentSeason;
-let currentEpisode;
-  
 
- let watchProgress = JSON.parse(localStorage.getItem("watchProgress") || "{}"); 
-  
 /* ========= CLOCK ========= */
 function updateClock() {
   const now = new Date();
@@ -1236,7 +1230,7 @@ if (hero) {
     const slide = document.createElement("div");
     slide.className = "slide" + (index === 0 ? " active" : "");
    slide.innerHTML = `
-<img src="${movie.title}.jpg" loading="lazy" style="width:100%; max-height:55vh; object-fit:contain;" onerror="this.style.display='none'">
+<img src="${movie.title}.jpg" loading="lazy" style="width:100%; max-height:55vh; object-fit:contain;">
 <div class="slide-title">${movie.title}</div>
 `;
     hero.appendChild(slide);
@@ -1283,9 +1277,7 @@ let videoId = trailer.includes("watch?v=")
 videoId = videoId.split("&")[0]; // extra parameters hata do
 
 const iframe = document.createElement("iframe");
-
-iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0`;
-
+iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
 iframe.className = "trailer-frame";
 iframe.allow = "autoplay";
 posterBox.appendChild(iframe);
@@ -1337,7 +1329,7 @@ posterBox.appendChild(iframe);
 videoId = videoId.split("&")[0];
 
     const iframe = document.createElement("iframe");
-   iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0`;
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
     iframe.className = "trailer-frame";
     iframe.allow = "autoplay";
 
@@ -1349,7 +1341,6 @@ videoId = videoId.split("&")[0];
     if (iframe) iframe.remove();
   });
 
-   
   card.addEventListener("click", () => {
     showEpisodeDropdown(series);
   });
@@ -1381,10 +1372,8 @@ movieData.forEach(m => addCard({
 
 /* ========= MODAL CLOSE ========= */
 window.closeModal = function () {
-
   if (modal) modal.style.display = "none";
   if (frame) frame.src = "";
-
 };
 
 /* ========= FILTER ========= */
@@ -1517,20 +1506,7 @@ if (searchInput) {
 }
 
  function showEpisodeDropdown(series){
-let saved = watchProgress[series.title];
 
-if(saved){
-
-currentSeries = series;
-currentSeason = saved.season;
-currentEpisode = saved.episode;
-
-frame.src = series.seasons[saved.season].episodes[saved.episode].video;
-modal.style.display = "flex";
-showSkipIntro();
-return;
-
-}
   const dropdown = document.createElement("div");
   dropdown.style.position = "fixed";
   dropdown.style.inset = "0";
@@ -1551,7 +1527,7 @@ return;
 
   box.innerHTML = `<h2 style="margin-bottom:20px;">${series.title}</h2>`;
 
-  series.seasons.forEach((season, sIndex) => {
+  series.seasons.forEach(season => {
 
     const seasonTitle = document.createElement("div");
 seasonTitle.innerText = season.season;
@@ -1569,7 +1545,7 @@ seasonTitle.style.background = "rgba(229,9,20,0.1)";
 seasonTitle.style.padding = "6px 10px";   
     
 box.appendChild(seasonTitle);
-   season.episodes.forEach((ep, eIndex) => {
+    season.episodes.forEach(ep => {
 
       const epBtn = document.createElement("div");
       epBtn.innerText = ep.name;
@@ -1578,26 +1554,12 @@ box.appendChild(seasonTitle);
       epBtn.style.background = "#1c1c1c";
       epBtn.style.cursor = "pointer";
 
-   epBtn.onclick = function(){
+      epBtn.onclick = function(){
+        frame.src = ep.video;
+        modal.style.display = "flex";
+        dropdown.remove();
+      };
 
-  currentSeries = series;
-  currentSeason = sIndex;
-  currentEpisode = eIndex;
-
-  frame.src = ep.video;
-  modal.style.display = "flex";
-     watchProgress[series.title] = {
-season: sIndex,
-episode: eIndex
-};
-
-localStorage.setItem("watchProgress", JSON.stringify(watchProgress));
-  dropdown.remove();
-showSkipIntro();
-};
-
-     // save episode
-     
       box.appendChild(epBtn);
 
     });
@@ -1615,60 +1577,20 @@ showSkipIntro();
   document.body.appendChild(dropdown);
 }
 
-
-const skipIntro = document.getElementById("skipIntro") || null;
-
-function showSkipIntro(){
-if(!skipIntro) return;
-skipIntro.style.display="block";
-
-setTimeout(()=>{
-skipIntro.style.display="none";
-},20000);
-
-}
-  
-if(skipIntro){
-skipIntro.onclick = function(){
-
-let player = frame;
-
-try{
-
-let video = player.contentWindow.document.querySelector("video");
-
-if(video){
-video.currentTime = 90;
-}
-
-}catch(e){}
-
-skipIntro.style.display="none";
-}
-}
+  window.addEventListener("load", () => {
+  const audio = document.getElementById("introMusic");
+  if(audio){
+    audio.volume = 1;
+    audio.play().catch(() => {
+      console.log("Autoplay blocked by browser");
+    });
+  }
+});
   
 </script>
 
   
   <audio id="introMusic" src="netflix-sound.mp3" preload="auto"></audio>
-
-
-  <div id="skipIntro" style="
-position:fixed;
-bottom:90px;
-right:30px;
-background:black;
-color:white;
-padding:10px 18px;
-border:1px solid #e50914;
-border-radius:6px;
-display:none;
-z-index:5000;
-cursor:pointer;
-">
-Skip Intro
-</div>
-  
 </body>
 </html>
   
