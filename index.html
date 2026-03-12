@@ -1293,6 +1293,8 @@ posterBox.appendChild(iframe);
   
   // Click = full movie
   card.addEventListener("click", () => {
+  const iframe = posterBox.querySelector("iframe");
+  if (iframe) iframe.remove();
     frame.src = clickSrc;
     modal.style.display = "flex";
   });
@@ -1342,6 +1344,8 @@ videoId = videoId.split("&")[0];
   });
 
   card.addEventListener("click", () => {
+  const iframe = posterBox.querySelector("iframe");
+  if (iframe) iframe.remove();
     showEpisodeDropdown(series);
   });
 
