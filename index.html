@@ -1305,6 +1305,9 @@ posterBox.appendChild(iframe);
   card.addEventListener("click", () => {
   const iframe = posterBox.querySelector("iframe");
   if (iframe) iframe.remove();
+    
+  gtag('event', 'movie_play', {movie_title: title});
+    
     frame.src = clickSrc;
     modal.style.display = "flex";
   });
@@ -1569,6 +1572,7 @@ box.appendChild(seasonTitle);
       epBtn.style.cursor = "pointer";
 
       epBtn.onclick = function(){
+        gtag('event','episode_play',{series: series.title, episode: ep.name});
         frame.src = ep.video;
         modal.style.display = "flex";
         dropdown.remove();
