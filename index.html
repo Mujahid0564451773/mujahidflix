@@ -609,7 +609,6 @@ let currentSeries;
 let currentSeason;
 let currentEpisode;
   
-let nextBtn;
 
  let watchProgress = JSON.parse(localStorage.getItem("watchProgress") || "{}"); 
   
@@ -1237,7 +1236,7 @@ if (hero) {
     const slide = document.createElement("div");
     slide.className = "slide" + (index === 0 ? " active" : "");
    slide.innerHTML = `
-<img src="${movie.title}.jpg" loading="lazy" style="width:100%; max-height:55vh; object-fit:contain;">
+<img src="${movie.title}.jpg" loading="lazy" style="width:100%; max-height:55vh; object-fit:contain;" onerror="this.style.display='none'">
 <div class="slide-title">${movie.title}</div>
 `;
     hero.appendChild(slide);
@@ -1284,7 +1283,9 @@ let videoId = trailer.includes("watch?v=")
 videoId = videoId.split("&")[0]; // extra parameters hata do
 
 const iframe = document.createElement("iframe");
-iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
+
+iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0`;
+
 iframe.className = "trailer-frame";
 iframe.allow = "autoplay";
 posterBox.appendChild(iframe);
@@ -1336,7 +1337,7 @@ posterBox.appendChild(iframe);
 videoId = videoId.split("&")[0];
 
     const iframe = document.createElement("iframe");
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
+   iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0`;
     iframe.className = "trailer-frame";
     iframe.allow = "autoplay";
 
@@ -1380,10 +1381,6 @@ movieData.forEach(m => addCard({
 
 /* ========= MODAL CLOSE ========= */
 window.closeModal = function () {
-
-  if(nextBtn){
-    nextBtn.style.display = "none";
-  }
 
   if (modal) modal.style.display = "none";
   if (frame) frame.src = "";
@@ -1530,7 +1527,6 @@ currentEpisode = saved.episode;
 
 frame.src = series.seasons[saved.season].episodes[saved.episode].video;
 modal.style.display = "flex";
-startEpisodeWatcher();
 showSkipIntro();
 return;
 
@@ -1596,7 +1592,6 @@ episode: eIndex
 };
 
 localStorage.setItem("watchProgress", JSON.stringify(watchProgress));
-startEpisodeWatcher();   // NEW
   dropdown.remove();
 showSkipIntro();
 };
@@ -1620,108 +1615,6 @@ showSkipIntro();
   document.body.appendChild(dropdown);
 }
 
-    window.addEventListener("load", () => {
-  nextBtn = document.getElementById("nextEpisode");
-
- if(nextBtn){
-    nextBtn.onclick = function(){
-
-      let season = currentSeason;
-      let episode = currentEpisode + 1;
-
-      const seasons = currentSeries.seasons;
-
-      if(episode >= seasons[season].episodes.length){
-        season++;
-        episode = 0;
-      }
-
-      if(!seasons[season]) return;
-
-      frame.src = seasons[season].episodes[episode].video;
-
-      nextBtn.style.display = "none";
-
-      currentSeason = season;
-      currentEpisode = episode;
-      watchProgress[currentSeries.title] = {
-      season: currentSeason,
-      episode: currentEpisode
-};
-
-localStorage.setItem("watchProgress", JSON.stringify(watchProgress));
-};
-   
-  }
-
-  const audio = document.getElementById("introMusic");
-      
-  if(audio){
-    audio.volume = 1;
-    audio.play().catch(() => {
-      console.log("Autoplay blocked");
-    });
-  }
-
-});
-
-  function startNextCountdown(){
-
-let box = nextBtn;
-let count = document.getElementById("count");
-
-let seconds = 120;   // 2 minute
-
-box.style.display="block";
-count.innerText = seconds;
-
-let timer = setInterval(()=>{
-
-seconds--;
-count.innerText = seconds;
-
-if(seconds <= 0){
-
-clearInterval(timer);
-
-let season = currentSeason;
-let episode = currentEpisode + 1;
-
-const seasons = currentSeries.seasons;
-
-if(episode >= seasons[season].episodes.length){
-season++;
-episode = 0;
-}
-
-if(!seasons[season]) return;
-
-frame.src = seasons[season].episodes[episode].video;
-
-currentSeason = season;
-currentEpisode = episode;
-  
-watchProgress[currentSeries.title] = {
-season: season,
-episode: episode
-};
-
-localStorage.setItem("watchProgress", JSON.stringify(watchProgress)); 
-
-}
-
-},1000);
-
-}
-  function startEpisodeWatcher(){
-
-setTimeout(()=>{
-
-startNextCountdown();
-
-},600000); // 10 minutes baad countdown start
-
-}
 
 const skipIntro = document.getElementById("skipIntro") || null;
 
@@ -1759,22 +1652,6 @@ skipIntro.style.display="none";
   
   <audio id="introMusic" src="netflix-sound.mp3" preload="auto"></audio>
 
-<div id="nextEpisode" style="
-position:fixed;
-bottom:30px;
-right:30px;
-padding:14px 22px;
-background:#e50914;
-color:white;
-border-radius:8px;
-display:none;
-z-index:5000;
-font-weight:bold;
-">
-
-Next Episode in <span id="count">120</span>
-
-</div>
 
   <div id="skipIntro" style="
 position:fixed;
